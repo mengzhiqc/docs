@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<article lang="en">
+<articleinfo>
+    <title>A Test Case Of Aifang Git Flow</title>
+    <date>March 30</date>
+    <author>
+        <firstname>Kavin</firstname>
+        <email>kavin@aifang.com</email>
+    </author>
+    <authorinitials>K</authorinitials>
+<revhistory><revision><revnumber>1.0</revnumber><date>March 30</date><authorinitials>K</authorinitials></revision></revhistory>
+</articleinfo>
+<section id="_忙碌的一周">
+<title>忙碌的一周</title>
+<blockquote>
+<attribution>
+2012-3-30， 陆家嘴未来资产大厦
+</attribution>
+<literallayout>又是一周周五，本周该合的代码都已经合上去啦，去看看紫薇发的本周合并项目，恩，没有什么问题</literallayout>
+</blockquote>
+<simpara>每周五由原来的合并负责人来创建新一周的release（前两周由kavin和wbsong负责合并），release拉出后，进行dev的集成测试。</simpara>
+<itemizedlist><title>Note</title>
+<listitem>
+<simpara>
+上一周的release改动，master分支里肯定是有的
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+创建新的release前，一定要保证自己本地master分支是最新最新的
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+拉出release分支后，尽快push一份到 <ulink url="mailto:git@git.corp.anjuke.com">git@git.corp.anjuke.com</ulink>:aifang/aifang-sites 上
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>git checkout master //切换到本地master，注意，master请保证origin是指向的 git@git.corp.anjuke.com:aifang/aifang-sites
+
+git pull --rebase origin master  //保证我的代码是最新的
+
+git co -b release-2012_14  //新建第14周release分支
+
+git push origin release-2012_14:release-2012_14  //将新建的release-2012_14推送到仓库</screen>
+</section>
+<section id="_楼盘新项目">
+<title>楼盘新项目</title>
+<blockquote>
+<attribution>
+2012-4-3
+<citetitle>陆家嘴未来资产大厦</citetitle>
+</attribution>
+<literallayout>清明节，别人出去玩我来加班，新项目开始了，我得新建一个分支，肿么办，应该难不倒我吧</literallayout>
+</blockquote>
+<itemizedlist><title>Note</title>
+<listitem>
+<simpara>
+新建分支前，确保当前本地master是最新的
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+分支名请标准化，小写pmt-pmtid-pmt alia name,发现未按标准的分支，会有惩罚的哦
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+远程分支请建在自己的目录下，比如lenyemeng,分支建在 <ulink url="mailto:git@git.corp.anjuke.com">git@git.corp.anjuke.com</ulink>:lenyemeng/branches 自己添加一个remote alias
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+多人合作，由项目po建立远程分支，并邮件通知到相关协作的成员
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>git checkout master
+
+git pull --rebase origin master
+
+git co -b pmt-2121-loupan-optimize
+
+git remote add mybranch git@git.corp.anjuke.com:lenyemeng/branches
+
+git push mybranch pmt-2121-loupan-optimize:pmt-2121-loupan-optimize  //如果是自己的一个很小的项目，没必要推送到远程仓库，本地改改就好了</screen>
+<simpara>巴拉巴拉。。。。 代码coding中，我是个勤奋的孩子吧，老板给加薪！</simpara>
+</section>
+<section id="_烦人的bug">
+<title>烦人的Bug</title>
+<blockquote>
+<attribution>
+2012-4-5
+<citetitle>陆家嘴未来资产大厦</citetitle>
+</attribution>
+<literallayout>什么？有没有搞错，我怎么会有bug，还是product bug，QA姐姐～～～～～算了，还是改吧，抵赖是抵赖不掉的。</literallayout>
+</blockquote>
+<itemizedlist><title>Note</title>
+<listitem>
+<simpara>
+修改线上bug，请记得从当前release拉出
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+解决完bug，请merge会release
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+千万别忘记，hotfix也要合回master，merge前记得rebase
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>git checkout release-2012_14
+
+git pull --rebase origin release-2012_14
+
+git checkout -b hotfix01
+
+............  //修改bug中。。。
+
+git checkout release-2012_14
+
+git merge --no-ff hotfix01
+
+git checkout hotfix01
+
+git rebase master
+
+git checkout master
+
+git merge --no-ff hotfix01
+
+git branch -d hotfix01  //及时清除垃圾，保证环境卫生</screen>
+<simpara>喂，那个主席，帮我上下线。。。</simpara>
+</section>
+<section id="_城市首页又要改版">
+<title>城市首页又要改版</title>
+<blockquote>
+<attribution>
+2012-4-10
+<citetitle>陆家嘴未来资产大厦</citetitle>
+</attribution>
+<literallayout>一个月改这么多次还有没有完啦，吐槽一下产品的哥哥们。。。</literallayout>
+</blockquote>
+<itemizedlist><title>Note</title>
+<listitem>
+<simpara>
+记得当前的master哦，是最新的吗？
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>git checkout master
+
+git pull --rebase origin master
+
+git co -b pmt-2121-home-version1
+
+git push mybranch pmt-2121-home-version1:pmt-2121-home-version1</screen>
+</section>
+<section id="_我的项目完成啦">
+<title>我的项目完成啦</title>
+<blockquote>
+<attribution>
+2012-4-11
+<citetitle>陆家嘴未来资产大厦</citetitle>
+</attribution>
+<literallayout>经过我连续几个日日夜夜的工作，我的项目终于完成啦，嘎嘎，厉害不！薇姐，给个QA姐姐测试先。。</literallayout>
+</blockquote>
+<itemizedlist><title>Note</title>
+<listitem>
+<simpara>
+项目完成，移交给QA测试，自测TC请认真书写
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+QA用www用户登录1.24，在自己的fp下的aifang-app文件夹更新代码
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+测试流程同SVN
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>Login In 192.168.1.24
+
+cd /home/www/release/v2/fp02/aifang-app
+
+git remote add lenyemeng_branch git@git.corp.anjuke.com:lenyemeng/branch
+
+git co -b pmt-2121-home-version1  lenyemeng_branch/pmt-2121-home-version1 //切到要测试的分支</screen>
+<simpara>开始测试吧。</simpara>
+</section>
+<section id="_合并分支">
+<title>合并分支</title>
+<blockquote>
+<attribution>
+2012-4-12
+<citetitle>陆家嘴未来资产大厦</citetitle>
+</attribution>
+<literallayout>现在的QA测试效率就是高啊，1天就测试完了，看来姑娘有时候是比小伙强, 我的分支我做主，合并回master，gogo。。。</literallayout>
+</blockquote>
+<itemizedlist><title>Note</title>
+<listitem>
+<simpara>
+需要测试的项目QA测试完毕后发出测试合格邮件后才可以合并进master
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+no testing项目自己一定认真自测后再合并
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+这一步大家一定要谨慎，保证rebase完了再合进去
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>git checkout master
+
+git pull --rebase origin master
+
+git checkout pmt-2121-home-version1
+
+git pull --rebase mybranch pmt-2121-home-version1
+
+git rebase master
+
+git checkout master
+
+git merge --no-ff pmt-2121-home-version1
+
+git push origin master:master</screen>
+<simpara>合并完了，等待上线。。。。嘿嘿</simpara>
+</section>
+<section id="_哪个坟蛋合错了">
+<title>哪个坟蛋合错了</title>
+<blockquote>
+<attribution>
+2012-4-12
+<citetitle>陆家嘴未来资产大厦</citetitle>
+</attribution>
+<literallayout>在master里增加了一个aifang-app-unknow测试测试,一不小心push上去了，这可怎么办？</literallayout>
+</blockquote>
+<note><simpara><emphasis role="strong">我们不允许直接在master上进行测试项目，需要的话，请切出一个分支进行研究</emphasis></simpara></note>
+<itemizedlist><title>方法一</title>
+<listitem>
+<simpara>
+立即通知其他人不要往master上merge任何代码
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+查看从push上去到当前时刻的时间段内有无项目往master上合并，如a项目
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+将自己本地master回退到未添加aifang-app-unknow状态
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+将本地代码推送到远程仓库
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+重新合并刚才的a项目
+</simpara>
+</listitem>
+</itemizedlist>
+<screen>git checkout master
+
+git reset a53931c --hard
+
+git push origin master</screen>
+</section>
+</article>
