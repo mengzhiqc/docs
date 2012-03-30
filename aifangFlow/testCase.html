@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>A Test Case Of Aifang Git Flow</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="A Test Case Of Aifang Git Flow" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp24750448"></a>A Test Case Of Aifang Git Flow</h2></div><div><div class="author"><h3 class="author"><span class="firstname">Kavin</span></h3><code class="email">&lt;<a class="email" href="mailto:kavin@aifang.com">kavin@aifang.com</a>&gt;</code></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left">Revision 1.0</td><td align="left">March 30</td><td align="left">K</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_忙碌的一周">1. 忙碌的一周</a></span></dt><dt><span class="section"><a href="#_楼盘新项目">2. 楼盘新项目</a></span></dt><dt><span class="section"><a href="#_烦人的bug">3. 烦人的Bug</a></span></dt><dt><span class="section"><a href="#_城市首页又要改版">4. 城市首页又要改版</a></span></dt><dt><span class="section"><a href="#_我的项目完成啦">5. 我的项目完成啦</a></span></dt><dt><span class="section"><a href="#_哪个坟蛋合错了">6. 哪个坟蛋合错了</a></span></dt><dt><span class="section"><a href="#_我的fast项目">7. 我的Fast项目</a></span></dt></dl></div><div class="section" title="1. 忙碌的一周"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_忙碌的一周"></a>1. 忙碌的一周</h2></div></div></div><div class="blockquote"><table border="0" width="100%" cellspacing="0" cellpadding="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><div class="literallayout"><p>又是一周周五，本周该合的代码都已经合上去啦，去看看紫薇发的本周合并项目，恩，没有什么问题</p></div></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
+2012-3-30， 陆家嘴未来资产大厦
+</span></td></tr></table></div><p>每周五由原来的合并负责人来创建新一周的release（前两周由kavin和wbsong负责合并），release拉出后，进行dev的集成测试。</p><div class="itemizedlist" title="Note"><p class="title"><b>Note</b></p><ul class="itemizedlist" type="disc"><li class="listitem">
+上一周的release改动，master分支里肯定是有的
+</li><li class="listitem">
+创建新的release前，一定要保证自己本地master分支是最新最新的
+</li><li class="listitem">
+拉出release分支后，尽快push一份到 <a class="ulink" href="mailto:git@git.corp.anjuke.com" target="_top">git@git.corp.anjuke.com</a>:aifang/aifang-sites 上
+</li></ul></div><pre class="screen">git checkout master //切换到本地master，注意，master请保证origin是指向的 git@git.corp.anjuke.com:aifang/aifang-sites
+
+git pull --rebase origin master  //保证我的代码是最新的
+
+git co -b release-2012_14  //新建第14周release分支
+
+git push origin release-2012_14:release-2012_14  //将新建的release-2012_14推送到仓库</pre></div><div class="section" title="2. 楼盘新项目"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_楼盘新项目"></a>2. 楼盘新项目</h2></div></div></div><div class="blockquote"><table border="0" width="100%" cellspacing="0" cellpadding="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><div class="literallayout"><p>清明节，别人出去玩我来加班，新项目开始了，我得新建一个分支，肿么办，应该难不倒我吧</p></div></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
+2012-4-3
+<em class="citetitle">陆家嘴未来资产大厦</em>
+</span></td></tr></table></div><div class="itemizedlist" title="Note"><p class="title"><b>Note</b></p><ul class="itemizedlist" type="disc"><li class="listitem">
+新建分支前，确保当前本地master是最新的
+</li><li class="listitem">
+分支名请标准化，小写pmt-pmtid-pmt alia name,发现未按标准的分支，会有惩罚的哦
+</li><li class="listitem">
+远程分支请建在自己的目录下，比如lenyemeng,分支建在 <a class="ulink" href="mailto:git@git.corp.anjuke.com" target="_top">git@git.corp.anjuke.com</a>:lenyemeng/branches 自己添加一个remote alias
+</li><li class="listitem">
+多人合作，由项目po建立远程分支，并邮件通知到相关协作的成员
+</li></ul></div><pre class="screen">git checkout master
+
+git pull --rebase origin master
+
+git co -b pmt-2121-loupan-optimize
+
+git remote add mybranch git@git.corp.anjuke.com:lenyemeng/branches
+
+git push mybranch pmt-2121-loupan-optimize:pmt-2121-loupan-optimize  //如果是自己的一个很小的项目，没必要推送到远程仓库，本地改改就好了</pre><p>巴拉巴拉。。。。 代码coding中，我是个勤奋的孩子吧，老板给加薪！</p></div><div class="section" title="3. 烦人的Bug"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_烦人的bug"></a>3. 烦人的Bug</h2></div></div></div><div class="blockquote"><table border="0" width="100%" cellspacing="0" cellpadding="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><div class="literallayout"><p>什么？有没有搞错，我怎么会有bug，还是product bug，QA姐姐～～～～～算了，还是改吧，抵赖是抵赖不掉的。</p></div></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
+2012-4-5
+<em class="citetitle">陆家嘴未来资产大厦</em>
+</span></td></tr></table></div><div class="itemizedlist" title="Note"><p class="title"><b>Note</b></p><ul class="itemizedlist" type="disc"><li class="listitem">
+修改线上bug，请记得从当前release拉出
+</li><li class="listitem">
+解决完bug，请merge会release
+</li><li class="listitem">
+千万别忘记，hotfix也要合回master，merge前记得rebase
+</li></ul></div><pre class="screen">git checkout release-2012_14
+
+git pull --rebase origin release-2012_14
+
+git checkout -b hotfix01
+
+............  //修改bug中。。。
+
+git checkout release-2012_14
+
+git merge --no-ff hotfix01
+
+git checkout hotfix01
+
+git rebase master
+
+git checkout master
+
+git merge --no-ff hotfix01
+
+git branch -d hotfix01  //及时清除垃圾，保证环境卫生</pre><p>喂，那个主席，帮我上下线。。。</p></div><div class="section" title="4. 城市首页又要改版"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_城市首页又要改版"></a>4. 城市首页又要改版</h2></div></div></div></div><div class="section" title="5. 我的项目完成啦"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_我的项目完成啦"></a>5. 我的项目完成啦</h2></div></div></div></div><div class="section" title="6. 哪个坟蛋合错了"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_哪个坟蛋合错了"></a>6. 哪个坟蛋合错了</h2></div></div></div></div><div class="section" title="7. 我的Fast项目"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_我的fast项目"></a>7. 我的Fast项目</h2></div></div></div></div></div></body></html>

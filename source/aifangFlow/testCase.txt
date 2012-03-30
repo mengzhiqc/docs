@@ -1,0 +1,103 @@
+A Test Case Of Aifang Git Flow
+==============================
+Kavin <kavin@aifang.com>
+v1.0, March 30
+
+忙碌的一周
+---------
+
+[verse, 2012-3-30， 陆家嘴未来资产大厦]
+又是一周周五，本周该合的代码都已经合上去啦，去看看紫薇发的本周合并项目，恩，没有什么问题
+
+每周五由原来的合并负责人来创建新一周的release（前两周由kavin和wbsong负责合并），release拉出后，进行dev的集成测试。
+
+.Note
+- 上一周的release改动，master分支里肯定是有的
+- 创建新的release前，一定要保证自己本地master分支是最新最新的
+- 拉出release分支后，尽快push一份到 git@git.corp.anjuke.com:aifang/aifang-sites 上
+
+----------------------------------
+git checkout master //切换到本地master，注意，master请保证origin是指向的 git@git.corp.anjuke.com:aifang/aifang-sites 
+
+git pull --rebase origin master  //保证我的代码是最新的
+
+git co -b release-2012_14  //新建第14周release分支
+
+git push origin release-2012_14:release-2012_14  //将新建的release-2012_14推送到仓库
+----------------------------------
+
+
+
+楼盘新项目 
+---------
+
+[verse, 2012-4-3, 陆家嘴未来资产大厦]
+清明节，别人出去玩我来加班，新项目开始了，我得新建一个分支，肿么办，应该难不倒我吧
+
+.Note
+- 新建分支前，确保当前本地master是最新的
+- 分支名请标准化，小写pmt-pmtid-pmt alia name,发现未按标准的分支，会有惩罚的哦
+- 远程分支请建在自己的目录下，比如lenyemeng,分支建在 git@git.corp.anjuke.com:lenyemeng/branches 自己添加一个remote alias
+- 多人合作，由项目po建立远程分支，并邮件通知到相关协作的成员
+
+-------------------------------------
+git checkout master
+
+git pull --rebase origin master
+
+git co -b pmt-2121-loupan-optimize
+
+git remote add mybranch git@git.corp.anjuke.com:lenyemeng/branches
+
+git push mybranch pmt-2121-loupan-optimize:pmt-2121-loupan-optimize  //如果是自己的一个很小的项目，没必要推送到远程仓库，本地改改就好了
+
+-------------------------------------
+
+巴拉巴拉。。。。 代码coding中，我是个勤奋的孩子吧，老板给加薪！
+
+烦人的Bug 
+---------
+
+[verse, 2012-4-5, 陆家嘴未来资产大厦]
+什么？有没有搞错，我怎么会有bug，还是product bug，QA姐姐～～～～～算了，还是改吧，抵赖是抵赖不掉的。
+
+.Note
+- 修改线上bug，请记得从当前release拉出
+- 解决完bug，请merge会release
+- 千万别忘记，hotfix也要合回master，merge前记得rebase
+
+-------------------------------------
+git checkout release-2012_14
+
+git pull --rebase origin release-2012_14
+
+git checkout -b hotfix01
+
+............  //修改bug中。。。
+
+git checkout release-2012_14
+
+git merge --no-ff hotfix01
+
+git checkout hotfix01
+
+git rebase master 
+
+git checkout master
+
+git merge --no-ff hotfix01
+
+git branch -d hotfix01  //及时清除垃圾，保证环境卫生
+-------------------------------------
+喂，那个主席，帮我上下线。。。
+
+
+城市首页又要改版
+----------------
+
+我的项目完成啦 
+--------------
+哪个坟蛋合错了
+-------------
+我的Fast项目
+------------
