@@ -16,9 +16,10 @@ v1.0, March 30
 ==========================
 - 上一周的release改动，master分支里肯定是有的
 - 创建新的release前，一定要保证自己本地master分支是最新最新的
-- 拉出release分支后，尽快push一份到 git@git.corp.anjuke.com:aifang/aifang-sites 上
+- 拉出release分支后，尽快push一份到 git@git.corp.anjuke.com:aifang/aifang-sites footnote:[安居客git仓库]上
 ==========================
 
+[source,shell]
 ----------------------------------
 git checkout master //切换到本地master，注意，master请保证origin是指向的 git@git.corp.anjuke.com:aifang/aifang-sites 
 
@@ -45,6 +46,7 @@ git push origin release-2012_14:release-2012_14  //将新建的release-2012_14�
 - 多人合作，由项目po建立远程分支，并邮件通知到相关协作的成员
 ============================
 
+[source,shell]
 -------------------------------------
 git checkout master
 
@@ -72,6 +74,7 @@ git push mybranch pmt-2121-loupan-optimize:pmt-2121-loupan-optimize  //如果是
 - 千万别忘记，hotfix也要合回master，merge前记得rebase
 ====================
 
+[source,shell]
 -------------------------------------
 git checkout release-2012_14
 
@@ -107,6 +110,7 @@ git branch -d hotfix01  //及时清除垃圾，保证环境卫生
 [NOTE]
 *记得当前的master哦，是最新的吗？*
 
+[source,shell]
 --------------------------
 git checkout master
 
@@ -122,7 +126,7 @@ git push mybranch pmt-2121-home-version1:pmt-2121-home-version1
 [verse, 2012-4-11, 陆家嘴未来资产大厦]
 经过我连续几个日日夜夜的工作，我的项目终于完成啦，嘎嘎，厉害不！薇姐，给个QA姐姐测试先。。
 
-[Note]
+[NOTE]
 =======================
 - 项目完成，移交给QA测试，自测TC请认真书写
 - QA用www用户登录1.24，在自己的fp下的aifang-app文件夹更新代码
@@ -150,6 +154,8 @@ git co -b pmt-2121-home-version1  lenyemeng_branch/pmt-2121-home-version1 //切�
 - no testing项目自己一定认真自测后再合并
 - 这一步大家一定要谨慎，保证rebase完了再合进去
 ===============
+
+[source,shell]
 ------------------------
 git checkout master
 
@@ -186,6 +192,8 @@ git push origin master:master
 - 将本地代码推送到远程仓库
 - 重新合并刚才的a项目
 *****************
+
+[source,shell]
 -----------------
 git checkout master
 
