@@ -1,0 +1,17 @@
+Git Simple Tutor
+================
+Kavin <kavin@aifang.com>
+v1.0, April 5th
+
+Install
+-------
+
+Windows
+~~~~~~~
+
+.Steps
+- DownLoad msysgit footnote:[ You can download this software in \\192.168.1.24\public\softs\git ] in our public source
+- Install msysgit and generate the keys pair
+- Put your public key to Anjuke Git Repository footnote:[http://git.corp.anjuke.com]
+- Wait for several minitus and you can clone repository from Anjuke Git Repository
+
