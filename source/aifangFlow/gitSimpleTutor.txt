@@ -10,8 +10,32 @@ Windows
 ~~~~~~~
 
 .Steps
+==================================================
 - DownLoad msysgit footnote:[ You can download this software in \\192.168.1.24\public\softs\git ] in our public source
 - Install msysgit and generate the keys pair
 - Put your public key to Anjuke Git Repository footnote:[http://git.corp.anjuke.com]
 - Wait for several minitus and you can clone repository from Anjuke Git Repository
+- Details Install Method , You can refer github help document - http://help.github.com/win-set-up-git/
+==================================================
+.Pics
+image::../images/bootcamp_1_win_install_1.jpg[pic1]
+image::../images/bootcamp_1_win_install_2.jpg[pic1]
+image::../images/bootcamp_1_win_install_3.jpg[pic1]
+image::../images/bootcamp_1_win_install_4.jpg[pic1]
+image::../images/bootcamp_1_win_install_5.jpg[pic1]
+image::../images/bootcamp_1_win_install_6.jpg[pic1]
+image::../images/bootcamp_1_win_install_7.jpg[pic1]
+image::../images/bootcamp_1_win_install_8.jpg[pic1]
+image::../images/bootcamp_1_win_install_9.jpg[pic1]
+
+Linux
+~~~~~
+
+.Steps
+=====================================
+- aptitude install git
+- Source Method:
+=====================================
+
+Install Egit For Eclipse
 

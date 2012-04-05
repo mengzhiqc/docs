@@ -5,6 +5,6 @@ then
 else
 	stylesheet= $1
 fi
-
-a2x -v -f xhtml --icons -r ./images --stylesheet=./stylesheets/docbook-xsl.css -D ./aifangFlow/  ./source/aifangFlow/testCase.txt -L
-a2x -v -f xhtml --icons -r ./images --stylesheet=./stylesheets/docbook-xsl.css -D ./aifangFlow/  ./source/aifangFlow/gitSimpleTutor.txt -L
+BASENAME='/home/www/docs'
+a2x -v -f xhtml --icons -r $BASENAME/images --stylesheet=$BASENAME/stylesheets/docbook-xsl.css -D $BASENAME/aifangFlow/  $BASENAME/source/aifangFlow/testCase.txt -L
+a2x -v -f xhtml --icons -r $BASENAME/images --stylesheet=$BASENAME/stylesheets/docbook-xsl.css -D $BASENAME/aifangFlow/  $BASENAME/source/aifangFlow/gitSimpleTutor.txt -L
