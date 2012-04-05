@@ -1,0 +1,2009 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.5" />
+<title></title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'DIV'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'DIV' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph"><p><strong>By kavin &lt;<a href="mailto:lenye01@gmail.com">lenye01@gmail.com</a>&gt;.</strong></p></div>
+<h1 id="_第一章_基本知识">第一章  基本知识</h1>
+<div class="sect1">
+<h2 id="_拯救这个世界">拯救这个世界</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>如何解释ØMQ，有些人乐于谈论它能完成的伟大的事情，它聚合多种套接字，它类似具有路由功能的邮箱，它快速！另一部分人在当一切都变得明了的时候试图分享他们受启发的瞬间--zap-pow-kaboom satori paradigm-shift启示时刻。事情变得更加简单。复杂性不见了。它会打开心灵。还有一部分人则试图通过比较来解释。它比较小,比较简单,但仍然看上去很熟悉。就我个人而言,我喜欢回忆为什么我们要发明ØMQ,那是因为你，今天的读者。</p></div>
+<div class="paragraph"><p>程序是一门自然科学，但更是一门艺术，因为我们很多人都不明白软件科学，所以即使听说了，很少进行使用，软件科学不是算法，数据结构，语言或者抽象概念，它仅仅是我们制造的工具，我们可以选择使用或者丢弃的它，真正的软件科学是人类科学学。</p></div>
+<div class="paragraph"><p>特别的，当我们遇到复杂的事情，我们渴望一起工作去解决一个大难题，这个时候就会出现局限性。这就是程序的科学：将一件事情拆分成大家都很容易理解并使用的部件，这样，人们就可以团队合作来解决惊天难题。</p></div>
+<div class="paragraph"><p>我们生活在一个相互关联的世界，现代软件必须要引领这个世界，所以明天的解决方案中的每一个部件也是关联并且很多都是并行的，编写“健壮并简洁”的代码早已不够，一段代码必须能够与另外一段代码沟通，代码必须要“健谈”，“热爱交际”，“很好的联系”，代码必须像人类大脑一样，拥有数以万计的独立的神经末端去向彼此发送消息，没有控制中心的大量并行网络，没有单点失败，却能及时的处理难题，毫无意外，将来的代码看起来就像人类的大脑，因为每个网络终端在某种程度上来说，就可以看作人类大脑。</p></div>
+<div class="paragraph"><p>如果你已经用线程，协议或者网络完成过一些工作，你将意识到这是个多么不可思议的事情，如同一场梦一般。当你开始处理现实生活中的场景时，即使仅仅用很少的几个套接字去连接很少的程序都是一件噩梦。那数以万计的情况下呢？那成本是难以想象的。连接计算机是如此的困难以至于用软件和服务去做处理它可能是是一件需要耗费数十亿美元的事情。</p></div>
+<div class="paragraph"><p>我们生活的世界里，线路传输数据的能力已经超越我们目前所发掘的好多年，我们在1980年发生过一次软件危机，当像Fred Brooks这样的一群人相信这世界没有“Silver Bullet”（喻指新技术 译者注），自由开放软件通过高效的知识共享瓦解了那次危机。今天我们遇到了又一软件危机，只是我们很少去讨论这件事。如今，只有大而富有的公司能够支付得起应用之间创建连接的费用。我们有数据云，但它不属于我们，我们的数据和知识正在从我们的个人计算机往我们无法访问的云计算设备转移。谁拥有我们的社交网络？另一方面，这更像是大型计算机集群的革命。</p></div>
+<div class="paragraph"><p>我们可以把政治哲学放到其他书上去写，但重点是当因特网提供大量潜在的相互关联的代码，而事实上大部分我们无法访问，所以，大量大家感兴趣的问题（如健康，教育，经济，交通等）仍然无法解决，正是由于没有办法连接代码，所以我们就没有办法将处理这些问题的智慧结合在一起解决问题。</p></div>
+<div class="paragraph"><p>现在已经有很多解决软件关联问题的尝试，已经有数千个因特网工程任务组编制的说明书可以去解决难题的某一部分，对一个应用开发者来说，HTTP或者算是一个足够简单工作的方案，但是它可能会将问题变得更糟，它促使开发者和架构师们从庞大的服务器和小而愚蠢的客户端角度去思考问题。</p></div>
+<div class="paragraph"><p>如今，人们还是使用UDP和TCP，私有协议，HTTP，WebSockets这些方法去连接应用程序，而这依旧痛苦并且速度低下，很难扩展，而且基本上还是集中集中式的。分布式p2p架构主要是用于娱乐而不是日常工作，有多少应用程序是使用Skype或者是BT来传输数据的？</p></div>
+<div class="paragraph"><p>这让我们回到科学的编程。挽救这个世界,我们需要做两件事。一、解决一般问题"怎样连接任何两段代码”。二、包装成人们可以理解并且容易使用的部件。</p></div>
+<div class="paragraph"><p>这听起来异常的简单。也许这才是整个重点。</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_用一百个字解释0mq">用一百个字解释0MQ</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>0MQ (ZeroMQ, 0\MQ, zmq)看起来像一种嵌入式的网络库，但却像并发框架般工作，它能为你提供各种诸如in-process、inter-process、TCP或者多点传送间的完整信息传送的套接字。你可以通过像fanout,pub-sub,任务分发或者请求-回答模式进行N-N的套接字连接。它的速度足够满足集群产品架构的要求。它的异步I/O模式能够像构建异步的报文处理任务般为你提供可扩展多核心应用。它拥有多语言的API，可以运行在大部分操作系统上。0MQ来自于 iMatix（http://www.imatix.com） 并且遵循LGPL开放协议。</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_一些假定">一些假定</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>我们假设你是在使用最新的0MQ。我们假设你使用的是类似于Linux的工作环境。我们假设你基本可以阅读C代码，因为那是我们书写样例所用的语言。我们假设如果程序语言用到一些类似PUSH或者SUBSCRIBE，你可以明白它其实叫做ZMQ_PUSH或者ZMQ_SUBSCRIBE.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_演示样例">演示样例</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>你可已在指导文档的git [<a href="https://github.com/imatix/zguide">https://github.com/imatix/zguide</a> git 仓库]. 获取所有样例的最简单的办法就是按照如下的方法复制这个仓库：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>git clone git://github.com/imatix/zguide.git</tt></pre>
+</div></div>
+<div class="paragraph"><p>你可以浏览样例的子文件夹，你可以根据不同语言找到你说需要的样例。如果我们的样例缺少你所需要的语言，欢迎你提交一个[<a href="http://zguide.zeromq.org/main:translate">http://zguide.zeromq.org/main:translate</a> submit a 翻译版本]. 这就是为什么今天的文档会如此的有用，谢谢那些工作的朋友。</p></div>
+<div class="paragraph"><p>如果源代码中未特殊指定，所有的样例遵循MIT/X11协议许可。</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_请求和接受">请求和接受</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>让我们从一些代码开始我们的学习进程。当然，我们还是从Hello world样例开始，我们将创建一个客户端和服务端，客户端发送“Hello”到服务端，然后服务端回应“World”。我们这儿的服务端语言使用C，通过5555端口打开一个0MQ的套接字，读取请求并向请求方回应“World”:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Hello World server
+//  Binds REP socket to tcp://*:5555
+//  Expects "Hello" from client, replies with "World"
+//
+#include &lt;zmq.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+
+int main (void)
+{
+    void *context = zmq_init (1);
+
+    //  Socket to talk to clients
+    void *responder = zmq_socket (context, ZMQ_REP);
+    zmq_bind (responder, "tcp://*:5555");
+
+    while (1) {
+        //  Wait for next request from client
+        zmq_msg_t request;
+        zmq_msg_init (&amp;request);
+        zmq_recv (responder, &amp;request, 0);
+        printf ("Received Hello\n");
+        zmq_msg_close (&amp;request);
+
+        //  Do some 'work'
+        sleep (1);
+
+        //  Send reply back to client
+        zmq_msg_t reply;
+        zmq_msg_init_size (&amp;reply, 5);
+        memcpy (zmq_msg_data (&amp;reply), "World", 5);
+        zmq_send (responder, &amp;reply, 0);
+        zmq_msg_close (&amp;reply);
+    }
+    //  We never get here but if we did, this would be how we end
+    zmq_close (responder);
+    zmq_term (context);
+    return 0;
+}
+          +------------+
+          |            |
+          |   Client   |
+          |            |
+          +------------+
+          |    REQ     |
+          \---+--------/
+              |    ^
+              |    |
+         "Hello"  "World"
+              |    |
+              v    |
+          /--------+---\
+          |    REP     |
+          +------------+
+          |            |
+          |   Server   |
+          |            |
+          +------------+
+
+
+     Figure # - 请求-问答</tt></pre>
+</div></div>
+<div class="paragraph"><p>REQ-REP套接字对是同步的，在一个周期内，客户端先运行 zmq_send 然后再运行 zmq_recv，其他执行次序（比如说在一行中发送两条消息）都将会引发错误。类似的，服务端在需要的时候先执行 zmq_recv 接着执行 zmq_send。</p></div>
+<div class="paragraph"><p>0mq的参考语言是C。C语言也是我们用来作演示的主要语言，如果你是在线阅读的这份文档，演示代码下面的链接将引导你翻译成其他程序语言。让我们来和同样的C++语言服务端做一次比较：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Hello World server
+//  Binds REP socket to tcp://*:5555
+//  Expects "Hello" from client, replies with "World"
+//
+#include &lt;zmq.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+
+int main (void)
+{
+    void *context = zmq_init (1);
+
+    //  Socket to talk to clients
+    void *responder = zmq_socket (context, ZMQ_REP);
+    zmq_bind (responder, "tcp://*:5555");
+
+    while (1) {
+        //  Wait for next request from client
+        zmq_msg_t request;
+        zmq_msg_init (&amp;request);
+        zmq_recv (responder, &amp;request, 0);
+        printf ("Received Hello\n");
+        zmq_msg_close (&amp;request);
+
+        //  Do some 'work'
+        sleep (1);
+
+        //  Send reply back to client
+        zmq_msg_t reply;
+        zmq_msg_init_size (&amp;reply, 5);
+        memcpy (zmq_msg_data (&amp;reply), "World", 5);
+        zmq_send (responder, &amp;reply, 0);
+        zmq_msg_close (&amp;reply);
+    }
+    //  We never get here but if we did, this would be how we end
+    zmq_close (responder);
+    zmq_term (context);
+    return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>你可以发现C或者C++的OMQ API非常相似，在类似PHP的语言里，我们可以省掉更多从而让代码变得更加易读。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;?php
+/*
+*  Hello World server
+*  Binds REP socket to tcp://*:5555
+*  Expects "Hello" from client, replies with "World"
+* @author Ian Barber &lt;ian(dot)barber(at)gmail(dot)com&gt;
+*/
+
+$context = new ZMQContext(1);
+
+//  Socket to talk to clients
+$responder = new ZMQSocket($context, ZMQ::SOCKET_REP);
+$responder-&gt;bind("tcp://*:5555");
+
+while(true) {
+    //  Wait for next request from client
+    $request = $responder-&gt;recv();
+    printf ("Received request: [%s]\n", $request);
+
+    //  Do some 'work'
+    sleep (1);
+
+    //  Send reply back to client
+    $responder-&gt;send("World");
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>客户端代码（点击下面的代码阅读或者贡献你翻译成的喜欢的程序代码）</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Hello World client
+//  Connects REQ socket to tcp://localhost:5555
+//  Sends "Hello" to server, expects "World" back
+//
+#include &lt;zmq.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+int main (void)
+{
+    void *context = zmq_init (1);
+
+    //  Socket to talk to server
+    printf ("Connecting to hello world server…\n");
+    void *requester = zmq_socket (context, ZMQ_REQ);
+    zmq_connect (requester, "tcp://localhost:5555");
+
+    int request_nbr;
+    for (request_nbr = 0; request_nbr != 10; request_nbr++) {
+        zmq_msg_t request;
+        zmq_msg_init_size (&amp;request, 5);
+        memcpy (zmq_msg_data (&amp;request), "Hello", 5);
+        printf ("Sending Hello %d…\n", request_nbr);
+        zmq_send (requester, &amp;request, 0);
+        zmq_msg_close (&amp;request);
+
+        zmq_msg_t reply;
+        zmq_msg_init (&amp;reply);
+        zmq_recv (requester, &amp;reply, 0);
+        printf ("Received World %d\n", request_nbr);
+        zmq_msg_close (&amp;reply);
+    }
+    zmq_close (requester);
+    zmq_term (context);
+    return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>实际场景下，这看起来似乎太简单，一个0MQ套节字就是当你带着一个普通的TCP套节字，并注入一剂从秘密的苏联原子研究工程中偷窃出来的放射性同位素，用50年代的宇宙射线使其爆炸，并将它放入一个受毒品折磨的伪装成膨胀肌肉喜剧丛书的作者的手里。是的，0MQ的套节字就是拯救网络世界的大英雄。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt> +------------+        +------------+
+ |            |        |            | Zap!
+ | TCP socket +-------&gt;| 0MQ socket |
+ |            | BOOM!  |     cC00   |  POW!!
+ +------------+        +------------+
+   ^    ^    ^
+   |    |    |
+   |    |    +---------+
+   |    |              |
+   |    +----------+   |
+  Illegal          |   |
+  radioisotopes    |   |
+  from secret      |   |
+  Soviet atomic    | Spandex
+  city             |
+               Cosmic rays
+
+
+    Figure # - A terrible accident...</tt></pre>
+</div></div>
+<div class="paragraph"><p>你可以简单的在服务器上一次性启动数以千计的客户端，并且它可以快乐快速的继续工作。你可已尝试性的先启动服务端再启动服务端，看看它是如何继续工作，然后想想为什么？</p></div>
+<div class="paragraph"><p>让我来简单解释这两个程序事实上在处理什么。它们创建一个用于工作的0MQ上下文和一个套节字。别担心这些词的意义。你在接下来的内容里会理解的。服务端将它的REP(reply)套节字绑定到555端口。服务端不停的等待请求并答复一个回应。客户端发送请求并读取从服务端发回的响应。</p></div>
+<div class="paragraph"><p>在后台还有很多其他的事情发生，但是关乎我们广大程序员的是代码是如何的精简和够酷、还有它能够多久不挂掉，即使是在高负荷的情况下。这就是request-reply模式，可能是最简单的方式使用0MQ。它映射到RPC和传统的CS模型。
+== 一个字符串的缺陷 ==</p></div>
+<div class="paragraph"><p>除了数据的大小，0MQ不知道任何与数据相关的信息。这就意味着你有义务将数据格式化为安全的形式以使得应用可以正确读取。当我们处理特殊的类库，如Protocol Buffers时,为对象和复杂的数据类型进行数据格式化通常是必须的工作。
+在C语言程序里，字符串是以一个字节的null结束的。我们可以发送一个“HELLO”，后面跟着一个null</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>zmq_msg_init_data (&amp;request, "Hello", 6, NULL, NULL);</tt></pre>
+</div></div>
+<div class="paragraph"><p>如果你使用其他的语言发送一行字符串，可能不许要包含null.比如说，使用python发送相同的字符串，我们可以这样做：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>socket.send ("Hello")</tt></pre>
+</div></div>
+<div class="paragraph"><p>线架结构显示模式如下：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>+-----+    +-----+-----+-----+-----+-----+
+|  5  |    |  H  |  e  |  l  |  l  |  o  |
++-----+    +-----+-----+-----+-----+-----+
+
+
+          Figure # - A 0MQ string</tt></pre>
+</div></div>
+<div class="paragraph"><p>如果你用C程序去读取，你将获得一些像字符串的数据，或许偶然像字符串(比如碰巧5bytes的数据发现他们后面跟了一个无辜的null)，但其实它本身并非字符串。这就意味着你的服务端和客户端对字符的格式不能达成一致，你可能会获得诡异的结果。
+当你使用C程序从0MQ接收字符数据，你可能不能确信它是否安全的结束。每次你读取一行字符，你应该开辟一块附加多余1byte的buffer空间，复制字符并以null结尾。
+所以让我们来建立一个 <strong>0MQ字符是定长的规则，并且以不跟null</strong>的线架结构方式存在。最简单的情形(我们将在我们的实例中实现)，一个0MQ字符工整的映射一个0MQ消息框架。这个框架类似与上面的图--一个长度值和一些bytes。
+我们用C程序实现了接收0MQ字符并且将它以正确的C程序字符方式分发到应用:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//  Receive 0MQ string from socket and convert into C string
+static char *
+s_recv (void *socket) {
+    zmq_msg_t message;
+    zmq_msg_init (&amp;message);
+    zmq_recv (socket, &amp;message, 0);
+    int size = zmq_msg_size (&amp;message);
+    char *string = malloc (size + 1);
+    memcpy (string, zmq_msg_data (&amp;message), size);
+    zmq_msg_close (&amp;message);
+    string [size] = 0;
+    return (string);
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>我们遵循更有效的重用原则创建了一个非常有用的帮助函数，让我们写一个类似's_send'的函数来以正确的0MQ方式发送字符，而后我们把它封装到头文件里以便重用。
+完成的代码是{{zhelpers.h}},它可以让我们用C程序写出简短优雅的0MQ应用，这是一段相当长的源代码，仅供C开发者娱乐使用。[<a href="https://github.com/imatix/zguide/blob/master/examples/C/zhelpers.h">https://github.com/imatix/zguide/blob/master/examples/C/zhelpers.h</a> 闲暇的时候可以一读]。</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_版本报告v">版本报告V</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>0MQ非常快速的发行了许多版本，如果你使用中遇到问题了，它可能在后面的版本就已经解决了。所以<strong>明确的</strong>知道你使用的0MQ版本是很有用的技巧。这里有个简短的程序可以做到：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Report 0MQ version
+//
+#include "zhelpers.h"
+
+int main (void)
+{
+    int major, minor, patch;
+    zmq_version (&amp;major, &amp;minor, &amp;patch);
+    printf ("Current 0MQ version is %d.%d.%d\n", major, minor, patch);
+
+    return EXIT_SUCCESS;
+}</tt></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_发布信息">发布信息</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>第二个经典的模式是单向数据发布，这种模式下，服务器将更新推送到客户端。让我们来看一个实例，它的功能是将与邮编关联的地区的天气更新情况、温度、相对湿度推送到客户端。我们生成随机数，模拟真实的气象站。</p></div>
+<div class="paragraph"><p>服务端程序。我们为应用提供5556端口</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Weather update server
+//  Binds PUB socket to tcp://*:5556
+//  Publishes random weather updates
+//
+#include "zhelpers.h"
+
+int main (void)
+{
+    //  Prepare our context and publisher
+    void *context = zmq_init (1);
+    void *publisher = zmq_socket (context, ZMQ_PUB);
+    zmq_bind (publisher, "tcp://*:5556");
+    zmq_bind (publisher, "ipc://weather.ipc");
+
+    //  Initialize random number generator
+    srandom ((unsigned) time (NULL));
+    while (1) {
+        //  Get values that will fool the boss
+        int zipcode, temperature, relhumidity;
+        zipcode     = randof (100000);
+        temperature = randof (215) - 80;
+        relhumidity = randof (50) + 10;
+
+        //  Send message to all subscribers
+        char update [20];
+        sprintf (update, "%05d %d %d", zipcode, temperature, relhumidity);
+        s_send (publisher, update);
+    }
+    zmq_close (publisher);
+    zmq_term (context);
+    return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这个更新流没有开始也没有结束，像一个永不停止的广播。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>                 +-------------+
+                 |             |
+                 |  Publisher  |
+                 |             |
+                 +-------------+
+                 |     PUB     |
+                 \-------------/
+                      bind
+                        |
+                        |
+                     updates
+                        |
+        +---------------+---------------+
+        |               |               |
+     updates         updates         updates
+        |               |               |
+        |               |               |
+        v               v               v
+     connect         connect         connect
+  /------------\  /------------\  /------------\
+  |    SUB     |  |    SUB     |  |    SUB     |
+  +------------+  +------------+  +------------+
+  |            |  |            |  |            |
+  | Subscriber |  | Subscriber |  | Subscriber |
+  |            |  |            |  |            |
+  +------------+  +------------+  +------------+
+
+
+           Figure # - Publish-Subscribe</tt></pre>
+</div></div>
+<div class="paragraph"><p>客户端应用，用于监听更新流并且获取指定邮编的相关信息，默认为纽约市。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Weather update client
+//  Connects SUB socket to tcp://localhost:5556
+//  Collects weather updates and finds avg temp in zipcode
+//
+#include "zhelpers.h"
+
+int main (int argc, char *argv [])
+{
+    void *context = zmq_init (1);
+
+    //  Socket to talk to server
+    printf ("Collecting updates from weather server…\n");
+    void *subscriber = zmq_socket (context, ZMQ_SUB);
+    zmq_connect (subscriber, "tcp://localhost:5556");
+
+    //  Subscribe to zipcode, default is NYC, 10001
+    char *filter = (argc &gt; 1)? argv [1]: "10001 ";
+    zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, filter, strlen (filter));
+
+    //  Process 100 updates
+    int update_nbr;
+    long total_temp = 0;
+    for (update_nbr = 0; update_nbr &lt; 100; update_nbr++) {
+        char *string = s_recv (subscriber);
+        int zipcode, temperature, relhumidity;
+        sscanf (string, "%d %d %d",
+            &amp;zipcode, &amp;temperature, &amp;relhumidity);
+        total_temp += temperature;
+        free (string);
+    }
+    printf ("Average temperature for zipcode '%s' was %dF\n",
+        filter, (int) (total_temp / update_nbr));
+
+    zmq_close (subscriber);
+    zmq_term (context);
+    return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>如果你使用子套节字，你<strong>必须</strong>像代码中一样使用zmq_setsockopt[3]和SUBSCRIBE设置一个订阅。如果你没有设置订阅，你不会获得任何消息。这是很多新手常犯的一个错误。订阅者可以一次性设置许多订阅。那就意味着，如果一个更新匹配任何订阅，订阅者可以接收该信息。订阅者也可以取消订阅某个订阅。订阅是指定长度的二进制数据。你可以查看zmq_setsockopt[3]来了解其如何工作。</p></div>
+<div class="paragraph"><p>PUB-SUB套接字对是异步的。客户端循环执行zmq_recv[3].尝试发送一条消息到SUB套接字将导致错误。类似的，在需要的时候，服务端执行zmq_send[3]，PUB套接字无法执行zmq_recv[3]。</p></div>
+<div class="paragraph"><p>关于PUB-SUB套接字我们必须了解的是：你不能准确的知道订阅者何时开始接收信息。即使你开启了一个订阅客户端，等待一会再开始启动发布程序。<strong>订阅者将丢失发布者第一条信息</strong>。这是因为当订阅这连接到发布者时候(需要消耗极短时间但并非不需要时间)，发布者可能已经将消息发送出去。
+这个“slow joiner”特性困扰里很多人，我们将在接下来解释细节。记住：0MQ进行异步I/O。例如：在后台，如果你有2个节点来做发布，按下面的顺序：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+订阅者连接到一个节点并接收和计算消息条数
+</p>
+</li>
+<li>
+<p>
+发布者绑定到某个节点并立即发送1000条消息
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>订阅者可能不会接收任何数据。你可能会疑惑，检查是否设置里正确的过滤条件，然后再次尝试，订阅者依旧没有获得任何消息。</p></div>
+<div class="paragraph"><p>创建一个TCP连接并进行信号交换会根据你的网络或者信号跳跃次数不同，需要几毫秒不等的时间。在那种情况下，0MQ却能够发送很多消息。为了证明这一点，我们假设建立一个连接需要5毫秒，而同样的连接1秒钟可以处理约1M的信息。在订阅者与发布者连接的这5毫秒内，发布者仅仅需要1毫秒就可以发出1K的信息。</p></div>
+<div class="paragraph"><p>在第二章我们将解释如何去使得发布者和订阅者同步处理信息，这样你不需要等到订阅者已经连接并且在等待的时候才能发布数据。有一种简单而又笨的来延迟发布的方法就是休眠。我从来没有在真实的应用中使用过这种方法，它既脆弱又不优雅，而且还很慢。当然你可以用休眠来验证目前的代码，在第二章我们将会知道如何正确的同步来处理，请拭目以待。
+还有一种处理同步的方法是简单的假设发布的数据流是无止境的，没有开始也没有结尾。这是我们处理天气客户端案例所使用的方法。</p></div>
+<div class="paragraph"><p>客户端订阅它所选择的邮编并收集几千条更新。那意味着如果邮编是随机生成的，服务器需要发布大约一千万条更新。你可以启动客户端，然后启动服务端，客户端将继续工作。你可以随意关闭再重新启动服务端，客户端依旧工作。当客户端已经搜集到几千条更新，她计算平均值并打印，之后退出。</p></div>
+<div class="paragraph"><p>发布-订阅模式的几个值得注意的地方：
+* 一个订阅者可以连接多个发布者，一次只能使用一个连接。数据将到达并交互间隔，这样就不会出现某单个发布者阻塞别的发布者。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+如果一个发布者没有与任何订阅者建立连接，它将丢弃所有消息。
+</p>
+</li>
+<li>
+<p>
+如果你正在使用TCP，并且订阅者接收速度很慢，消息会在发布者上组成队列。我们寻找如何防止出现这个情况，之后我们会使用“高水位标记”。
+</p>
+</li>
+<li>
+<p>
+在目前版本的0MQ上，过滤仅发生在订阅者上而非发布者。这意味着，通过TCP，一个发布者将所有信息发送给订阅者，后者丢弃其不想要的消息。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>下面是测试在我的机器上需要多久来接受并筛选10M的消息。机器配置是Intel 4 core Q8300：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>ph@ws200901:~/work/git/0MQGuide/examples/c$ time wuclient
+Collecting updates from weather server...
+Average temperature for zipcode '10001 ' was 18F
+
+real    0m5.939s
+user    0m1.590s
+sys     0m2.290s</tt></pre>
+</div></div>
+<div class="sect2">
+<h3 id="_细分并征服">细分并征服</h3>
+<div class="paragraph"><p>作为最后一个例子，让我们做一点超级计算。喝一杯咖啡，我们的超算应用是一个相当典型的并行模型。
+* 我们有一个分派器来产生可以并行操作的任务。
+* 我们拥有很多workers来处理任务。
+* 我们有一个收集worker处理完的任务的结果的数据槽。</p></div>
+<div class="paragraph"><p>在现实中，workers工作在超快速的机器上，可能使用GPUs来进行数学运算。这是一个分派器。它生成100个任务，每个任务都是一条高速worker休眠数秒的消息:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Task ventilator
+//  Binds PUSH socket to tcp://localhost:5557
+//  Sends batch of tasks to workers via that socket
+//
+#include "zhelpers.h"
+
+int main (void)
+{
+    void *context = zmq_init (1);
+
+    //  Socket to send messages on
+    void *sender = zmq_socket (context, ZMQ_PUSH);
+    zmq_bind (sender, "tcp://*:5557");
+
+    //  Socket to send start of batch message on
+    void *sink = zmq_socket (context, ZMQ_PUSH);
+    zmq_connect (sink, "tcp://localhost:5558");
+
+    printf ("Press Enter when the workers are ready: ");
+    getchar ();
+    printf ("Sending tasks to workers…\n");
+
+    //  The first message is "0" and signals start of batch
+    s_send (sink, "0");
+
+    //  Initialize random number generator
+    srandom ((unsigned) time (NULL));
+
+    //  Send 100 tasks
+    int task_nbr;
+    int total_msec = 0;     //  Total expected cost in msecs
+    for (task_nbr = 0; task_nbr &lt; 100; task_nbr++) {
+        int workload;
+        //  Random workload from 1 to 100msecs
+        workload = randof (100) + 1;
+        total_msec += workload;
+        char string [10];
+        sprintf (string, "%d", workload);
+        s_send (sender, string);
+    }
+    printf ("Total expected cost: %d msec\n", total_msec);
+    sleep (1);              //  Give 0MQ time to deliver
+
+    zmq_close (sink);
+    zmq_close (sender);
+    zmq_term (context);
+    return 0;
+}
+
+                  +-------------+
+                  |             |
+                  |  Ventilator |
+                  |             |
+                  +-------------+
+                  |    PUSH     |
+                  \------+------/
+                         |
+                       tasks
+                         |
+         +---------------+---------------+
+         |               |               |
+       task            task             task
+         |               |               |
+         v               v               v
+   /------------\  /------------\  /------------\
+   |    PULL    |  |    PULL    |  |    PULL    |
+   +------------+  +------------+  +------------+
+   |            |  |            |  |            |
+   |   Worker   |  |   Worker   |  |   Worker   |
+   |            |  |            |  |            |
+   +------------+  +------------+  +------------+
+   |    PUSH    |  |    PUSH    |  |    PUSH    |
+   \-----+------/  \-----+------/  \-----+------/
+         |               |               |
+       result          result          result
+         |               |               |
+         +---------------+---------------+
+                         |
+                      results
+                         |
+                         v
+                  /-------------\
+                  |    PULL     |
+                  +-------------+
+                  |             |
+                  |    Sink     |
+                  |             |
+                  +-------------+
+
+
+           Figure # - Parallel Pipeline</tt></pre>
+</div></div>
+<div class="paragraph"><p>这是一个worker应用。它接受消息，休眠数秒，然后发送已经完成的信号:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Task worker
+//  Connects PULL socket to tcp://localhost:5557
+//  Collects workloads from ventilator via that socket
+//  Connects PUSH socket to tcp://localhost:5558
+//  Sends results to sink via that socket
+//
+#include "zhelpers.h"
+
+int main (void)
+{
+    void *context = zmq_init (1);
+
+    //  Socket to receive messages on
+    void *receiver = zmq_socket (context, ZMQ_PULL);
+    zmq_connect (receiver, "tcp://localhost:5557");
+
+    //  Socket to send messages to
+    void *sender = zmq_socket (context, ZMQ_PUSH);
+    zmq_connect (sender, "tcp://localhost:5558");
+
+    //  Process tasks forever
+    while (1) {
+        char *string = s_recv (receiver);
+        //  Simple progress indicator for the viewer
+        fflush (stdout);
+        printf ("%s.", string);
+
+        //  Do the work
+        s_sleep (atoi (string));
+        free (string);
+
+        //  Send results to sink
+        s_send (sender, "");
+    }
+    zmq_close (receiver);
+    zmq_close (sender);
+    zmq_term (context);
+    return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这是个数据槽应用。它收集100个任务，计算总共处理时间，这样我们可以确认workers是在并行工作，当然前提是总时间不超过单个时间:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//
+//  Task sink
+//  Binds PULL socket to tcp://localhost:5558
+//  Collects results from workers via that socket
+//
+#include "zhelpers.h"
+
+int main (void)
+{
+    //  Prepare our context and socket
+    void *context = zmq_init (1);
+    void *receiver = zmq_socket (context, ZMQ_PULL);
+    zmq_bind (receiver, "tcp://*:5558");
+
+    //  Wait for start of batch
+    char *string = s_recv (receiver);
+    free (string);
+
+    //  Start our clock now
+    int64_t start_time = s_clock ();
+
+    //  Process 100 confirmations
+    int task_nbr;
+    for (task_nbr = 0; task_nbr &lt; 100; task_nbr++) {
+        char *string = s_recv (receiver);
+        free (string);
+        if ((task_nbr / 10) * 10 == task_nbr)
+            printf (":");
+        else
+            printf (".");
+        fflush (stdout);
+    }
+    //  Calculate and report duration of batch
+    printf ("Total elapsed time: %d msec\n",
+        (int) (s_clock () - start_time));
+
+    zmq_close (receiver);
+    zmq_term (context);
+    return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>平均耗费时间是5s。当分别运行1个，2个，4个的workers，我们在数据槽里获得这样的数据：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>#   1 worker
+Total elapsed time: 5034 msec
+#   2 workers
+Total elapsed time: 2421 msec
+#   4 workers
+Total elapsed time: 1018 msec</tt></pre>
+</div></div>
+<div class="paragraph"><p>让我们更加深入的来看看这段代码的某些方面:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+workers向上连接到分派器，向下与数据槽相连。这就意味着你可以任意的增加workers。如果workers与端点绑定，一旦你要添加workers，你就需要更多端点并且去修改分派器和数据槽，我们说分派器和数据槽是我们整个架构的固定部分，但workers是动态的。
+</p>
+</li>
+<li>
+<p>
+我们必须去同步所有开始并在运行的worker的开始。这点是0MQ相当普通的常识并且没有简单的解决方案。'connect'的方法需要一定的时间。所以当我们将一个worker连接到一个分派器的时候。第一个成功连接的将会得到整个消息。而在那极短的时间里，其他的workers仍旧在连接。如果你不去同步。系统将不会并行。试试移除等待看看。
+</p>
+</li>
+<li>
+<p>
+分派器的PUSH套接字分配任务给workers(假设他们都提前连接好)。这就叫<strong>均衡加载</strong>,这是我们需要再次研究的细节。
+</p>
+</li>
+<li>
+<p>
+数据槽推送套接字收集workers发回的结果。这就叫<strong>平衡队列</strong>:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>  +---------+   +---------+   +---------+
+  |  PUSH   |   |  PUSH   |   |  PUSH   |
+  \----+----/   \----+----/   \----+----/
+       |             |             |
+   R1, R2, R3       R4           R5, R6
+       |             |             |
+       +-------------+-------------+
+                     |
+               fair-queuing
+           R1, R4, R5, R2, R6, R3
+                     |
+                     v
+              /-------------\
+              |     PULL    |
+              +-------------+
+
+
+          Figure # - Fair queuing</tt></pre>
+</div></div>
+<div class="paragraph"><p>管道模式还展示了"slow joiner"表现，导致了PUSH套接字不能正确的平衡加载。如果你使用PUSH和PULL套接字，并且你的某个worker比起他的获取更多信息，这是因为PULL套接字会比其他的连接得快，在别人连接的时候它已经获取了大量消息。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_用0mq编程">用0MQ编程</h3>
+<div class="paragraph"><p>看过很多实例，你一定已经渴望在应用中使用0MQ了。在你开始之前，深呼吸，淡定，一些基本的忠告可以减少你的紧张和焦躁。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+一步一步学习0MQ。虽然它只是一个简单的API，但它隐藏着这个世界的各种可能。慢慢的实现并掌握这种种可能。
+</p>
+</li>
+<li>
+<p>
+写出漂亮的代码。丑陋的代码隐藏问题并且别人很难帮到你。你可能习惯了用一些无意义的变量名，但是读你代码的人并不习惯。用现实生活中的名字，而不应该说”我太粗心，我不能告诉你这个变量是做什么的“。用固定的缩进，简洁的层次。写漂亮的代码，你的世界将更加舒服。
+</p>
+</li>
+<li>
+<p>
+当你做的时候，多测试。这样当你的程序无法运行的时候，你可以知道需要到哪五行代码中去查，尤其是你在使用0MQ的时候，往往首次运行的时候都不成功。
+</p>
+</li>
+<li>
+<p>
+当你发现代码不如预期般运行，将你的代码分块并逐个测试，看看哪个不工作。0MQ可以让你写出模块化的代码，发挥你的优势吧。
+</p>
+</li>
+<li>
+<p>
+多使用抽象(类，方法，其他),如果你复制黏贴很多代码，你同时也在复制黏贴错误。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>这儿有一段别人让我帮忙修复的代码：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>//  NOTE: do NOT reuse this example code!
+static char *topic_str = "msg.x|";
+
+void* pub_worker(void* arg){
+    void *ctx = arg;
+    assert(ctx);
+
+    void *qskt = zmq_socket(ctx, ZMQ_REP);
+    assert(qskt);
+
+    int rc = zmq_connect(qskt, "inproc://querys");
+    assert(rc == 0);
+
+    void *pubskt = zmq_socket(ctx, ZMQ_PUB);
+    assert(pubskt);
+
+    rc = zmq_bind(pubskt, "inproc://publish");
+    assert(rc == 0);
+
+    uint8_t cmd;
+    uint32_t nb;
+    zmq_msg_t topic_msg, cmd_msg, nb_msg, resp_msg;
+
+    zmq_msg_init_data(&amp;topic_msg, topic_str, strlen(topic_str) , NULL, NULL);
+
+    fprintf(stdout,"WORKER: ready to recieve messages\n");
+    //  NOTE: do NOT reuse this example code, It's broken.
+    //  e.g. topic_msg will be invalid the second time through
+    while (1){
+    zmq_send(pubskt, &amp;topic_msg, ZMQ_SNDMORE);
+
+    zmq_msg_init(&amp;cmd_msg);
+    zmq_recv(qskt, &amp;cmd_msg, 0);
+    memcpy(&amp;cmd, zmq_msg_data(&amp;cmd_msg), sizeof(uint8_t));
+    zmq_send(pubskt, &amp;cmd_msg, ZMQ_SNDMORE);
+    zmq_msg_close(&amp;cmd_msg);
+
+    fprintf(stdout, "recieved cmd %u\n", cmd);
+
+    zmq_msg_init(&amp;nb_msg);
+    zmq_recv(qskt, &amp;nb_msg, 0);
+    memcpy(&amp;nb, zmq_msg_data(&amp;nb_msg), sizeof(uint32_t));
+    zmq_send(pubskt, &amp;nb_msg, 0);
+    zmq_msg_close(&amp;nb_msg);
+
+    fprintf(stdout, "recieved nb %u\n", nb);
+
+    zmq_msg_init_size(&amp;resp_msg, sizeof(uint8_t));
+    memset(zmq_msg_data(&amp;resp_msg), 0, sizeof(uint8_t));
+    zmq_send(qskt, &amp;resp_msg, 0);
+    zmq_msg_close(&amp;resp_msg);
+
+    }
+    return NULL;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这是我重写过的，作为发现bug的一部分：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>static void *
+worker_thread (void *arg) {
+    void *context = arg;
+    void *worker = zmq_socket (context, ZMQ_REP);
+    assert (worker);
+    int rc;
+    rc = zmq_connect (worker, "ipc://worker");
+    assert (rc == 0);
+
+    void *broadcast = zmq_socket (context, ZMQ_PUB);
+    assert (broadcast);
+    rc = zmq_bind (broadcast, "ipc://publish");
+    assert (rc == 0);
+
+    while (1) {
+        char *part1 = s_recv (worker);
+        char *part2 = s_recv (worker);
+        printf ("Worker got [%s][%s]\n", part1, part2);
+        s_sendmore (broadcast, "msg");
+        s_sendmore (broadcast, part1);
+        s_send     (broadcast, part2);
+        free (part1);
+        free (part2);
+
+        s_send (worker, "OK");
+    }
+    return NULL;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>最后，问题是这样的：应用在线程间传递套接字，而线程自己却诡异的崩溃了。这在0MQ/2.1是合法的行为，但它依旧危险，我们不建议这样做。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_0mq_2_1">0MQ/2.1</h3>
+<div class="paragraph"><p>历史告诉我们0MQ/2.0是当低延时分发消息从烂泥堆中爬出来，脱掉笨重的外衣，到达枝头，好像在大声哭喊：“终于解放了”。我们过去一直在用这稳定的分支直到2010年八月份那个炎热的一天，0MQ/2.0.8的发布.</p></div>
+<div class="paragraph"><p>时间在变迁，2011年的<strong>la模式</strong>使得2010年不再酷。0MQ开发者和社区已经在狂热于重新定义消息报文。大家都明白，2.1将是新的稳定版。</p></div>
+<div class="paragraph"><p>假设你正在使用2.1.x。让我们来看看不同点，它们可能会影响到你使用旧的2.0版本开发的应用。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+在2.0，zmq_close[3]和zmq_term[3]丢弃任何使用中的消息，所以如果关闭一个套接字或者在发送消息后终止是不安全的操作。在2.1里，这些事安全的：zmq_term将清除任何等待发送的。在2.0的例子里我们经常增加sleep(1)来解决问题，在2.1里，这并不需要。
+</p>
+</li>
+<li>
+<p>
+作为对比，在2.0，调用zmq_term[3]是安全的，即使有套接字在打开。在2.1里，这就不安全了，它将导致zmq_term阻塞。所以，在2.1里，我们在退出前<strong>通常关闭每个套接字</strong>。进一步讲，如果你有对外的消息或者等待套接字的连接，2.1将默认永久等待尝试发出。你必须<strong>设置LINGER套接字选项</strong>(如 to zero)，在调用zmq_term之前，每个套接字可能正在忙碌。
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>int zero = 0;
+zmq_setsockopt (mysocket, ZMQ_LINGER, &amp;zero, sizeof (zero));</tt></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+在2.0里，zmq_poll[3]将返回任意值，所以你不能用它当作计时器。我们通常用一个循环来检查还剩下多少时间，然后按需要调用zmq_poll，在2.1里，如果没有事件，zmq_poll会正确地等待超时。
+</p>
+</li>
+<li>
+<p>
+在2.0里，0MQ会忽略中断的系统调用，这意味着如果在操作过程中，如果一个信号被接收了，没有libzmq调用会返回EINTR。这将导致诸如Ctrol-C的信号丢失。
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_立刻获得上下文">立刻获得上下文</h3>
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p><strong>在你的主要代码行开始处加上zmq_init[3],结尾处加上一个zmq_term[3]。</strong></p></div>
+<div class="paragraph"><p>如果你使用系统调用fork()，每个进程需要自己的context。如果你在调用fork()之前在主进程中使用zmq_init[3]，子进程需要获得他们自己的上下文。总的来说你想要在子进程中做一些有趣的事，你仅仅需要在父进程中管理他们。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_明确退出">明确退出</h3>
+<div class="paragraph"><p>优秀的程序员分享着同样的座右铭--“因为优秀成就男人”：在完成工作的时候要进行清理。当你使用诸如Python语言的0MQ时，自动释放资源很容易。但是当你使用C作为你的开发语言的话，当你完成的时候，你就必须要小心的释放资源，否则将会造成内存泄露，不稳定的应用，产生不良反响。</p></div>
+<div class="paragraph"><p>内存泄露是一方面，但是0MQ对你如何退出应用是很有讲究的。如果你未关闭某些套接字，结果将是技术上的无尽烦恼和痛苦。zmq_term[3]函数将永远挂着。即使你关闭了所有套接字，zmq_term[3]默认的依旧在等如果有未知的连接或者发送。除非你在关闭那些套接字的时候设置LINGER为0.</p></div>
+<div class="paragraph"><p>我们需要关心的关于0MQ对象的有消息，套接字和上下文。很幸运，这些很简单，至少在简单的程序里是如此：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+当完成后，使用zmq_msg_close[3]关闭消息。
+</p>
+</li>
+<li>
+<p>
+如果你打开或者关闭很多套接字，很可能这是你需要重新设计你的应用的信号。
+</p>
+</li>
+<li>
+<p>
+当你退出程序时，关闭你的套接字并且调用zmq_term[3]。它将销毁上下文。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>如果你在处理多线程的工作，这将会更加复杂点。我们将在下一章讲解多线程，但是因为你们一部分人，会在学会安全走路前试着去跑，虽然这只是个提醒。下面是快速并且粗略的指导，让你在一个<strong>多线程</strong>0MQ应用中干净利落的退出：</p></div>
+<div class="paragraph"><p>首先，不要在多线程应用中使用相同的套接字。No，不要解释你为什么觉得这很棒，求你别这样做。接着，关闭所有套接字，主线程里结束上下文。最后，这将导致接收，投票或者发送的返回错误信息在关联的线程中阻塞(比如说共享相同的上下文)。在<strong>那个</strong>线程中获取它，关闭套接字，并且退出。zmq_term在主线程将要被阻塞直到所有套接字指导如何被安全的关闭。</p></div>
+<div class="paragraph"><p>瞧！这是复杂和痛苦的，任何包含作者汗水的语言都应该自动的在不需要的时候关闭套接字。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_为什么我们需要0mq">为什么我们需要0MQ</h3>
+<div class="paragraph"><p>现在你已经在表现形式上认识0MQ，让我们回到“为什么”。</p></div>
+<div class="paragraph"><p>最近很多应用都在强调跨网络的组件，或者是LAN，或者是Internet。所以很多应用开发者最终从事特定消息开发。许多开发者使用消息队列产品，但是大部分时间，他们在使用TCP或者UDP处理他们自己的事情。这些协议并不难用，但是发送从A到B的消息，处理以可信的方式处理消息的差别却很大。</p></div>
+<div class="paragraph"><p>让我们来看下一个典型的问题，我们用TCP开始一个连接。任何可重用的消息层需要解决所有或者大部分问题：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+如何去处理I/O?我们的应用是否阻塞，或者我们在后台处理I/O?这是个关键的设计决定。阻塞I/O的架构让我们无法很好的扩展。但是后台I/O很难做对。
+</p>
+</li>
+<li>
+<p>
+如何去处理动态组件，如，临时性的拆分？我们是否形式上把组件拆成“客户端”和”服务端“并授权服务端不会丢失？如果我们想服务端与服务端相连又该怎么办？我们是不是隔几秒就重新连接一次呢？
+</p>
+</li>
+<li>
+<p>
+网络结构里，我们如何表示消息？我们如何组建数据以让它们便于读写、如何让数据在缓冲溢出后也是安全的、如何高效的进行小数据量消息传送，而且还要满足大的视频数据传输。
+</p>
+</li>
+<li>
+<p>
+我们如何处理那种不能立即发送的消息？具体的说，如果我们在线等待一个组件返回？我们是丢掉消息，把他们放在数据库里？亦或者放进内存队列中？
+</p>
+</li>
+<li>
+<p>
+我们如何储存消息队列？如果从一个队列读取组件非常缓慢，导致我们的队列堵塞，我们该怎么办？我们如何处理这样的问题？
+</p>
+</li>
+<li>
+<p>
+我们如何处理丢失的信息？我们是等待刷新数据？发送一个重发请求？或者构建某种可信的层来保证消息不会丢失？如果这个用来保障的层自己崩溃里怎么办？
+</p>
+</li>
+<li>
+<p>
+我们是否需要使用一个不同的网络传输协议？比如说用多点传输代替TCP的单点传输？或者是IPv6技术？我们是否需要重写应用，在某些层上，传输协议是否被抽象？
+</p>
+</li>
+<li>
+<p>
+我们如何路由消息？我们是否往每个节点上发送相同的消息？我们是否发会答复给原始的请求？
+</p>
+</li>
+<li>
+<p>
+我们如何用别的语言写API？我们是否要重新继承底层协议或者我们要重新打包类库？如果是前者，我们如何保证高效和栈的稳定性？如果是后者，我们如何保证可用性？
+</p>
+</li>
+<li>
+<p>
+我们如何表示数据已让其能在不同的架构下可读？我们是强制为数据类型指定特定的编码？消息系统的这种业务距离更上一层业务又相距多远？
+</p>
+</li>
+<li>
+<p>
+我们如何处理网络错误？我们是等待重试？或者静静的忽略？亦或者是中止？
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>看看典型的开源工程，如[<a href="http://hadoop.apache.org/zookeeper/">http://hadoop.apache.org/zookeeper/</a> Hadoop Zookeeper]，在[<a href="http://github.com/apache/zookeeper/blob/trunk/src/c/src/zookeeper.c">http://github.com/apache/zookeeper/blob/trunk/src/c/src/zookeeper.c</a> src/c/src/zookeeper.c]阅读C程序的API代码。有3200行神秘的未公开的用户端-客户端网络交互协议。可以看得出它的高效，因为它使用poll()而不是select()。但是事实上，Zookeeper应该使用通用的消息层和明确的未公开的底层协议。团队去不断写这写协议是极其浪费的。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>             +------------+
+             |            |
+             |  Piece A   |
+             |            |
+             +------------+
+                   ^
+                   |
+                  TCP
+                   |
+                   v
+             +------------+
+             |            |
+             |  Piece B   |
+             |            |
+             +------------+
+
+
+  Figure # - Messaging as it starts</tt></pre>
+</div></div>
+<div class="paragraph"><p>但是如何去写出可复用的消息层？为什么这么说？当很多工程需要这种技术，人们需要依旧艰难的在他们的代码里写TCP套节字代码来解决那种长列表清单的问题？</p></div>
+<div class="paragraph"><p>构建重用的消息系统是困难的，这是为什么很少有FOSS工程那样尝试，这也是为什么商业消息产品是如此复杂，昂贵，一成不变和脆弱。2006年iMatix设计了[<a href="http://www.amqp.org">http://www.amqp.org</a> AMQP]，从此开始了为FOSS开发者提供第一个可重用的消息系统。AMQP比其他设计运行得要更好。如果不太顺利的话，它需要数周去学习如何使用，数月去创建稳定的不崩溃的架构。</p></div>
+<div class="paragraph"><p>大部分消息工程，如AMQP，试着以一个可重用的方法处理那个长的列表清单需要解决的问题，他们通常通过发明一个新的，叫"broker"的概念，用来寻址，路由，进行队列。这通常在一个客户端-服务端协议或者一些未公开的协议的顶层，让应用与broker对话。brokers在降低大的网络工程的复杂性中扮演一个很棒的角色。为类似Zookeeper的产品添加一个基于broker的消息是一件糟糕的事情，这会意味着添加一个额外的机器，一个新的单点错误。一个broker迅速的成为一个瓶颈和一个新的需要管理的风险。如果软件支持，我们能添加第二个，第三个，第四个broker并进行故障切换事物处理。人们在如此做的时候发现了它产生了更多的移动碎片，更复杂，更多的事情需要解决。</p></div>
+<div class="paragraph"><p>一个以broker为中心的消息架构需要他们自己的操作系统。你真的需要日夜监视brokers，当他们不工作的时候需要用小木棍去鞭打他们。你需要机器、备份机器和管理这些机器的人。只有当很大的应用，他们需要很多移动的模块，好几个组的人去构建，历史数年，这样的应用才值得去做。</p></div>
+<div class="paragraph"><p>所以中小型的应用开发者们将陷入困境。他们逃避网络编程，构建庞大的不可扩展的应用。或者跳入网络编程生产出脆弱的，复杂的，难以掌控的应用。或者他们寄希望于成熟的消息产品，或者购买昂贵的可扩展的但很可能缺乏技术支持的应用。如今已经没有什么好的选择了，这是为什么消息发送在上个世纪陷入困境并激起很大的情绪波动。那些出售技术支持和许可证的商人们在否定用户。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>            +---+          |  +---+
+    +---+   |   |   +---+  |  |   |
+    |   +--&gt;|   |   |   |  |  |   |
+    |   |   +---+   |   |  |  +-+-+
+    +-+-+           +-+-+  |    |
+      |               |    |    |
+      |       +-----------------+
+      |       |       |    |
+      +-----------------------+
+              |       |    |  |
+      +-------|-------|----+--|------+
+      |       v       |       v      |
+    +-+-+   +---+     |     +---+    |
+    |   |   |   |   +-+-+   |   |    |
+    |   |   |   |   |   |   |   |    |
+    +---+   +---+   |   |   +---+    |
+              ^     +---+     ^      |
+              |       ^       |    +-+
+      +-------+-------+-------+    |
+      |       |       |            |
+      v     +-+-+     v     +---+  |
+    +---+   |   |   +---+   |   |  |
+    |   |   |   |&lt;--+   |   |   |&lt;-+
+    |   |   +---+   |   |   +-+-+
+    +---+           +---+
+
+
+   Figure # - Messaging as it becomes</tt></pre>
+</div></div>
+<div class="paragraph"><p>我们需要的不仅仅是消息事物而是以简单，便宜的方法使其运行在任何应用上，而且是接近零成本。这可能是一个不需要其他依赖的类库。没有其他的移动模块，没有额外风险。可以以任何语言在任何操作系统上运行。</p></div>
+<div class="paragraph"><p>这就是0MQ：一个高效的，嵌入的类库。它可以解决大部分应用的问题，让应用在网络中可完美的伸缩，却没有额外的成本。</p></div>
+<div class="paragraph"><p>特别指出：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+0MQ在后台线程中异步处理I/O操作。他们与使用无锁数据结构的应用线程通讯，所以0MQ应用不需要锁，信号或者其他等待状态。
+</p>
+</li>
+<li>
+<p>
+组件可以动态的来去自如，0MQ能够自动的重新连接。这意味着你可以以任何顺序开始组件。你可以创建“面向服务的架构”(SOAs),这样你的服务可以在任何时刻离开网络。
+</p>
+</li>
+<li>
+<p>
+如果需要，0MQ自动排列消息。它可以很智能的完成，将消息在排列之前尽可能的接近接受者。
+</p>
+</li>
+<li>
+<p>
+0MQ能够处理满队列状态(也叫高水位标志)。当一个队列满了，0MQ自动的阻拦发送者或者根据消息的类型(即所谓的模式)丢弃消息。
+</p>
+</li>
+<li>
+<p>
+0MQ能够让你的应用与任意通信协议对话，比如说：TCP，多点广播，in-process,inter-process。你不需要根据不同通信协议更改你的代码。
+</p>
+</li>
+<li>
+<p>
+0MQ能够安全的处理慢/阻塞读取。它会根据不同消息模式运用不同策略。
+</p>
+</li>
+<li>
+<p>
+0MQ能够通过使用不同模式，如请求-答复模式，发布-订阅模式来路由消息。这些模式取决于你所创建的拓扑结构以及网络结构。
+</p>
+</li>
+<li>
+<p>
+0MQ可以在你需要降低很多互联块的复杂性的时候使用模式扩展的设备(微型brokers).
+</p>
+</li>
+<li>
+<p>
+0MQ分发的信息与发送的信息相当，因为它在网络上使用了简单的框架。如果你写了一条10k的消息，你收到的消息也差不多是10k。
+</p>
+</li>
+<li>
+<p>
+0MQ没有强行规定消息格式。消息可以从大小为0的二进制块到数十亿的数据块。当你想表示数据，你可以选择其他的顶层格式，如Google的protocol buffer,XDR或者其他。
+</p>
+</li>
+<li>
+<p>
+0MQ可以智能的处理网络错误。有时候它会重试，有时候它告诉你操作失败。
+</p>
+</li>
+<li>
+<p>
+0MQ可以降低碳排放。做更多的事却耗费更少的CPU意味着你的机器更节能，你可以使用旧的机器更长的时间。Al Gore将会爱上0MQ。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>事实上，0MQ能够做的事比这多得多。它拥有颠覆性的效果，这取决于你如何开发网络应用。简单的讲，它只是一个套接字API，你可以使用zmq_recv[3]和zmq_send[3]。但是消息处理很快变成了中央循环，你的应用很快的转化成消息处理任务。这既优雅又自然。它的范畴：每个任务映射到一个节点，节点通过任意的通信协议相互沟通。一个进程中的两个节点(节点是一个线程)，一台机器的两个节点(一个节点是一个进程),一个网络上的两台机器(一个节点是一台机器)。我们不需要改变任何应用代码。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_可伸缩性的套接字">可伸缩性的套接字</h3>
+<div class="paragraph"><p>让我们看看0MQ在表现上的可伸缩性。有一个shell脚本用来启动一个天气服务，然后并行的启动一批客户端:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>wuserver &amp;
+wuclient 12345 &amp;
+wuclient 23456 &amp;
+wuclient 34567 &amp;
+wuclient 45678 &amp;
+wuclient 56789 &amp;</tt></pre>
+</div></div>
+<div class="paragraph"><p>当客户端运行的时候，我们使用top命令来看看活跃的进程，我们会发现如下(在四核处理器上):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+ 7136 ph        20   0 1040m 959m 1156 R  157 12.0  16:25.47 wuserver
+ 7966 ph        20   0 98608 1804 1372 S   33  0.0   0:03.94 wuclient
+ 7963 ph        20   0 33116 1748 1372 S   14  0.0   0:00.76 wuclient
+ 7965 ph        20   0 33116 1784 1372 S    6  0.0   0:00.47 wuclient
+ 7964 ph        20   0 33116 1788 1372 S    5  0.0   0:00.25 wuclient
+ 7967 ph        20   0 33072 1740 1372 S    5  0.0   0:00.35 wuclient</tt></pre>
+</div></div>
+<div class="paragraph"><p>让我们想想这到底发生了什么。天气服务器拥有一个单一的套接字，我们使用它想5个客户端并行的发送数据。我们可能有数千个同时运行的客户端。而服务端却看不到他们，也不能跟它们直接对话。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_消息丢失问题处理器">消息丢失问题处理器</h3>
+<div class="paragraph"><p>如果你可是使用0MQ编程，你可能不止一次遇到这样的问题：你丢失了原本期望接收的消息。这儿有一个基本的问题解决程序可以解决大部分情况下的问题。别担心，如果有些术语你还不熟悉，你在接下来的章节会很清晰的。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        +-----------------+
+        |                 |
+        | I'm not getting |
+        |     my data!    |
+        |             {o} |
+        +--------+--------+
+                 |
+                 |
+                 v
+        +-----------------+        +-----------------+        +------------------+
+        |                 |        |                 |        | Use the          |
+        | Are you losing  |        |  Do you set a   |        | zmq_setsockopt   |
+        |  messages in a  +-------&gt;|  subscription   +-------&gt;| ZMQ_SUBSCRIBE    |
+        |   SUB socket?   | Yes    |  for messages?  | No     | ("") option      |
+        |             {o} |        |             {o} |        |                  |
+        +--------+--------+        +--------+--------+        +------------------+
+                 | No                       | Yes
+                 |                          |
+                 |                          v
+                 |                 +-----------------+        +------------------+
+                 |                 |                 |        | Start all SUB    |
+                 |                 |  Do you start   |        | sockets first,   |
+                 |                 |  the SUB socket +-------&gt;| then the PUB     |
+                 |                 |  after the PUB? | No     | sockets to avoid |
+                 |                 |             {o} |        | loss             |
+                 |                 +--------+--------+        +------------------+
+                 |                          | Yes
+                 |                          |
+                 |                          v
+                 |              +-------------------------+
+                 |              |  See explanation of the |
+                 |              | "slow joiner" syndrome  |
+                 |              |  syndrome in this text. |
+                 |              +-------------------------+
+                 |
+                 |
+                 v
+        +-----------------+        +--------------------+
+        |                 |        | With REQ, send and |
+        |  Are you using  |        | recv in a loop and |
+        |   REQ and REP   +-------&gt;| check the return   |
+        |     sockets?    | Yes    | codes. With REP    |
+        |             {o} |        | it's recv + send.  |
+        +--------+--------+        +--------------------+
+                 | No
+                 |
+                 v
+        +-----------------+        +---------------------+        +-----------------+
+        |                 |        | The 1st PULL socket |        | You may need to |
+        |  Are you using  |        | to connect can grab |        | do extra work to|
+        |  PUSH sockets?  +-------&gt;| 1000's of messages  +-------&gt;| synchronize your|
+        |                 | Yes    | before the others   |        | sockets before  |
+        |             {o} |        | get there.          |        | sending tasks.  |
+        +--------+--------+        +---------------------+        +-----------------+
+                 | No
+                 |
+                 v
+        +-----------------+        +-----------------+
+        |                 |        |                 |
+        |  Do you check   |        | Check every 0MQ |
+        | return codes on +-------&gt;| method call. In |
+        |  all methods?   | No     | C, use asserts. |
+        |             {o} |        |                 |
+        +--------+--------+        +-----------------+
+                 | Yes
+                 |
+                 v
+        +-----------------+        +-----------------+        +------------------+
+        |                 |        |                 |        |                  |
+        | Are you using   |        |   Do you pass   |        | Create a socket  |
+        | threads in your +-------&gt;| sockets between +-------&gt;| in the thread    |
+        |  app already?   | Yes    |    threads?     | Yes    | where you use it |
+        |             {o} |        |             {o} |        |                  |
+        +--------+--------+        +--------+--------+        +------------------+
+                 | No                       | No
+                 +--------------------------+
+                 |
+                 v
+        +-----------------+        +-----------------+        +------------------+
+        |                 |        |                 |        |                  |
+        |  Are you using  |        | Are you calling |        | Call zmq_init    |
+        |   the inproc    +-------&gt;|  zmq_init more  +-------&gt;| exactly once in  |
+        |   transport?    | Yes    |    than once?   | Yes    | every process.   |
+        |             {o} |        |             {o} |        |                  |
+        +--------+--------+        +--------+--------+        +------------------+
+                 | No                       | No
+                 |                          |
+                 |                          v
+                 |                 +-----------------+
+                 |                 |                 |
+                 |                 | Check that you  |
+                 |                 | bind before you |
+                 |                 | connect.        |
+                 |                 |                 |
+                 |                 +-----------------+
+                 |
+                 v
+        +-----------------+        +-----------------+        +-----------------+
+        |                 |        | Check that the  |        | If you're using |
+        |  Are you using  |        | reply address   |        | identities make |
+        | ROUTER sockets? +-------&gt;| is valid. 0MQ   +-------&gt;| sure to set them|
+        |                 | Yes    | drops messages  |        | before not after|
+        |             {o} |        | it can't route. |        | you connect.    |
+        +--------+--------+        +-----------------+        +--------+--------+
+                 | No
+                 |
+                 v
+        +-----------------+        +--------------------+
+        |                 |        | You probably have  |
+        | Are you losing  |        | a client running   |
+        |   one message   +-------&gt;| in the background. |
+        |    in two?      | Yes    | Kill it and start  |
+        |             {o} |        | again.             |
+        +--------+--------+        +--------------------+
+                 | No
+                 |
+                 v
+        +-----------------+
+        |                 |
+        | Make a minimal  |
+        | test case, ask  |
+        | on zeromq IRC.  |
+        |                 |
+        +-----------------+
+
+
+                 Figure # - Missing Message Problem Solver</tt></pre>
+</div></div>
+<div class="paragraph"><p>如果你在某个场景中使用0MQ，而且失败的代价又很昂贵，这时你就必须正确的规划。首先，建立一个原形，这样你可以学习并且测试你所设计的不同方面。增大压力直到其无法承受，这样你就可以知道你的设计到底有多强壮。第二，多做测试，这意味着需要建立一个测试框架，保证你能够进入现实的安装，并且你的机器拥有充足的电源，花时间去真正的测试。理想状况下，一个团队写代码，第二个团队尝试破坏它。最后，一定要将你的团队带到[<a href="http://www.imatix.com/contact">http://www.imatix.com/contact</a> contact iMatix]去讨论如何帮助确定一切运行无误，如果出问题，我们也可以快速修复。</p></div>
+<div class="paragraph"><p>总的来说：如果你还没证明某个架构在现实条件下正常工作，它很可能在坏的情况下真的崩溃。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_警告_不稳定的范例">警告  不稳定的范例</h3>
+<div class="paragraph"><p>传统的网络程序建立在这样的假设下：一个套接字与一个连接，一个节点进行对话。虽然有多点广播协议，但是却很神奇。当我们假设一个套接字等于一个连接的时候，我们用某种特定的方法束缚了我们的架构。我们创建一个逻辑线程，一个线程对应一个套接字，一个节点。我们在这些线程里投入智慧与汗水。</p></div>
+<div class="paragraph"><p>在0MQ的世界里，套接字是聪明的多线程应用，他们自动为你管理整个连接。你甚至不需要监视，操作，打开，关闭或者为这些连接绑定状态。无论你是阻止发送或者接受亦或者是投票，你需要交互的仅仅是套接字，而不是它为你管理的连接。连接本身是私有并且不可见的，这是0MQ可伸缩性的关键。</p></div>
+<div class="paragraph"><p>你的代码直接与套接字通话，它客户处理任意多个链接，他们可以运行在任意网络协议上，而不需要变更。一个基于0MQ的消息模式可以比基于应用的消息模式具有更廉价的扩展。</p></div>
+<div class="paragraph"><p>通常的假设已经不再适用。当你阅读样例代码的时候，你的脑袋会试着把它们与你所知道的对应起来。你在读“套接字”的时候可能会在想：“恩，那代表一个到另外节点的连接”。那是错误的。当你读“线程”的时候，你脑海里应该在想“恩，一个线程代表一个到别的节点的连接”，再一次的，你的脑袋将会糊涂不清。</p></div>
+<div class="paragraph"><p>如果你是第一次读这篇指导，你需要意识到除非你真正写了一天或者两天，当然也可以是三天或者四天0MQ代码，你可能觉得很困惑，特别在于其如何让事情变得简单，你可能会试着将常规的假设强加到0MQ上，但是它并不能正常工作。然后，你将经历从启蒙到顿悟的过程，当你已经领悟的时候，一切将变得很清晰。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2011-09-15 18:07:22 CST
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,2751 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.5" />
+<title>ØMQ 指南</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'DIV'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'DIV' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>ØMQ 指南</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>作者：Pieter Hintjens &lt;<a href="mailto:ph@imatix.com">ph@imatix.com</a>&gt; CEO iMatix Corp.</p></div>
+<div class="paragraph"><p>翻译：夏政红 &lt;<a href="mailto:zhenghongxia@anjuke.com">zhenghongxia@anjuke.com</a>&gt; 爱房PD Anjuke Inc.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_第二章_中间件">第二章：中间件</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>在第一章中，我们通过一些基本的示例，体验了一下ØMQ的主要模式：请求-应答，发布-订阅和管道。在本章中我们将开始学习如何在实际程序中使用这些工具。</p></div>
+<div class="ulist"><div class="title">本章涉及的主要内容：</div><ul>
+<li>
+<p>
+如何去创建和使用ØMQ套接字（socket）。
+</p>
+</li>
+<li>
+<p>
+如何使用套接字（socket）发送和接受消息。
+</p>
+</li>
+<li>
+<p>
+如何使用ØMQ的异步读/写（I/O）模型创建你的应用程序。
+</p>
+</li>
+<li>
+<p>
+如何在一个线程中处理多个套接字(socket)。
+</p>
+</li>
+<li>
+<p>
+如何合理的处理致命和非致命错误。
+</p>
+</li>
+<li>
+<p>
+如何去处理像Ctrl-C那样的中断信号。
+</p>
+</li>
+<li>
+<p>
+如何彻底的关闭一个ØMQ应用程序。
+</p>
+</li>
+<li>
+<p>
+如何去检测一个ØMQ应用程序是否内存泄漏
+</p>
+</li>
+<li>
+<p>
+如何发送和接收分段的消息。
+</p>
+</li>
+<li>
+<p>
+如何在网络上转发消息。
+</p>
+</li>
+<li>
+<p>
+如何创建一个简单的消息队列代理。
+</p>
+</li>
+<li>
+<p>
+如何使用ØMQ写多线程应用程序。
+</p>
+</li>
+<li>
+<p>
+如何使用ØMQ在线程间发送信号。
+</p>
+</li>
+<li>
+<p>
+如何使用ØMQ去协调一个网络节点。
+</p>
+</li>
+<li>
+<p>
+如何使用套接字(socket)身份识别创建可持久化的套接字(socket)。
+</p>
+</li>
+<li>
+<p>
+如何创建和使用消息信封实现发布-订阅。
+</p>
+</li>
+<li>
+<p>
+如何使用可持久化的订阅者实现从崩溃中恢复。
+</p>
+</li>
+<li>
+<p>
+使用高水位标记（HWM）来防止内存溢出。
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_零的禅意">零的禅意</h3>
+<div class="paragraph"><p>Ø在ØMQ中是关于所有的权衡。这个陌生的名字一方面降低了ØMQ在Google和Twitter上的知名度。另一方面，&#8230;</p></div>
+<div class="paragraph"><p>Ø在ØMQ中的本来意思是“零代理”（很接近）和 “零延迟”（尽可能）。在这期间已经实现了不同的目标：零管理，零成本，零浪费。更为普遍的是，零指的是以一种极简注意文化渗透到项目中。我们加大力度去削减复杂性而不是去展示新功能。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_套接字应用程序接口">套接字应用程序接口</h3>
+<div class="paragraph"><p>坦白的说，ØMQ 对你做了许多的诱惑使你改变。我们不会为此道歉，它对你的好处和对我们的伤害远大于对你的伤害。它提出了一个熟悉的基于BSD授权的套接字应用程序接口，但是却隐藏了一堆消息处理机器，这样将改变你设计和编写分布式软件的世界观。
+套接字(Sockets)是网络编程事实上的标准应用程序接口。ØMQ对开发者来说是一件美味，可以使用标准的套接字(socket)应用程序接口。</p></div>
+<div class="paragraph"><p>像一个漂亮的辣香肠比萨饼，ØMQ 套接字非常容易消化吸收。套接字的生命周期有4部分，就像BSD 套接字：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+创建和销毁套接字，它们一起构成了套接字的一个完整的生命周期。
+</p>
+</li>
+<li>
+<p>
+检测套接字是否需要通过设置选项进行配置。
+</p>
+</li>
+<li>
+<p>
+通过创建ØMQ连接使socket连接到网络拓扑中。
+</p>
+</li>
+<li>
+<p>
+通过套接字写入数据和接收消息。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>在C语言中，有点像这样：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><strong>void</strong> *mousetrap;
+
+<i>// Create socket for catching mice</i>
+mousetrap = zmq_socket (context, ZMQ_PULL);
+
+<i>// Configure the socket</i>
+int64_t jawsize = 10000;
+zmq_setsockopt (mousetrap, ZMQ_HWM, &amp;jawsize, <strong>sizeof</strong> jawsize);
+
+<i>// Plug socket into mouse hole</i>
+zmq_connect (mousetrap, "tcp:<i>//192.168.55.221:5001");</i>
+
+<i>// Wait for juicy mouse to arrive</i>
+zmq_msg_t mouse;
+zmq_msg_init (&amp;mouse);
+zmq_recv (mousetrap, &amp;mouse, 0);
+<i>// Destroy the mouse</i>
+zmq_msg_close (&amp;mouse);
+
+<i>// Destroy the socket</i>
+zmq_close (mousetrap);</tt></pre>
+</div></div>
+<div class="paragraph"><p>需要注意的是套接字返回的总是空指针，消息返回的是结构体。因此在C语言中就是如此传递套接字，但是在使用消息的时候传递的是消息的地址,如:zmq_send(3) 和 zmq_recv(3)。为了方便记忆，我们可以这样来理解，在ØMQ中左右的套接字都是输入我们的，而消息是需要你在你的代码中实现。</p></div>
+<div class="paragraph"><p>如你所预期的，创建，销毁，和配置套接字的工作是需要在所有的项目中要做的事情。但是要记住：ØMQ是一个异步的，具有灵活性的架构。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_将套接字连通到拓扑网络">将套接字连通到拓扑网络</h3>
+<div class="paragraph"><p>在两个节点之间创建连接，你可以在一个节点中使用zmq_bind(3) ,在另一个结点中使用zmq_connect(3)。一般来讲，使用zmq_bind(3)的节点是“服务器”，它处于一个大家都知道的网络地址上，使用zmq_connect(3)的是“客户端”，是一个任意的不为人知的网络地址。</p></div>
+<div class="paragraph"><p>ØMQ的连接和传统的TCP连接多少有一些不同。最主要的区别如下：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+它们可以采用多种方式进行传输（inproc, ipc, tcp, pgm or epgm）。参考See zmq_inproc(7), zmq_ipc(7), zmq_tcp(7), zmq_pgm(7), and zmq_epgm(7).
+</p>
+</li>
+<li>
+<p>
+它们在客户端使用zmq_connect(3) 方法连接到终端时存在，而不管服务器端是否已经通过zmq_bind(3) 方法绑定到终端。
+</p>
+</li>
+<li>
+<p>
+它们是异步的，且可以在任何地方和任何时候拥有队列。
+</p>
+</li>
+<li>
+<p>
+根据各个终端使用的不同类型的套接字(socket)，它们都有某一个明确的“消息模式” 。
+</p>
+</li>
+<li>
+<p>
+一个套接字可以有许多传出和传入的连接。
+</p>
+</li>
+<li>
+<p>
+这里没有zmq_accept()方法。在一个套接字绑定到一个终端的时候，它们是自动开始接受连接的。
+</p>
+</li>
+<li>
+<p>
+你的应用程序代码不能直接使用这些连接；它们需要经过套接字的封装。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>许多架构使用的就是一些client-server模式，服务端是一些很稳固的组件，而客户端是一些动态的组件，也就是变动很频繁。有时要解决的问题是：服务器端对客户端可见，但不一定，反之亦然。所以一般情况下，哪一个节点使用zmq_bind(3)就是服务器端，而使用zmq_connect(3) 就是客户端。在一些特殊的网络架构中，也依赖于你所使用的套接字的类型。我们稍后将看看套接字类型。</p></div>
+<div class="paragraph"><p>现在，假设我们在服务器端启动之前先启动客户端。在传统的网络中我们会得到一个大的红色错误标记。但是ØMQ可以让我们对服务器端与客户端进行任意的停止和启动。只要客户端一使用zmq_connect(3) 方法连接就存在，那么这个节点就可以写消息到套接字中。在某一阶段，服务器激活了（希望在消息队列存放太多而开始丢弃消息或者客户端被阻塞之前)，并使用了zmq_bind(3) ，ØMQ 就开始投递消息。</p></div>
+<div class="paragraph"><p>一个服务器端节点可以绑定多个终端，使用一个套接字(socket)也可以这么做。这就意味着它可以接受跨越不同传输协议的连接。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>zmq_bind (socket, "tcp:<i>//*:5555");</i>
+zmq_bind (socket, "tcp:<i>//*:9999");</i>
+zmq_bind (socket, "ipc:<i>//myserver.ipc");</i></tt></pre>
+</div></div>
+<div class="paragraph"><p>你不能够对同一个终端进行两次连接，这样将会导致异常。</p></div>
+<div class="paragraph"><p>每当有一个客户端节点使用zmq_connect(3) 连接到这些终端中的任意一个，服务器端节点的套接字就会取得另外一个连接。一个套接字(socket)能够拥有的连接数没有固定的限制。客户端节点也可以使用单个套接字连接到很多终端。</p></div>
+<div class="paragraph"><p>大部分情况下，哪个节点作为客户端，哪个节点作为服务器端，要看网络拓扑结构而非消息流。然而，有些情况下（连接丢失时重发），同一个类型的套接字会因为它是服务器端或者是客户端，而有不同的表现。</p></div>
+<div class="paragraph"><p>这就意味着你应该总是认为“客户端”在你的网络拓扑中是稳定的，更多的是固定的终端地址，“客户端”作为一个动态的部分变动很频繁。然后，围绕这个模型设计你的应用程序。它就有机会像那样很好的工作。</p></div>
+<div class="paragraph"><p>套接字(sockets)有很多类型。套接字的类型给套接字定义了语义，它提供了消息进来和出去，以及队列处理的策略等等。你可以一起连接某一类型的套接字。例如，发布者套接字和订阅者套接字。所有的套接字是通过消息模式一起工作。我们会在稍后看到详细的介绍。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_通过套接字_socket_携带数据">通过套接字(socket)携带数据</h3>
+<div class="paragraph"><p>你使用zmq_send(3)和zmq_recv(3)方法进行消息的发送与接收。命名很传统，但是ØMQ的I/O模型与TCP模型有很大的不同，因此你需要一些时间来了解。</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig10.png" alt="height=100%" />
+</span></p></div>
+<div class="paragraph"><p>让我们来看看TCP套接字和ØMQ套接字在携带数据时的主要区别：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+ØMQ携带消息时，不是像TCP那样使用字节或者像UDP那样使用数据帧。一条消息是一个规定长度的大的二进制数据块。我们会很快的接收到消息，这样的优化设计为了性能，因而有点难于理解。
+</p>
+</li>
+<li>
+<p>
+ØMQ套接字通过后台线程进行I/O。这就意味着消息到达时进入本地的input队列，从本地的output队列发送消息，而与你的应用程序再怎么忙也没有关系。顺便提一下，这是可配置内存队列。
+</p>
+</li>
+<li>
+<p>
+ØMQ 可以依赖不同类型的套接字类型，连接到许多别的套接字（或者从不同的套接字连接到同一个套接字）。TCP仿效的是一对一的电话呼叫模式，而ØMQ实现了一对多(像无线广播)，多对多（像邮局），多对一（像邮箱），还有一对一。
+</p>
+</li>
+<li>
+<p>
+ØMQ套接字可以发送消息到多个终端(创建一个扇出[fan-out]模式)，或者从多个终端接收消息（创建一个扇入[fan-in]模式）
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig11.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>所以将一条消息写入到套接字(socket)可以一次发送到一个或者许多不同的地方。反过来，一个套接字（socket）可以收集所有连接发送给它的消息。mq_recv(3) 方法使用了一个平等的排队算法，所以可以每个发送者都可以得到一个平等的机会。</p></div>
+<div class="paragraph"><p>zmq_send(3) 方法实际上并没有将消息发送给套接字连接。它是将消息放入队列，这样I/O线程就可以异步的发送它。除非一些异常情况，否则不会被阻塞。所以在zmq_send(3) 返回给你的应用程序时，消息没有必要发送。如果你使用zmq_msg_init_data(3) 创建一条消息，你就不能重复使用或者释放它，否则I/O线程会快速找到它自己进行写入覆盖或者使其未分配。这对如初学者来说是一个很常见的问题。等会儿我们将看看怎样合理的使用消息。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_单点传输工具">单点传输工具</h3>
+<div class="paragraph"><p>ØMQ提供一组单点传输工具（inproc, ipc, and tcp）和组播传输工具（epgm, pgm）。组播是一项高级技术，我们稍后会介绍。除非你知道的你的扇出率使用1-to-N的单点传播不能实现，甚至在这时候你也不要开始使用它。</p></div>
+<div class="paragraph"><p>在大多数情况下，使用 <em>tcp</em> ，这是一个断开的TCP传输。对大多数情形来说，它灵活、方便、足够的快速。我们叫这个“断开的”是因为ØMQ的tcp传输并不要求在你连接到终端之前终端必须存在。客户端和服务器端在任何时候进行连接和绑定，也可以随时断开，而对应用程序来说始终是透明的。</p></div>
+<div class="paragraph"><p>进程间传输， <em>ipc</em> ，像tcp但是它是从局域网抽象而来，因此你不需要指定ip地址或者域的名字。这就使得它能够更好的实现某种目的，因此在我们书中的例子中经常使用到。ØMQ的ipc传输像tcp一样，是断开的。它有一个局限：它不能在windows系统上使用。这个限制在将来的ØMQ版本中可能被修复。按照惯例，我们使用一个“.ipc”扩展名作为终端的名字，以防止和其它潜在的文件名冲突。在Unix系统上，如果你使用ipc终端，你需要合适的权限，否则在不同用户帐号下运行的进程之间不能共享。你也必须要确保所有的进程能够访问这个文件，例如在同一个目录下运行。</p></div>
+<div class="paragraph"><p>线程间的传输， <em>inproc</em> ，是一个连接的信号传输。它比tcp和ipc要快很多。与ipc和tcp相比，这种传输有一个特别的限制： <em>在你连接之前需要先绑定</em> 。这是ØMQ将来版本需要解决的事情，但是目前需要按照这样的规则使用inproc套接字。我们创建和绑定一个套接字，开始启动子线程去创建和连接其它的套接字。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_ømq_不是一个中间载体">ØMQ 不是一个中间载体</h3>
+<div class="paragraph"><p>刚接触ØMQ的新人问的一个常见的问题（也是一个我问我自己的问题）就是：“我怎样通过ØMQ写一个某某服务器？”例如，“我怎样通过ØMQ写一个HTTP服务器？”</p></div>
+<div class="paragraph"><p>言下之意就是，如果我们使用普通的套接字进行HTTP请求和响应，那么我们也应该能够使用ØMQ做同样的事情，而且更快、更好。
+很遗憾的回答是“这不是它的工作方式”。ØMQ不是一个中间载体，它使用的是在传输层协议之上强加了一个帧。这个帧不兼容已经存在的协议，而倾向于使用自己的帧。例如，这里是一个HTTP请求和一个ØMQ请求，都是建立在TCP/IP之上：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig12.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>在HTTP求中使用一个CR-LF作为帧的简单分隔符，ØMQ使用一个指定长度的帧：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig13.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>所以你可以使用ØMQ写一个像HTTP那样的协议，可以使用请求-应答模式作为示范。但是它不是HTTP。</p></div>
+<div class="paragraph"><p>然而，对于这样一个问题有一个很好的回答，“使用ØMQ我要怎样做才能使我新的某某服务器更好？”无论如何你需要实现任何你使用的协议，但是你可以使协议服务器（可是实现的很简单）连接到后端的ØMQ，让它做实际的工作。这样做的好处就是你可以用任何语言代码区扩展你的后端，只要你愿意，运行在本地或者远程都可以。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_i_o线程">I/O线程</h3>
+<div class="paragraph"><p>我们说过ØMQ是使用一个后台线程进行I/O操作。一个I/O线程足够应付所有的套接字哪怕是很极端的应用程序。这就是我们在创建一个上下文(context)时所使用的有魔力的“1”，它的意思就是使用1个I/O线程。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><strong>void</strong> *context = zmq_init (1);</tt></pre>
+</div></div>
+<div class="paragraph"><p>一个ØMQ应用程序和一个传统的基于网络的应用程序相比有一个最主要的不同点。那就是你不用是个连接对应一个套接字。一个套接字可以为一个工作点处理所有的进入的和出去的连接。例如，你给1000个订阅者发布消息，就是经由一个套接字。当你给20个服务分发任务时，也是经由一个套接字。当你从1000个web应用程序收集数据时，也是经由一个套接字。</p></div>
+<div class="paragraph"><p>这儿有几个基本的原则会影响你如何编写应用程序。一个传统的基于网络的应用程序需要有一个进程或这个线程为远程连接服务，这样一个进程或者线程就只能处理一个socket。ØMQ可以让你将整个结构折叠在一个线程里面，在有需要的时候又可以对缩放。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_核心消息模式">核心消息模式</h3>
+<div class="paragraph"><p>在棕色牛皮纸包裹的ØMQ的套接字应用程序接口下面就是消息模式。如果你有企业消息方面的背景，这些对你来说就有些似曾相识。但是对大多数ØMQ的新手来说它们是一个惊喜，我们在一个套接字代表另外一个节点时这样使用一个TCP范例。</p></div>
+<div class="paragraph"><p>我们简单的回顾一下ØMQ为你做了些什么。它快速、高效的发送大块的二进制消息给节点。你可以将节点映射到线程，进程或者boxes。它只给你一个单独的套接字应用程序接口为你的应用程序工作，而与具体的传输方式没有关系（像进程间，进程内，传输控制协议，多路组播）
+。随着消息的进出它能够自动的连接节点。只要需要，它可以在发送和接受消息时将消息放入队列。它小心的管理这些队列，确保进程不会内存溢出，适当的时候将数据放到硬盘上。它处理套接字的错误。它在后台线程里进行所有的I/O。它采用无所技术进行节点间的通讯，所以从不用锁，不用信号等待也不会死锁。</p></div>
+<div class="paragraph"><p>但是除了那些，它路由消息和队列处理消息是根据一种叫做模式（的东西）进行精确匹配。由于这些模式给ØMQ提供了人性化(的功能)。它们把我们辛苦得来的经验进行封装并且通过一种最好方式对数据进行分发使其工作。ØMQ的模式是通过硬编码的方式写在代码中的，但是将来的版本中可能会让用户自己进行定义模式。
+ØMQ的模式是通过一对套接字的类型进行匹配来执行的。换句话说，你要理解ØMQ的模式你就需要理解套接字的类型以及它们是怎么一起工作的。显而易见，这个级别大多是需要学习的。</p></div>
+<div class="paragraph"><p>在ØMQ的内核中的模式有：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+请求-应答模式，将一组客户端连接到一组服务端。这是一个远程过程调用和任务分发模式。
+</p>
+</li>
+<li>
+<p>
+发布-订阅模式，将一组发布者连接到一组订阅者。这是一个数据分发模式。
+</p>
+</li>
+<li>
+<p>
+管道模式，通过扇出/扇入的模式连接节点，可能有很多步骤和循环。这是一个并行的任务分配和收集模式。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>在第一章中我们已经对这些有过了解。这儿有很多模式人们在使用时任然倾向于用传统的TCP套接字理解ØMQ。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+独占一对模式，通过独占的方式连接两个套接字。这是一个比较特别的低级别的模式，高级的用例。我们会在本章的结尾看到一个示例。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>在zmq_socket(3) 的手册页有相当明确的解释，值得我们多看几次，直到开始对它有感觉。我们来看看每个模式和以及所涵盖的情况。</p></div>
+<div class="paragraph"><p>下面就是有效的可以进行连接绑定的套接字组合对（任何一边都可以绑定）。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+PUB与SUB
+</p>
+</li>
+<li>
+<p>
+REQ与REP
+</p>
+</li>
+<li>
+<p>
+REQ与ROUTER
+</p>
+</li>
+<li>
+<p>
+DEALER与REP
+</p>
+</li>
+<li>
+<p>
+DEALER与ROUTER
+</p>
+</li>
+<li>
+<p>
+DEALER与DEALER
+</p>
+</li>
+<li>
+<p>
+ROUTER与ROUTER
+</p>
+</li>
+<li>
+<p>
+PUSH与PULL
+</p>
+</li>
+<li>
+<p>
+PAIR与PAIR
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>如果你尝试使用任何其它的组合将会产生无效的以及不可靠的结果，在未来的版本中可能会返回错误。当然你可以通过代码桥接其它类型的套接字，例如，从一个类型的套接字读取数据然后写入到 另外一种类型的套接字。</p></div>
+<div class="paragraph"><p>在ØMQ里有4中核心的消息模式。它们是ØMQ应用程序接口的一部分，是在C++的核心库里面实现的，以确保在其它的平台也可用。如果有一天Linux的内核里面包含了ØMQ，那么这些模式也有了。</p></div>
+<div class="paragraph"><p>在上面，我们增加的高层的模式。我们建立在ØMQ上的这些高层模式可以使用任何语言通过我们的应用程序去实现。它们不是核心库的一部分，不会随ØMQ包一起，它们有自己的地方，作为ØMQ社区的一部分。
+我们的目标就是通过这个指南给你提供一组这样高级别的模式，既有小的(如何稳定的处理消息)也有大（如何去建立一个可靠的发布-订阅架构）的。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_使用消息">使用消息</h3>
+<div class="paragraph"><p>ØMQ的消息是以大于零的二进制块存放在内存中。你可以通过Google的缓冲协议，XDR，JSON，或者任何你的应用程序需要使用的。一种比较明智的做法选择一种轻便的，快速的数据表示方法，但是你也可以自己做决定进行取舍。</p></div>
+<div class="paragraph"><p>在内存中，ØMQ的消息是zmq_msg_t结构体(或者是类，取决于你所使用的语言)。下面是在C语言中使用ØMQ消息的基本规则：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+你可以创建和传递zmq_msg_t对象，而不是数据块。
+</p>
+</li>
+<li>
+<p>
+去读取一条消息你可以使用zmq_msg_init(3) 去创建一条空消息，然后传递给zmq_recv(3).
+</p>
+</li>
+<li>
+<p>
+通过新数据写入一条消息，你可以使用zmq_msg_init_size(3) 去创建一条消息，同时分配一块指定大小的数据块。你就可以从缓冲区拷贝一份数据去填充它，然后将这条消息传递给zmq_send(3).
+</p>
+</li>
+<li>
+<p>
+释放（不是销毁）一条消息你可以调用zmq_msg_close(3).这样就断开对这条消息的引用，最终ØMQ将销毁这条消息。
+</p>
+</li>
+<li>
+<p>
+你可以使用zmq_msg_data(3)去访问消息的内容。想知道消息包含了多少数据，可以使用zmq_msg_size(3)方法。
+</p>
+</li>
+<li>
+<p>
+请不要使用zmq_msg_move(3),zmq_msg_copy(3)或者zmq_init_data(3)这些方法，除非你阅读过手册页且明确知道你为什么要做这些。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>这儿是一个典型的使用消息的代码块，如果你很仔细的话你应该对这些代码感到很熟悉。这就是来自我们使用在示例中的zhelper.h文件。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>// Receive 0MQ string from socket and convert into C string</i>
+<strong>static</strong> <strong>char</strong> *
+s_recv (<strong>void</strong> *socket) {
+zmq_msg_t message;
+zmq_msg_init (&amp;message);
+zmq_recv (socket, &amp;message, 0);
+<strong>int</strong> size = zmq_msg_size (&amp;message);
+<strong>char</strong> *string = malloc (size + 1);
+memcpy (string, zmq_msg_data (&amp;message), size);
+zmq_msg_close (&amp;message);
+string [size] = 0;
+<strong>return</strong> (string);
+}
+
+<i>// Convert C string to 0MQ string and send to socket</i>
+<strong>static</strong> <strong>int</strong>
+s_send (<strong>void</strong> *socket, <strong>char</strong> *string) {
+<strong>int</strong> rc;
+zmq_msg_t message;
+zmq_msg_init_size (&amp;message, strlen (string));
+memcpy (zmq_msg_data (&amp;message), string, strlen (string));
+rc = zmq_send (socket, &amp;message, 0);
+assert (!rc);
+zmq_msg_close (&amp;message);
+<strong>return</strong> (rc);
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>你可以很容易的去扩展这些代码去发送和接受任意长度的数据块。</p></div>
+<div class="paragraph"><p>请注意，如果你传递一条消息给zmq_send(3)，ØMQ会清空消息，也就是将消息的尺寸设为0。相同的消息你不能发送两次，而且在消息发送之后你也不能在访问消息数据。</p></div>
+<div class="paragraph"><p>如果一条消息发送你想要不止一次的发送，那么你可以创建第二条消息，使用zmq_msg_init(3)去初始化它接着使用zmq_msg_copy(3)去复制一条消息。这不是去复制数据而是引用。这样你就可以将消息发送两次（或者更多，如果你复制多份）且消息只有在最后一条消息发送或者被关闭时它才会最终被销毁。</p></div>
+<div class="paragraph"><p>ØMQ同样也支持分段消息，这就让你将一串数据作为一条消息来处理。这是在实际的应用程序中广泛应用的，我们稍后将在本章和第三章中看到。</p></div>
+<div class="paragraph"><p>关于消息还有一些其它的东西值得我们去了解：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+ØMQ 是自动发送和接受消息的，也就是说你要么接受整条消息，要么就你就接收不到这条消息的任何部分。
+</p>
+</li>
+<li>
+<p>
+ØMQ不是马上发送一条消息，而是在稍后一个不确定的时间。
+</p>
+</li>
+<li>
+<p>
+你可以发送长度为0的消息，也就是说从一个线程发送信号到另外一个。
+</p>
+</li>
+<li>
+<p>
+一条消息必须存放在内存中。如果你想发送任意尺寸的文件，你就需要将文件分成片，并将每一片作为一条单独的消息发送。
+</p>
+</li>
+<li>
+<p>
+当一条消息使用完毕之后你必须调用zmq_msg_close(3) 。在一些语言中消息中，在对象范围关闭时不会被销毁。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>在这儿任然要重复一下，务必不要使用zmq_msg_init_data(3)方法。这是一个零复制的方法，一定会给你带来麻烦的。关于ØMQ这里还有很多的东西需要学习。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_处理多个套接字">处理多个套接字</h3>
+<div class="paragraph"><p>到目前为止的所有例子中，大多数例子的循环主要做的就是：</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+等待套接字上的消息
+</p>
+</li>
+<li>
+<p>
+处理消息
+</p>
+</li>
+<li>
+<p>
+重复
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>如果我们想在同一时间读取多个套接字，该怎么做？最简单的方法就是将一个套接字连接到多个末端，让ØMQ 为我们进行消息的扇入。如果远程末端都是一个模式那么这么做就是合法的，但是有时是不合法的。例如：将一个PULL类型的套接字连接到一个PUB类型的末端。如果你使用了混合模式，将打破未来的可扩展性。</p></div>
+<div class="paragraph"><p>正确的做法是使用zmq_poll(3)。一个更好的方法可能是我们用一个框架将zmq_poll(3)封装起来，使其成为一个很好的事件处理堆。但是这样就表示我们有更多的工作需要做。</p></div>
+<div class="paragraph"><p>下面将告诉你怎么做一个非阻塞的套接字读取。这里是一些简单的例子从两个套接字一非阻塞的方式进行读取。这是一个令人相当疑惑的程序，既作为一个订阅者去更新天气，同时也作为一个worker去并行处理任务。</p></div>
+<div class="paragraph"><p>msreader：在C语言中多个套接字读取</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Reading from multiple sockets</i>
+<i>// This version uses a simple recv loop</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<i>// Prepare our context and sockets</i>
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Connect to task ventilator</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_PULL);
+zmq_connect (receiver, "tcp:<i>//localhost:5557");</i>
+
+<i>// Connect to weather server</i>
+<strong>void</strong> *subscriber = zmq_socket (context, ZMQ_SUB);
+zmq_connect (subscriber, "tcp:<i>//localhost:5556");</i>
+zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, "10001 ", 6);
+
+<i>// Process messages from both sockets</i>
+<i>// We prioritize traffic from the task ventilator</i>
+<strong>while</strong> (1) {
+<i>// Process any waiting tasks</i>
+<strong>int</strong> rc;
+<strong>for</strong> (rc = 0; !rc; ) {
+zmq_msg_t task;
+zmq_msg_init (&amp;task);
+<strong>if</strong> ((rc = zmq_recv (receiver, &amp;task, ZMQ_NOBLOCK)) == 0) {
+<i>// process task</i>
+}
+zmq_msg_close (&amp;task);
+}
+<i>// Process any waiting weather updates</i>
+<strong>for</strong> (rc = 0; !rc; ) {
+zmq_msg_t update;
+zmq_msg_init (&amp;update);
+<strong>if</strong> ((rc = zmq_recv (subscriber, &amp;update, ZMQ_NOBLOCK)) == 0) {
+<i>// process weather update</i>
+}
+zmq_msg_close (&amp;update);
+}
+<i>// No activity, so sleep for 1 msec</i>
+s_sleep (1);
+}
+<i>// We never get here but clean up anyhow</i>
+zmq_close (receiver);
+zmq_close (subscriber);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这种方法的代价会使得第一条消息有一些额外的延迟(没有等待处理的消息的时候，循环最后有休眠)。但是对于那种对于亚毫秒级都至关重要的应用程序中，这将是一个问题。另外，你需要检查文档使其休眠指定的时间或者其它方法，使循环不要太忙碌。</p></div>
+<div class="paragraph"><p>你可以平等的看待这些套接字，首先从第一个套接字读取一条，接着从第二个套接字读取一条，而不是像我们在刚才的例子中那样指定优先次序。这就叫做“公平队列”，当一个套接字从不止一个源那里接收数据时，ØMQ 会自动这么做。</p></div>
+<div class="paragraph"><p>现在让我们看看同一个较小没什么使用意义的应用程序的正确做法，使用zmq_poll(3)：</p></div>
+<div class="paragraph"><p>mspoller:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Reading from multiple sockets</i>
+<i>// This version uses zmq_poll()</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Connect to task ventilator</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_PULL);
+zmq_connect (receiver, "tcp:<i>//localhost:5557");</i>
+
+<i>// Connect to weather server</i>
+<strong>void</strong> *subscriber = zmq_socket (context, ZMQ_SUB);
+zmq_connect (subscriber, "tcp:<i>//localhost:5556");</i>
+zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, "10001 ", 6);
+
+<i>// Initialize poll set</i>
+zmq_pollitem_t items [] = {
+{ receiver, 0, ZMQ_POLLIN, 0 },
+{ subscriber, 0, ZMQ_POLLIN, 0 }
+};
+<i>// Process messages from both sockets</i>
+<strong>while</strong> (1) {
+zmq_msg_t message;
+zmq_poll (items, 2, -1);
+<strong>if</strong> (items [0].revents &amp; ZMQ_POLLIN) {
+zmq_msg_init (&amp;message);
+zmq_recv (receiver, &amp;message, 0);
+<i>// Process task</i>
+zmq_msg_close (&amp;message);
+}
+<strong>if</strong> (items [1].revents &amp; ZMQ_POLLIN) {
+zmq_msg_init (&amp;message);
+zmq_recv (subscriber, &amp;message, 0);
+<i>// Process weather update</i>
+zmq_msg_close (&amp;message);
+}
+}
+<i>// We never get here</i>
+zmq_close (receiver);
+zmq_close (subscriber);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_处理错误和eterm">处理错误和ETERM</h3>
+<div class="paragraph"><p>ØMQ的错误处理理念是快速失败和韧性组合。进程，我们相信，应该对内部错误尽可能脆弱，对外要尽可能抵御攻击和处理错误。打一个比方，一个活的细胞检测到内部错误信号它会自动毁灭，但是它会尽一切可能抵御外来入侵。可以断言，ØMQ的代码看起来绝对是有活力且健壮的代码，就像附在细胞壁的右侧一样。这里应该有这样的墙。如果它不清楚是一个内部错误还是一个外部错误，这样的一个设计就有缺陷需去要修复。</p></div>
+<div class="paragraph"><p>在C语言里，有错误时ØMQ会果断的停止应用程序。在其它的语言里你可以得到异常或者立即停止。</p></div>
+<div class="paragraph"><p>当ØMQ侦测到一个外部错误时，它会给调用它的代码返回错误。在一些特殊少见的情况下，如果没有一种较为明显的方法使其从错误中恢复过来，它会静默的把消息丢弃。在少数地方，ØMQ仍然会维持外部错误，但是这些可以被认为是错误。</p></div>
+<div class="paragraph"><p>到目前位置，我们所看到的大多数C语言的示例中没有错误处理。真实的代码中应该对每一个单独的ØMQ调用进行错误处理。如果你是使用除了C以外的语言进行绑定，绑定会为你处理错误。在C语言中，你务必自己去做这些。这儿有一些简单的规则，是POSIX的约定：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+假如方法在创建对象时产生错误，将返回NULL
+</p>
+</li>
+<li>
+<p>
+其它方法再成功的时候返回0，别的值（大多数是-1）在异常条件下表示失败。
+</p>
+</li>
+<li>
+<p>
+错误代码是通过错误代号或者zmq_errno(3)方法提供。
+</p>
+</li>
+<li>
+<p>
+一些描述性的错误文本用于日志，是通过zmq_strerror(3)方法提供。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>这里有两个主要的异常情形，你可以当作非致命错误进行处理：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+当一个线程使用非阻塞方式调用zmq_recv(3)，但是没有等待的数据时，ØMQ将会返回-1并将错误代号设为EAGAIN。
+</p>
+</li>
+<li>
+<p>
+当一个线程调用zmq_term(3)而别的线程在做阻塞式的工作。zmq_term(3)将关闭上下文和正在阻塞的调用将返回-1，并且错误代号设为ETERM。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>这些可以归纳为：在大多数情况下可以像在C语言中这样使用assertions调用ØMQ:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><strong>void</strong> *context = zmq_init (1);
+assert (context);
+<strong>void</strong> *socket = zmq_socket (context, ZMQ_REP);
+assert (socket);
+<strong>int</strong> rc;
+rc = zmq_bind (socket, "tcp:<i>//*:5555");</i>
+assert (rc == 0);</tt></pre>
+</div></div>
+<div class="paragraph"><p>在这份代码的第一个版本中我把assert() 方法围绕着方法。这不是一个好主意，直到我们建立优化使用宏指令是所有的assert()为null。使用一个返回代码并维护返回代码。</p></div>
+<div class="paragraph"><p>让我们看看如何彻底的关闭一个进程。我们将采用前面一节中使用的平行管道示例。如果我们在后台已经启动了一大堆的worker，我们想在它们完成一批任务之后将它们都杀掉。我们可以发送一条杀死的消息给所有的worker。进行这项操作最好的地方就是sink，它能够真实的知道什么时候批理任务已经完成。</p></div>
+<div class="paragraph"><p>我们怎么做才能够将sink连接到workers呢？PUSH/PULL类型的socket只是单向的。ØMQ的标准答案是：为么每一个需要解决的问题的类型创建一个新的套接字流。我们将使用发布-订阅模型来给worker发送kill消息：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+sink在一个新的末端创建一个发布类型的套接字。
+</p>
+</li>
+<li>
+<p>
+Workers将它们的输入套接字绑定到这个末端。
+</p>
+</li>
+<li>
+<p>
+当sink侦测到批任务已经完成，就发送kill消息给发布套接字。
+</p>
+</li>
+<li>
+<p>
+当worker侦测到kill消息，它就退出。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>在sink里面不需要太多新的代码：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><strong>void</strong> *control = zmq_socket (context, ZMQ_PUB);
+zmq_bind (control, "tcp:<i>//*:5559");</i>
+…
+<i>// Send kill signal to workers</i>
+zmq_msg_init_data (&amp;message, "KILL", 5);
+zmq_send (control, &amp;message, 0);
+zmq_msg_close (&amp;message);</tt></pre>
+</div></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig14.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>这里的worker进程需要管理两个套接字（一个PUL套接字获取任务，和一个SUB套接字获取控制命令）使用我们先前看过的zmq_poll(3)方法。</p></div>
+<div class="paragraph"><p>taskwork2: Parallel task worker with kill signaling in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Task worker - design 2</i>
+<i>// Adds pub-sub flow to receive and respond to kill signal</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket to receive messages on</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_PULL);
+zmq_connect (receiver, "tcp:<i>//localhost:5557");</i>
+
+<i>// Socket to send messages to</i>
+<strong>void</strong> *sender = zmq_socket (context, ZMQ_PUSH);
+zmq_connect (sender, "tcp:<i>//localhost:5558");</i>
+
+<i>// Socket for control input</i>
+<strong>void</strong> *controller = zmq_socket (context, ZMQ_SUB);
+zmq_connect (controller, "tcp:<i>//localhost:5559");</i>
+zmq_setsockopt (controller, ZMQ_SUBSCRIBE, "", 0);
+
+<i>// Process messages from receiver and controller</i>
+zmq_pollitem_t items [] = {
+{ receiver, 0, ZMQ_POLLIN, 0 },
+{ controller, 0, ZMQ_POLLIN, 0 }
+};
+<i>// Process messages from both sockets</i>
+<strong>while</strong> (1) {
+zmq_msg_t message;
+zmq_poll (items, 2, -1);
+<strong>if</strong> (items [0].revents &amp; ZMQ_POLLIN) {
+zmq_msg_init (&amp;message);
+zmq_recv (receiver, &amp;message, 0);
+
+<i>// Do the work</i>
+s_sleep (atoi ((<strong>char</strong> *) zmq_msg_data (&amp;message)));
+
+<i>// Send results to sink</i>
+zmq_msg_init (&amp;message);
+zmq_send (sender, &amp;message, 0);
+
+<i>// Simple progress indicator for the viewer</i>
+printf (".");
+fflush (stdout);
+
+zmq_msg_close (&amp;message);
+}
+<i>// Any waiting controller command acts as 'KILL'</i>
+<strong>if</strong> (items [1].revents &amp; ZMQ_POLLIN)
+<strong>break</strong>; <i>// Exit loop</i>
+}
+<i>// Finished</i>
+zmq_close (receiver);
+zmq_close (sender);
+zmq_close (controller);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这里是经过修改之后的sink应用程序。当它收集完所有的结果之后就给所有的worker发送一条kill信息。</p></div>
+<div class="paragraph"><p>tasksink2: Parallel task sink with kill signaling in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Task sink - design 2</i>
+<i>// Adds pub-sub flow to send kill signal to workers</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket to receive messages on</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_PULL);
+zmq_bind (receiver, "tcp:<i>//*:5558");</i>
+
+<i>// Socket for worker control</i>
+<strong>void</strong> *controller = zmq_socket (context, ZMQ_PUB);
+zmq_bind (controller, "tcp:<i>//*:5559");</i>
+
+<i>// Wait for start of batch</i>
+<strong>char</strong> *string = s_recv (receiver);
+free (string);
+
+<i>// Start our clock now</i>
+int64_t start_time = s_clock ();
+
+<i>// Process 100 confirmations</i>
+<strong>int</strong> task_nbr;
+<strong>for</strong> (task_nbr = 0; task_nbr &lt; 100; task_nbr++) {
+<strong>char</strong> *string = s_recv (receiver);
+free (string);
+<strong>if</strong> ((task_nbr / 10) * 10 == task_nbr)
+printf (":");
+<strong>else</strong>
+printf (".");
+fflush (stdout);
+}
+printf ("Total elapsed time: %d msec\n",
+(<strong>int</strong>) (s_clock () - start_time));
+
+<i>// Send kill signal to workers</i>
+s_send (controller, "KILL");
+
+<i>// Finished</i>
+sleep (1); <i>// Give 0MQ time to deliver</i>
+
+zmq_close (receiver);
+zmq_close (controller);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_处理中断信号">处理中断信号</h3>
+<div class="paragraph"><p>现实的应用程序需要通过CTRL-C或者其它的信号（如：SIGTERM）中断并彻底的关闭。默认情况下，这些只是简单的将进程kill掉，意味着消息并没有发出，文件也没有很好的关闭，以及其它的一些问题。</p></div>
+<div class="paragraph"><p>下面就是如何在各种语言中处理一个信号：
+interrupt: Handling Ctrl-C cleanly in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Shows how to handle Ctrl-C</i>
+<i>//</i>
+#include &lt;zmq.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+
+<i>// ---------------------------------------------------------------------</i>
+<i>// Signal handling</i>
+<i>//</i>
+<i>// Call s_catch_signals() in your application at startup, and then exit</i>
+<i>// your main loop if s_interrupted is ever 1. Works especially well with</i>
+<i>// zmq_poll.</i>
+
+<strong>static</strong> <strong>int</strong> s_interrupted = 0;
+<strong>static</strong> <strong>void</strong> s_signal_handler (<strong>int</strong> signal_value)
+{
+s_interrupted = 1;
+}
+
+<strong>static</strong> <strong>void</strong> s_catch_signals (<strong>void</strong>)
+{
+<strong>struct</strong> sigaction action;
+action.sa_handler = s_signal_handler;
+action.sa_flags = 0;
+sigemptyset (&amp;action.sa_mask);
+sigaction (SIGINT, &amp;action, NULL);
+sigaction (SIGTERM, &amp;action, NULL);
+}
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+<strong>void</strong> *socket = zmq_socket (context, ZMQ_REP);
+zmq_bind (socket, "tcp:<i>//*:5555");</i>
+
+s_catch_signals ();
+<strong>while</strong> (1) {
+<i>// Blocking read will exit on a signal</i>
+zmq_msg_t message;
+zmq_msg_init (&amp;message);
+zmq_recv (socket, &amp;message, 0);
+
+<strong>if</strong> (s_interrupted) {
+printf ("W: interrupt received, killing server…\n");
+<strong>break</strong>;
+}
+}
+zmq_close (socket);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>zhelpers.h文件提供了s_catch_signals()方法，可以捕捉CTRL-C信号和SIGTERM（终止进程信号）。当这两种信号中的任何一个到达，s_catch_signals()方法会处理并设置全局变量s_interrupted。你的应用程序将不会自动死掉，你现在需要显式的检测中断，并且妥善的去处理它。</p></div>
+<div class="paragraph"><p>下面就是教我们如何去做：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+在你的主代码开头调用s_catch_signals() 方法。这样设置就是为了处理信号。
+</p>
+</li>
+<li>
+<p>
+当在一个信号到达时，如果你的代码正在被zmq_recv(3),zmq_poll(3)或者zmq_send(3)阻塞时，那个调用会返回EINTR。
+</p>
+</li>
+<li>
+<p>
+s_recv()之类的包装者返回NULL，如果它们被中断。
+</p>
+</li>
+<li>
+<p>
+所以，你的应用程序中检查一个EINTR的返回码，返回一个NULL或者s_interrupted。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>下面是一个典型的代码片段：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>s_catch_signals ();
+client = zmq_socket (...);
+<strong>while</strong> (!s_interrupted) {
+    <strong>char</strong> *message = s_recv (client);
+    <strong>if</strong> (!message)
+        <strong>break</strong>;          <i>//  Ctrl-C used</i>
+}
+zmq_close (client);</tt></pre>
+</div></div>
+<div class="paragraph"><p>如果你调用了s_catch_signals()但不对它做中断测试，你的应用程序将会对Ctrl-C和SIGTERM信号免疫，这可能很有用，但是通常不这么做。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_侦测类存泄漏">侦测类存泄漏</h3>
+<div class="paragraph"><p>任何长时间运行的应用程序需要进行正确的内存管理，否则它将会耗尽所有的可用内存并且崩溃。如果你使用的语言可以自动的为你处理，祝贺你。如果你是使用C，C++或者其它任何需要你负责管理内存的语言编程，这里是一个简短的valgrind使用教程，它可以给出你的程序任何有类存泄漏的报告。</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+安装valgrind，例如在Ubuntu或者Debian上，使用 sudo apt-get install valgrind。
+</p>
+</li>
+<li>
+<p>
+默认情况下，ØMQ会导致valgrind出现很多警告。为了移除这些警告，使用ZMQ_MAKE_VALGRIND_HAPPY宏进行重新编译安装。如下：
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ cd zeromq2
+$ export CPPFLAGS=-DZMQ_MAKE_VALGRIND_HAPPY
+$ ./configure
+$ make clean; make
+$ sudo make install</tt></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+修复你的应用程序使其在CTRL-C之后可以彻底的退出。不是对于所有的应用程序需要自身退出。但是对于长时间运行的应用程序（设备），这是很有必要的，否则valgrind 会抱怨当前分配的内存。
+</p>
+</li>
+<li>
+<p>
+使用-DEBUG设置你的应用程序，如果这不是默认设置。这样可以确保valgrind可以精确的告诉你哪儿发生内存泄漏。
+</p>
+</li>
+<li>
+<p>
+最后，通过如下方式运行valgrind：
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>valgrind --tool=memcheck --leak-check=full someprog</tt></pre>
+</div></div>
+<div class="paragraph"><p>在修复了所有的错误报告之后，你可以得到如下让你感觉很愉快的信息：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>==30536== ERROR SUMMARY: 0 errors from 0 contexts...</tt></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_分段的消息">分段的消息</h3>
+<div class="paragraph"><p>ØMQ可以让我们使用多帧组合消息，给我们一个“分段消息”。实际的应用程序经常使用分段消息，特别是制作“信封”。我们将在稍后看到它们。我们现在将要学习的是如何简单的对分段的消息进行安全的读和写，否则我们所写的设备无法与使用分段消息的应用程序正常工作。</p></div>
+<div class="paragraph"><p>当你使用分段消息时，它的每一部分都是一个zmq_msg项。例如，如果你要将一条消息分为5部分发送，你就必须要构造，发送，销毁5个zmq_msg项。你可以使用高级(将zmq_msg项存放再数组或者结构体中)的方法或者一个接一个的发送。</p></div>
+<div class="paragraph"><p>下面就是如何在一个分段的消息中发送帧（我们接收每个帧放到一个消息对象中）：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>zmq_send (socket, &amp;message, ZMQ_SNDMORE);
+…
+zmq_send (socket, &amp;message, ZMQ_SNDMORE);
+…
+zmq_send (socket, &amp;message, 0);</tt></pre>
+</div></div>
+<div class="paragraph"><p>下面是我们如何接收和处理一条消息中的多个块，单一的或者多部分的：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><strong>while</strong> (1) {
+zmq_msg_t message;
+zmq_msg_init (&amp;message);
+zmq_recv (socket, &amp;message, 0);
+<i>// Process the message part</i>
+zmq_msg_close (&amp;message);
+int64_t more;
+size_t more_size = <strong>sizeof</strong> (more);
+zmq_getsockopt (socket, ZMQ_RCVMORE, &amp;more, &amp;more_size);
+<strong>if</strong> (!more)
+<strong>break</strong>; <i>// Last message part</i>
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>一些需要知道的关于分段消息的事情：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+当你发送一条分段的消息时，只有当这条消息的最后一部分发送，第一部分(和后续的部分)才会开始发送出去。
+</p>
+</li>
+<li>
+<p>
+如果你使用zmq_poll(3)，当你接收到一条消息的第一部分时，所有其它剩余的部分也到达了。
+</p>
+</li>
+<li>
+<p>
+你要么接收到一条消息的所有部分，要么什么都没有。
+</p>
+</li>
+<li>
+<p>
+一条消息的每一部分都是一个分开的zmq_msg项。
+</p>
+</li>
+<li>
+<p>
+不论你是否检查RCVMORE项，你都将接收到一条消息的所有部分。
+</p>
+</li>
+<li>
+<p>
+在消息发送的时候，ØMQ会将消息的块放在内存中进行列队，直到接收最后一块，这时才将它们一起发送出去。
+</p>
+</li>
+<li>
+<p>
+没有办法取消一条已经发送了一部分的消息，除非关闭套接字。
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_中间件与设备">中间件与设备</h3>
+<div class="paragraph"><p>任何已连接的集合随着数量的增加其曲线复杂度也会增加。数量较小时成员之间可以知道对方的存在，但随着集合的变大，成员之间要知道对方的存在的话，其成本会成线性增长，并且连接成员的成本也在增长。解决方案就是将大的集合变小，然后使用中间件去连接它们。</p></div>
+<div class="paragraph"><p>这种模式在现实生活中很常见，这就是为什么我们的社会和经济充满了那些没有实际功能但是可以减少网络复杂度的中介的原因。中间件通常叫做批发商，经销商，经理人，等等。</p></div>
+<div class="paragraph"><p>任何一个ØMQ网络不能超出一定的增长规模而无需中间件。在ØMQ中，我们叫它们“设备”。一般情况下，我们开始使用ØMQ的时候，建立我们的应用程序作为网络中的一个节点和其它节点进行通讯，而无需中间件：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig15.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>然后我们将设备放在特定的地方增加节点数量，来通过网络扩展我们的应用程序。</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig16.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>ØMQ的设备一般是将一组前端套接字连接到一组后端套接字，虽然没有严格的设计准则。它们的理念是无状态运行，因此可以根据应用程序的可伸缩性进行中间件的添加。
+你可以将它们放在一个进程的多个线程里面运行，也可以作为一个单独的进程运行。ØMQ提供了一些很基本的设备，但是再实际的实践中你可以开发你自己的设备。</p></div>
+<div class="paragraph"><p>ØMQ的设备可以作为地址，服务，队列以及其它任何你关注的抽象的可以定义在消息和套接字层上的中间件。不同的消息模式有不同的复杂问题，从而需要不同的中间件。举个例子，请求-应答模式是使用队列和服务抽象，而发布-订阅使用流或者主题。</p></div>
+<div class="paragraph"><p>有趣的是ØMQ与传统的集中式的代理相比较，你可以将设备放在你认为需要的地方，且能够得到最优的使用。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_发布_订阅代理服务器">发布-订阅代理服务器</h3>
+<div class="paragraph"><p>一个普遍的需求就是扩展一个发布-订阅架构到多个网段进行传输。或许这里有一组订阅者的位置在远程。或许我们通过组播发布到本地的订阅者，通过TCP发布到远程订阅者。</p></div>
+<div class="paragraph"><p>我们将要写一个简单的代理服务器，将其放在一组发布者与订阅者之间，桥接两个网络。这或许是一个简单而有用的设备。这个设备有两个套接字，一个是前端面向内网的，也就是天气服务器所在地，一个是后端面向外网的订阅者。它通过前端套接字订阅天气服务，将数据重新发布给后端的套接字：</p></div>
+<div class="paragraph"><p>wuproxy: Weather update proxy in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Weather proxy device</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// This is where the weather server sits</i>
+<strong>void</strong> *frontend = zmq_socket (context, ZMQ_SUB);
+zmq_connect (frontend, "tcp:<i>//192.168.55.210:5556");</i>
+
+<i>// This is our public endpoint for subscribers</i>
+<strong>void</strong> *backend = zmq_socket (context, ZMQ_PUB);
+zmq_bind (backend, "tcp:<i>//10.1.1.0:8100");</i>
+
+<i>// Subscribe on everything</i>
+zmq_setsockopt (frontend, ZMQ_SUBSCRIBE, "", 0);
+
+<i>// Shunt messages out to our own subscribers</i>
+<strong>while</strong> (1) {
+<strong>while</strong> (1) {
+zmq_msg_t message;
+int64_t more;
+
+<i>// Process all parts of the message</i>
+zmq_msg_init (&amp;message);
+zmq_recv (frontend, &amp;message, 0);
+size_t more_size = <strong>sizeof</strong> (more);
+zmq_getsockopt (frontend, ZMQ_RCVMORE, &amp;more, &amp;more_size);
+zmq_send (backend, &amp;message, more? ZMQ_SNDMORE: 0);
+zmq_msg_close (&amp;message);
+<strong>if</strong> (!more)
+<strong>break</strong>; <i>// Last message part</i>
+}
+}
+<i>// We don't actually get here but if we did, we'd shut down neatly</i>
+zmq_close (frontend);
+zmq_close (backend);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>我们叫这个代理是因为扮演了发布者的订阅者，同时又扮演了订阅者的发布者。这就意味着你可以将设备插入到网络中而不影响它（当然新的订阅者需要知道代理）。</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig17.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>请记住，这是一个分段消息安全的应用程序。它能够正确的侦测分段消息并且发送和接收它们。如果我们向外发送分段消息时没有设置SNDMORE选项，那么接收者最终得到的将是损毁的消息。你应该使你的设备对分段的消息是安全的，这样就不存在转换时损毁数据的风险。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_一个请求_应答代理">一个请求-应答代理</h3>
+<div class="paragraph"><p>我们来探讨一下在ØMQ写一个小的消息队列代理来解决规模的问题。我们来看看在这种情况下的请求-应答模式。</p></div>
+<div class="paragraph"><p>在hello world 客户端-服务器应用程序中，我们有一个客户端连接一个服务。然而在真实情况下，我们需要允许多个服务端与多个客户端。这就让我们去扩大服务的能力(多个线程、进程、boxes比一个好)。唯一的约束就是要求服务端是无状态的，所有的状态封装在请求中或者是一些共享存储，如数据库。</p></div>
+<div class="paragraph"><p>这儿有两个方法将多个客户端连接到多个服务器端。一个强有力的做法是将每一个客户端连接到多个服务末端。一个客户端套接字可以连接到多个服务套接字，请求就被负载均衡到服务端上。比方说你要将一个客户端套接字连接到3个服务末端，A，B和C。客户端产生4个请求R1，R2，R3，R4。R1和R4到达了服务端A，R2到达了B，R3到达了服务端C。</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig18.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>这种设计可以让你低成本的增加许多客户端。你也可以增加很多服务端。每一个客户端的请求都会被负载均衡到服务端。但是每个客户端需要知道服务端的拓扑结构。如果你有100个客户端而你决定添加3个服务端，为了让客户端知道你新增的3个服务端，你需要重新配置并重启这100个客户端。在凌晨三点我们的超级计算机集群因资源耗尽，我们拼命的增加几百个新的服务节点，这显然不是我们想要干的事情。太多稳定的件就像混泥土浇灌的一样，固件越多，改变拓扑结构对你的影响就越大。我们所想要的就是在客户端与服务端之间有一个可以知道拓扑结构的东西。理想的是我们应该可以在任何时间添加或移除服务端与客户端而不用触碰网络拓扑的任何一部分。</p></div>
+<div class="paragraph"><p>因此，我们将写一个小的消息队列代理给我们提供灵活性。代理绑定到两个末端，前端作为客户端，后端作为服务端。然后使用zmq_pull(3)去监控两个套接字的行为，它使消息穿梭再两个套接字之间。它实际上不管理任何队列，ØMQ自动对每个套接字进行处理。</p></div>
+<div class="paragraph"><p>当你使用REQ与REP通讯，你将会取得一个严格的同步请求-应答会话。客户端发送一个请求，服务端读取请求并发送一个应答。客户端就读取来自服务端的应答。如果客户端或者服务端试图做一些其它的事情（例如，等待响应的时候发送两个请求）将会得到一个错误。</p></div>
+<div class="paragraph"><p>但是我们的代理不会阻塞。很明显，我们可以使用zmq_poll(3)等待每一个套接字上的行为，但是我们不能使用REP和REQ。</p></div>
+<div class="paragraph"><p>幸运的是这儿有两个套接字叫做DEALER和ROUTER，可以让你进行非阻塞的请求-响应。这些套接字以前叫做XREQ和XREP，你可以在老的代码中看到这些名字。这些老的名字的意思是：XREQ是一个扩展的REQ，XREP是一个扩展的REP，但是这是错误的。在第三章中你将会看到DEALER和ROUTER如何让你创建各种各样的异步请求-应答流。</p></div>
+<div class="paragraph"><p>现在，我们只是看看DEALER和ROUTER如何让我们扩展REQ——REP贯穿设备。这就是我们的小代理。</p></div>
+<div class="paragraph"><p>在这个简单的扩展的请求-应答模式中，REQ与ROUTER通讯，DEALER与REP通讯。在DEALER和ROUTER之间我们需要用代码从一个套接字取出消息并把它们推到另外一个中：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig19.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>请求应答代理绑定到两个末端，一个作为客户端连接到（前端套接字），一个作为服务端连接到（后端套接字）。为了测试这个代理，你会想去改变你的服务使其连接到后端套接字。下面是C语言实现的客户端和服务端，就是我所说的意思：</p></div>
+<div class="paragraph"><p>rrclient: Request-reply client in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Hello World client</i>
+<i>// Connects REQ socket to tcp://localhost:5559</i>
+<i>// Sends "Hello" to server, expects "World" back</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket to talk to server</i>
+<strong>void</strong> *requester = zmq_socket (context, ZMQ_REQ);
+zmq_connect (requester, "tcp:<i>//localhost:5559");</i>
+
+<strong>int</strong> request_nbr;
+<strong>for</strong> (request_nbr = 0; request_nbr != 10; request_nbr++) {
+s_send (requester, "Hello");
+<strong>char</strong> *string = s_recv (requester);
+printf ("Received reply %d [%s]\n", request_nbr, string);
+free (string);
+}
+zmq_close (requester);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>下面是服务：</p></div>
+<div class="paragraph"><p>rrserver: Request-reply service in C'</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Hello World server</i>
+<i>// Connects REP socket to tcp://*:5560</i>
+<i>// Expects "Hello" from client, replies with "World"</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket to talk to clients</i>
+<strong>void</strong> *responder = zmq_socket (context, ZMQ_REP);
+zmq_connect (responder, "tcp:<i>//localhost:5560");</i>
+
+<strong>while</strong> (1) {
+<i>// Wait for next request from client</i>
+<strong>char</strong> *string = s_recv (responder);
+printf ("Received request: [%s]\n", string);
+free (string);
+
+<i>// Do some 'work'</i>
+sleep (1);
+
+<i>// Send reply back to client</i>
+s_send (responder, "World");
+}
+<i>// We never get here but clean up anyhow</i>
+zmq_close (responder);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>下面是代理。你会看到它是分段消息安全的：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Simple request-reply broker</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<i>// Prepare our context and sockets</i>
+<strong>void</strong> *context = zmq_init (1);
+<strong>void</strong> *frontend = zmq_socket (context, ZMQ_ROUTER);
+<strong>void</strong> *backend = zmq_socket (context, ZMQ_DEALER);
+zmq_bind (frontend, "tcp:<i>//*:5559");</i>
+zmq_bind (backend, "tcp:<i>//*:5560");</i>
+
+<i>// Initialize poll set</i>
+zmq_pollitem_t items [] = {
+{ frontend, 0, ZMQ_POLLIN, 0 },
+{ backend, 0, ZMQ_POLLIN, 0 }
+};
+<i>// Switch messages between sockets</i>
+<strong>while</strong> (1) {
+zmq_msg_t message;
+int64_t more; <i>// Multipart detection</i>
+
+zmq_poll (items, 2, -1);
+<strong>if</strong> (items [0].revents &amp; ZMQ_POLLIN) {
+<strong>while</strong> (1) {
+<i>// Process all parts of the message</i>
+zmq_msg_init (&amp;message);
+zmq_recv (frontend, &amp;message, 0);
+size_t more_size = <strong>sizeof</strong> (more);
+zmq_getsockopt (frontend, ZMQ_RCVMORE, &amp;more, &amp;more_size);
+zmq_send (backend, &amp;message, more? ZMQ_SNDMORE: 0);
+zmq_msg_close (&amp;message);
+<strong>if</strong> (!more)
+<strong>break</strong>; <i>// Last message part</i>
+}
+}
+<strong>if</strong> (items [1].revents &amp; ZMQ_POLLIN) {
+<strong>while</strong> (1) {
+<i>// Process all parts of the message</i>
+zmq_msg_init (&amp;message);
+zmq_recv (backend, &amp;message, 0);
+size_t more_size = <strong>sizeof</strong> (more);
+zmq_getsockopt (backend, ZMQ_RCVMORE, &amp;more, &amp;more_size);
+zmq_send (frontend, &amp;message, more? ZMQ_SNDMORE: 0);
+zmq_msg_close (&amp;message);
+<strong>if</strong> (!more)
+<strong>break</strong>; <i>// Last message part</i>
+}
+}
+}
+<i>// We never get here but clean up anyhow</i>
+zmq_close (frontend);
+zmq_close (backend);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>使用请求-应答代理可以使你的客户端-服务器架构很容扩展，即时客户端看不到服务端，服务端看不到客户端。唯一一个稳定的节点是中间的设备：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig20.png" alt="width=100%" />
+</span></p></div>
+</div>
+<div class="sect2">
+<h3 id="_内置设备">内置设备</h3>
+<div class="paragraph"><p>ØMQ提供了一些内置的设备，尽管很多高级用户写他们自己的设备。内置的设置有：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+队列（QUEUE），就像请求-应答代理。
+</p>
+</li>
+<li>
+<p>
+传送装置(FORWARDER)，就像发布-订阅代理服务器。
+</p>
+</li>
+<li>
+<p>
+流转化器（STREAMER），就像FORWARDER但是用作管道流。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>开始使用设备，你需要调用zmq_device(3)并将它传递给两个套接字，一个给前端，一个给后端：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>zmq_device (ZMQ_QUEUE, frontend, backend);</tt></pre>
+</div></div>
+<div class="paragraph"><p>如果你启动一个队列设备就和将请求-应答代理插入到你的代码中一样。在你调用zmq_device(3)之前，你需要创建一个套接字，并进行绑定或者连接它们，可能的话也可以对它们进行配置。下面是请求应答代理将消息重新写入到调用队列，重新贴上标签作为一个昂贵的“消息队列”。</p></div>
+<div class="paragraph"><p>msgqueue: Message queue broker in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Simple message queuing broker</i>
+<i>// Same as request-reply broker but using QUEUE device</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket facing clients</i>
+<strong>void</strong> *frontend = zmq_socket (context, ZMQ_ROUTER);
+zmq_bind (frontend, "tcp:<i>//*:5559");</i>
+
+<i>// Socket facing services</i>
+<strong>void</strong> *backend = zmq_socket (context, ZMQ_DEALER);
+zmq_bind (backend, "tcp:<i>//*:5560");</i>
+
+<i>// Start built-in device</i>
+zmq_device (ZMQ_QUEUE, frontend, backend);
+
+<i>// We never get here…</i>
+zmq_close (frontend);
+zmq_close (backend);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>内置的设备做了适当的错误处理，我们所展示的实例没有做。在启动设备之前，你可以根据需要对套接字进行配置，但是如果可以，内置的设备值得你去用。</p></div>
+<div class="paragraph"><p>如果你像大多数ØMQ用户，在这个时候你心里可能在想，“有哪些邪恶的方式可以让我来将随机类型的套接字连到设备上？”简短的回答是：不要那么做。你可以混合不同的类型的套接字，但是结果将是不可预测的。所以严格按照：队列设备使用ROUTER/DEALER，转发器(forwarder)SUB/PUB使用SUB/PUB,流使用PULL/PUSH。</p></div>
+<div class="paragraph"><p>如果你需要其它的组合，那就该写你自己的设备的时候了。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_ømq使用多线程">ØMQ使用多线程</h3>
+<div class="paragraph"><p>ØMQ也许是有史以来编写多线程应用程序最好的方式。如果你过去使用传统的套接字，那么使用ØMQ套接字就需要做一些调整。ØMQ的的多线程会将你以前所知道的关于写多线程应用的一些东西都给推翻掉。</p></div>
+<div class="paragraph"><p>为了实现一个完美的多线程程序（字面上去理解）我们不需要互迟，锁，或者任何其它的线程间的交互，除了在ØMQ套接字之间发送消息。</p></div>
+<div class="paragraph"><p>“完美”的多线程程序，我的意思是代码容易写且易于理解，通过一种技术能够在任何语言和任何操作系统以及跨越多CPU运行，且零等待状态。</p></div>
+<div class="paragraph"><p>如果你花了多年时间学习多线程代码技巧，使其工作，更不用说快速的学习锁，信号和临界区，如果什么时候你意识到它毫无用处，你会厌倦的。我们花了30多年学了一堂关于并发变成的课，它就是：不要共享状态。就像两个酒鬼试图共享一瓶啤酒。不管他们是不是好朋友。迟早他们会打一架。如果酒鬼越多，他们为了啤酒彼此之间打架的几率就越高。一个悲剧的多线程应用程序就像酒鬼打架一样。</p></div>
+<div class="paragraph"><p>在你写传统的共享状态的多线程代码时，你有一长串的问题清单需要解决。否则你的代码可能在工作的时候因为压力突然出现问题。这里有11个问题在你的多线程代码中出现，这些是来自一些世界一流的大公司的bug代码的经验：忘记同步，不正确的粒度，读写分离，重新锁定-释放，lock convoys，两步舞(two-step dance),以及优先级反转。</p></div>
+<div class="paragraph"><p>备注： <em>Lock Convoys是在多线程并发环境下由于锁的使用而引起的性能退化问题。当多个相同优先级的线程频繁地争抢同一个锁时可能会引起lock convoys问题，一般而言，lock convoys并不会像deadlock或livelock那样造成应用逻辑停止不前，相反地，遭受lock convoys的系统或应用程序仍然往前运行，但是，由于线程们频繁地争抢锁而导致过多的线程环境切换，从而使得系统的运行效率大为降低，而且，若存在同等优先级下不参与锁争抢的线程，则它们可以获得相对较多的处理器资源，从而造成系统调度的不公平性。</em></p></div>
+<div class="paragraph"><p>我们也算了一下有7种，不是11种。虽然这不是问题的关键点。问题是，你真的愿意你的代码在电网或者股市在繁忙的星期四下午三点产生两步lock convoys吗？谁在乎条款真正说的什么。</p></div>
+<div class="paragraph"><p>一些广泛使用的隐喻，尽管数十亿美元的产业基础，从根本上打破，共享状态并发就是其中之一。代码想要像互联网一样规模没有限制的，发送消息不进行任何共享，除了一种打破编程隐喻的蔑视。</p></div>
+<div class="paragraph"><p>写快乐的多线程代码，你需要遵循一些原则：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+你不要在多个线程中访问相同的数据。使用传统的多线程技术，如互迟，在ØMQ应用程序中是一种反对的模式。唯一例外的是ØMQ上下文对象,它是线程安全的。
+</p>
+</li>
+<li>
+<p>
+你必须给你的进程创建一个ØMQ上下文，将它传递给所有你想通过inproc 套接字连接的线程。
+</p>
+</li>
+<li>
+<p>
+你可以把线程当作单独的任务，有自己的上下文，但是线程不能超越inproc进行通讯。尽管以后它们很容易的分为单独的进程。
+</p>
+</li>
+<li>
+<p>
+你不能在线程间共享ØMQ套接字。ØMQ套接字不是线程安全的。技术上是可以实现这些，但是它要求信号、锁或者互斥。这样会使你的的应用程序变慢和脆弱。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>如果你遵循这些规则，在你需要的时候，你可以很容易的将那些线程分解为单独的进程。无能你的规模需求是什么样的，应用程序的逻辑可以在线程、进程或者boxes中。</p></div>
+<div class="paragraph"><p>ØMQ 使用的是本机的操作系统线程而不是虚拟的绿色线程。它的优点就是你不用去学习的新的线程API，这样ØMQ线程可以很清晰的映射到你的操作系统。你可以使用像英特尔的ThreadChecker那样的标准工具看看你的应用程序正在做什么。它的缺点对于代码，当启动一个新的线程实例，不再轻便。如果你有数量巨大的线程（几千个），这样会给操作系统带来压力。</p></div>
+<div class="paragraph"><p>我们来看看实际中是如何工作的。我们将把我们老的Hello World服务器变得更强大些。原始的服务器只有一个单独的线程。如果每一个worker的请求频率不高，这样是很好：一个ØMQ 线程可以在一个CPU内核上全速运行，且不会有等待，做大量的工作。但是现实的服务器的每个请求做的都是不平凡的工作。当一次有一个1000个客户端同时点击服务器时一个单独的内核可能不够。所以现实的服务器必须启动多个工作线程。这样它们就可以尽可能快的接受请求，并且将分发到它们的工作线程。工作线程从头到到尾的完成工作，最终给服务器发送应答。</p></div>
+<div class="paragraph"><p>你当然也可以使用一个队列设备和外部工作进程做这些，但是往往一个开启一个进程可以吞掉16个核，开始16个进程，每一个又吞掉一个核。更进一步，将worker作为线程来运行可以减少网络（路由的）跳数，减少延迟和网络故障。</p></div>
+<div class="paragraph"><p>多线程版本的hello world服务基本上是将队列设备和worker分解为一个单独的进程。</p></div>
+<div class="paragraph"><p>mtserver: Multithreaded service in C：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Multithreaded Hello World server</i>
+<i>//</i>
+#include "zhelpers.h"
+#include &lt;pthread.h&gt;
+
+<strong>static</strong> <strong>void</strong> *
+worker_routine (<strong>void</strong> *context) {
+<i>// Socket to talk to dispatcher</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_REP);
+zmq_connect (receiver, "inproc:<i>//workers");</i>
+
+<strong>while</strong> (1) {
+<strong>char</strong> *string = s_recv (receiver);
+printf ("Received request: [%s]\n", string);
+free (string);
+<i>// Do some 'work'</i>
+sleep (1);
+<i>// Send reply back to client</i>
+s_send (receiver, "World");
+}
+zmq_close (receiver);
+<strong>return</strong> NULL;
+}
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket to talk to clients</i>
+<strong>void</strong> *clients = zmq_socket (context, ZMQ_ROUTER);
+zmq_bind (clients, "tcp:<i>//*:5555");</i>
+
+<i>// Socket to talk to workers</i>
+<strong>void</strong> *workers = zmq_socket (context, ZMQ_DEALER);
+zmq_bind (workers, "inproc:<i>//workers");</i>
+
+<i>// Launch pool of worker threads</i>
+<strong>int</strong> thread_nbr;
+<strong>for</strong> (thread_nbr = 0; thread_nbr &lt; 5; thread_nbr++) {
+pthread_t worker;
+pthread_create (&amp;worker, NULL, worker_routine, context);
+}
+<i>// Connect work threads to client threads via a queue</i>
+zmq_device (ZMQ_QUEUE, clients, workers);
+
+<i>// We never get here but clean up anyhow</i>
+zmq_close (clients);
+zmq_close (workers);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这些代码你应该可以认识了。如何工作的：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+服务器端启动一组工作线程。每一个工作线程创建一个REP套接字并且处理这个套接字上的请求。工作线程就想一个单独的线程服务端。唯一的不同就是它们的传输方式（使用inproc代替tcp）以及绑定-连接的方向。
+</p>
+</li>
+<li>
+<p>
+服务端创建一个ROUTER套接字和客户端通讯并且绑定到外部的接口（通过tcp）。
+</p>
+</li>
+<li>
+<p>
+服务端创建一个DEALER套接字和workers及进行通讯，并且绑定到它内部的接口（通过inproc）。
+</p>
+</li>
+<li>
+<p>
+服务端启动一个队列设备连接到两个套接字。队列设别使用一个单独的队列存放进入的请求，并将它们分发发workers。它也将应答路由到它们的源。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>请注意，在大多数编程语言里，创建线程不是很方便的。POSIX的库是pthreads，但是在windows操作系统上你得使用一种不同的API。我们将在第三章看到怎样封装一个可移植的API。</p></div>
+<div class="paragraph"><p>这里的“工作”就是一个1秒钟的暂停。我们可以在worker里面做任何事情，包括和其他的节点进行通讯。这就是多线程服务器看起来像一些ØMQ套接字和节点。请记住请求-应答链就是REQ-ROUTER-queue-DEALER-REP：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig21.png" alt="width=100%" />
+</span></p></div>
+</div>
+<div class="sect2">
+<h3 id="_线程之间的信号">线程之间的信号</h3>
+<div class="paragraph"><p>在你使用ØMQ编写多线程应用程序的时候，你会遇到一个问题：就是如何协调你的线程。尽管你可能尝试过插入“sleep”语句，或者使用多线程技术，诸如：信号量，互斥，唯一的机制是你应该使用ØMQ的消息。记住酒鬼和啤酒瓶子的故事。</p></div>
+<div class="paragraph"><p>这里是一个简单的例子演示了三个线程告诉彼此已经准备好了。
+<span class="image">
+<img src="images/fig22.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>在这个例子里我们使用了PAIR套接字通过inproc进行传输：</p></div>
+<div class="paragraph"><p>mtrelay: Multithreaded relay in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Multithreaded relay</i>
+<i>//</i>
+#include "zhelpers.h"
+#include &lt;pthread.h&gt;
+
+<strong>static</strong> <strong>void</strong> *
+step1 (<strong>void</strong> *context) {
+<i>// Connect to step2 and tell it we're ready</i>
+<strong>void</strong> *xmitter = zmq_socket (context, ZMQ_PAIR);
+zmq_connect (xmitter, "inproc:<i>//step2");</i>
+printf ("Step 1 ready, signaling step 2\n");
+s_send (xmitter, "READY");
+zmq_close (xmitter);
+
+<strong>return</strong> NULL;
+}
+
+<strong>static</strong> <strong>void</strong> *
+step2 (<strong>void</strong> *context) {
+<i>// Bind inproc socket before starting step1</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_PAIR);
+zmq_bind (receiver, "inproc:<i>//step2");</i>
+pthread_t thread;
+pthread_create (&amp;thread, NULL, step1, context);
+
+<i>// Wait for signal and pass it on</i>
+<strong>char</strong> *string = s_recv (receiver);
+free (string);
+zmq_close (receiver);
+
+<i>// Connect to step3 and tell it we're ready</i>
+<strong>void</strong> *xmitter = zmq_socket (context, ZMQ_PAIR);
+zmq_connect (xmitter, "inproc:<i>//step3");</i>
+printf ("Step 2 ready, signaling step 3\n");
+s_send (xmitter, "READY");
+zmq_close (xmitter);
+
+<strong>return</strong> NULL;
+}
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Bind inproc socket before starting step2</i>
+<strong>void</strong> *receiver = zmq_socket (context, ZMQ_PAIR);
+zmq_bind (receiver, "inproc:<i>//step3");</i>
+pthread_t thread;
+pthread_create (&amp;thread, NULL, step2, context);
+
+<i>// Wait for signal</i>
+<strong>char</strong> *string = s_recv (receiver);
+free (string);
+zmq_close (receiver);
+
+printf ("Test successful!\n");
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这是在ØMQ中一个经典的多线程模式：
+. 两个线程通过inproc进行通讯，通过一个共享的上下文。
+. 父线程创建一个套接字，把它绑定到一个inproc://末端，接着启动子线程，并传递上下文给它。
+. 子线程创建第二个套接字，将它连接到那个inproc://末端，并且通过信号告诉父线程它已经准备好了。
+请注意，使用这种模式的多线程代码不能扩展到进程。如果你使用了inproc和套接字对，你将建立了一个紧密绑定应用程序（高耦合）。在延迟只管重要的时候这么做。对于大多数一般的应用程序，一个线程使用一个context，通过ipc或者tcp。这样，在需要的时候你就可以很容易的将你线程转换为一个分离的进程或者boxes。</p></div>
+<div class="paragraph"><p>这是我们第一次使用PAIR套接字进行实例。为什么使用PAIR?别的套接字的组合好像也可以工作，但是它们都有副作用，可能干扰信号：
+- 你可以在发送端使用PUSH类型，接收端使用PULL类型。这看起来简单并且可以工作。但是记住，PUSH会将消息负载均衡给所有可用的接收者。如果你偶然的开启了两个接收者（例如，一个正在运行的时候你启动第二个），你可能丢失一般的信号。PAIR模式的优点就是它拒绝一个以上的连接，它是一对独占的。
+-你可以在发送端使用DEALER类型，接收端使用ROUTER类型。尽管ROUTER可以将你的消息封装到一个“信封”里，也就是你的大小为零的信号转换成了一个分段的消息。如果你不关心数据，并且将任何都视为一个有效的信号，并且你从套接字读取不超过一次，都不会有问题。然而，如果你决定发送真实数据，你突然发现ROUTER个你提供了“错误”的消息。DEALER也是负载均衡，也有和PUSH一样的风险。
+- 你可以在发送端使用PUB类型，接收端使用SUB类型。这样将会正确的将你发送的消息进行精确的投递，并且pub也不像PUSH和DEALER那样进行负载均衡。然而，恼人的是你需要给订阅者配置一个空的订阅。更糟糕的是发布-订阅连接的可靠性依赖于链接的时间，在订阅者进行连接的时候，如果正在发布消息，这样就会丢失消息。</p></div>
+<div class="paragraph"><p>由于这些原因，PAIR是协调两个线程的最好选择。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_节点的协调">节点的协调</h3>
+<div class="paragraph"><p>如果你要对节点进行协调，PAIR套接字将不能再很好的工作了。这就是线程和节点使用策略的不同的地方。大部分的节点是变动的而线程是固定的。在远程节点端来或者连接的时候，PAIR套接字不会自动进行重新连接。</p></div>
+<div class="paragraph"><p>在线程和节点之家第二个最重要的区别就是：你一般有数量固定的线程，但是节点数目是变动的。然我们回到先前的场景（天气服务于客户端）并使用节点协调确保订阅者在启动的时候不会丢失消息。
+这就是应用程序将如何工作的：
+- 发布者事先知道并预计有多少订阅者。这仅是从某个地方获取的一个神奇数字。
+- 发布者启动并且等待所有的订阅者的连接。这就是节点的协调部分。每一个订阅者订阅并且通过另外一个套接字告诉发布者它已经准备好了。
+- 当发布者知道所有的订阅者已经连接，它就开始发布数据。</p></div>
+<div class="paragraph"><p>在这种情况下，我们使用一个REQ-REP套接字流同步订阅者与发布者。下面就是发布者：</p></div>
+<div class="paragraph"><p>syncpub: Synchronized publisher in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Synchronized publisher</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<i>// We wait for 10 subscribers</i>
+#define SUBSCRIBERS_EXPECTED 10
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Socket to talk to clients</i>
+<strong>void</strong> *publisher = zmq_socket (context, ZMQ_PUB);
+zmq_bind (publisher, "tcp:<i>//*:5561");</i>
+
+<i>// Socket to receive signals</i>
+<strong>void</strong> *syncservice = zmq_socket (context, ZMQ_REP);
+zmq_bind (syncservice, "tcp:<i>//*:5562");</i>
+
+<i>// Get synchronization from subscribers</i>
+printf ("Waiting <strong>for</strong> subscribers\n");
+<strong>int</strong> subscribers = 0;
+<strong>while</strong> (subscribers &lt; SUBSCRIBERS_EXPECTED) {
+<i>// - wait for synchronization request</i>
+<strong>char</strong> *string = s_recv (syncservice);
+free (string);
+<i>// - send synchronization reply</i>
+s_send (syncservice, "");
+subscribers++;
+}
+<i>// Now broadcast exactly 1M updates followed by END</i>
+printf ("Broadcasting messages\n");
+<strong>int</strong> update_nbr;
+<strong>for</strong> (update_nbr = 0; update_nbr &lt; 1000000; update_nbr++)
+s_send (publisher, "Rhubarb");
+
+s_send (publisher, "END");
+
+zmq_close (publisher);
+zmq_close (syncservice);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>下面是订阅者：
+syncsub: Synchronized subscriber in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Synchronized subscriber</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// First, connect our subscriber socket</i>
+<strong>void</strong> *subscriber = zmq_socket (context, ZMQ_SUB);
+zmq_connect (subscriber, "tcp:<i>//localhost:5561");</i>
+zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, "", 0);
+
+<i>// 0MQ is so fast, we need to wait a while…</i>
+sleep (1);
+
+<i>// Second, synchronize with publisher</i>
+<strong>void</strong> *syncclient = zmq_socket (context, ZMQ_REQ);
+zmq_connect (syncclient, "tcp:<i>//localhost:5562");</i>
+
+<i>// - send a synchronization request</i>
+s_send (syncclient, "");
+
+<i>// - wait for synchronization reply</i>
+<strong>char</strong> *string = s_recv (syncclient);
+free (string);
+
+<i>// Third, get our updates and report how many we got</i>
+<strong>int</strong> update_nbr = 0;
+<strong>while</strong> (1) {
+<strong>char</strong> *string = s_recv (subscriber);
+<strong>if</strong> (strcmp (string, "END") == 0) {
+free (string);
+<strong>break</strong>;
+}
+free (string);
+update_nbr++;
+}
+printf ("Received %d updates\n", update_nbr);
+
+zmq_close (subscriber);
+zmq_close (syncclient);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>这个Linux shell将启动10个订阅者以及发布者：</p></div>
+<div class="paragraph"><p>echo "Starting subscribers&#8230;"
+for a in 1 2 3 4 5 6 7 8 9 10; do
+    syncsub &amp;
+done
+echo "Starting publisher&#8230;"
+syncpub</p></div>
+<div class="paragraph"><p>这给了我们满意的输出：</p></div>
+<div class="paragraph"><p>Starting subscribers&#8230;</p></div>
+<div class="paragraph"><p>Starting publisher&#8230;</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>Received 1000000 updates</p></div>
+<div class="paragraph"><p>我们不能假设订阅完成的连接时，这时REQ/REP对话也完成。也不能保证外部的连接完成的任何顺序，除非你使用inproc的方式传输。所以这个例子在订阅的时候强制做了1秒钟的休眠，发送REQ/RQP同步。</p></div>
+<div class="paragraph"><p>一个更强大的模式可以是：
+- 发布者打开PUB套接字，开始发送“hello”消息（不是数据）
+- 订阅者连接SUB套接字，在接收到一条“hello”消息时它就会通过REQ/REP套接字对告诉发布者。
+- 当发布者有了所有必要的确认，它就开始发送真实数据。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_零拷贝">零拷贝</h3>
+<div class="paragraph"><p>在第一章的时候，关于零拷贝我们取笑你，那时你还是一个新手。如果你坚持到现在，你可能准备使用零拷贝。然而，请记住，这儿有许多路通地狱，过早的优化不是最愉快也不是有益的。试图做零拷贝的时候，如果你的架构不健全，是浪费时间，会使事情变得更糟，而不是更好。</p></div>
+<div class="paragraph"><p>ØMQ消息的应用程序接口让你可以直接通过应用程序的缓冲发送和接受消息而不需要拷贝数据。由于ØMQ在后台发送消息，零拷贝需要一些额外的东西。
+去做零拷贝你可以使用zmq_msg_init_data(3)创建一条消息引用使用malloc()在堆上已经分配的一个数据块，然后传递给zmq_send(3)。当你创建消息并传递给函数，在发送完消息之后，ØMQ调用并释放数据块。这是一个简单的例子，假设“缓冲区”是分配在堆上的1000个字节的块。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><strong>void</strong> my_free (<strong>void</strong> *data, <strong>void</strong> *hint) {
+free (data);
+}
+<i>// Send message from buffer, which we allocate and 0MQ will free for us</i>
+zmq_msg_t message;
+zmq_msg_init_data (&amp;message, buffer, 1000, my_free, NULL);
+zmq_send (socket, &amp;message, 0);</tt></pre>
+</div></div>
+<div class="paragraph"><p>在接收时没有办法做零拷贝：只要你想要存储，ØMQ给你传送一个缓冲区，但是它不会直接写数据到应用程序的缓冲区。</p></div>
+<div class="paragraph"><p>在写时，ØMQ的分段消息可以和零拷贝一起工作。在传统的消息传送中，你需要将不同的缓冲区整理成一个你可以发送的缓冲区。这就意味着数据拷贝。通过ØMQ，你可以将来自不同源的多个缓冲区作为单个的消息部分发送。我们将每个字段作为一个长度限定的帧发送。在应用程序看来，就像一序列的发送和接受调用。但是在内部多个部分写入网络并通过单个系统调用读回，因此非常高效。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_短暂的与持久的套接字">短暂的与持久的套接字</h3>
+<div class="paragraph"><p>在典型的网络中，套接字是API对象，它们的生命周期不会超过使用它的代码。但是，如果你看到一个套接字在某个阶段收集一串资源，网络缓冲区，一个ØMQ用户问，“在我的应用程序崩溃的时候，时候可以有一些方法通过记住这个点，然后找回它们（套接字）？”</p></div>
+<div class="paragraph"><p>这将是非常有用的。这不是万无一失的，但是它可以增强ØMQ的可靠性，特别是在发布-订阅情形下很有用。我们很快就会看到这些。</p></div>
+<div class="paragraph"><p>下面是两个套接字愉快的相互交流天气的通用模型&#8230;</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig24.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>如果接收端(SUB,PULL,REQ)的套接字设置了一个身份，那么发送端（PUB,PUSH,PULL）会在连接没有到达高水位标记时对消息进行缓存。发送端工作的时候不需要设置一个身份。</p></div>
+<div class="paragraph"><p>请记住，ØMQ的传输和接受缓冲区是不可见和自动的，就像TCP的缓冲区。</p></div>
+<div class="paragraph"><p>到现在为止，我们已经使用过的套接字都是短暂（非持久）的。将一个非持久的套接字转换为一个持久的，需要你给一个明确的身份。所有的ØMQ套接字都有身份，但是默认情况下，生成独特通用的表示符(UUID)。</p></div>
+<div class="paragraph"><p>在幕后，对你是不可见的，当一个套接字连接到另外一个，两个套接字交换身份。一般情况下，套接字不会告诉它们的节点他们的身份，所以节点给彼此创建随机的身份：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig25.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>但是一个套接字也可以告诉告诉其它它的身份，在下次它们两相遇的时候&#8230;</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig26.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>下面就是你怎样设置套接字的身份，创建一个持久化的套接字：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>zmq_setsockopt (socket, ZMQ_IDENTITY, "Lucy", 4);</tt></pre>
+</div></div>
+<div class="paragraph"><p>设置一个套接字的身份的一些建议：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+如果你设置一个身份，你必须在连接或者绑定套接字之前。
+</p>
+</li>
+<li>
+<p>
+它的接收器设置了一个身份：它有点像HTTP Web应用程序的cookie会话，除了客户端/发送者采用cookie。
+</p>
+</li>
+<li>
+<p>
+身份是二进制字符串：身份以ØMQ保留的一个零字节开始。
+</p>
+</li>
+<li>
+<p>
+不要使用同一个身份给一个以上的套接字。任何套接字试图使用一个已经被其它套接字使用的身份，它将被端口连接。
+</p>
+</li>
+<li>
+<p>
+在应用程序中创建大量套接字时一定不要使用随机身份。这样将导致大量的持久化的套接字的堆积，最终使节点崩溃。
+</p>
+</li>
+<li>
+<p>
+如果你需要知道你获取消息的节点的身份，只有ROUTER套接字自动的为你做这些。对如其它类型的套接字必须发送明确的地址，并作为消息的一部分。
+</p>
+</li>
+<li>
+<p>
+说到这些，使用持久化的套接字通常是一个坏主意。它使得发送者过度的积累，导致架构很脆弱。如果我们再次使用ØMQ，我们可能无法实现明确的身份。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>见zmq_setsockopt(3)的ZMQ_IDENTITY 套接字摘要选项。请注意，zmq_getsockopt(3)方法给你正在使用的套接字的身份，没有任何可能被连接的节点。</p></div>
+</div>
+<div class="sect2">
+<h3 id="_发布_订阅_消息信封">发布-订阅 消息信封</h3>
+<div class="paragraph"><p>我们简单的看了分段消息。让我们现在看看它们的主要用例，那就是消息信封。一个信封是通过一个方法将地址与数据进行安全的封装，而不用接触数据本身。</p></div>
+<div class="paragraph"><p>在发布-订阅模式中，信封至少持有用于订阅的键，但是你也可以在信封中添加发送者的身份。</p></div>
+<div class="paragraph"><p>如果你想使用发布-订阅信封，你可以自己做这些。它是可选的，在先前的发布-订阅实例中我们没有做这些。使用一个发布-订阅信封只需要在简单的用例上多做一点工作，但是尤其是在真实的情况下它很简洁，键和数据时自然分开的。如果你是直接从应用程序的缓冲区写数据，它也很快。</p></div>
+<div class="paragraph"><p>下面就是一个使用信封的发布-订阅消息：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig27.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>回想一下，发布-订阅是基于前缀消息匹配。将键放入一个单独的帧使得匹配更显而易见，这样使得应用程序没有机会意外的匹配到数据局部分。</p></div>
+<div class="paragraph"><p>这里是一个使用最少代码实现发布-订阅信封的例子。发布者发送两种类型的消息，A与B。信封持有消息类型：</p></div>
+<div class="paragraph"><p>psenvpub: Pub-sub envelope publisher in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Pubsub envelope publisher</i>
+<i>// Note that the zhelpers.h file also provides s_sendmore</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<i>// Prepare our context and publisher</i>
+<strong>void</strong> *context = zmq_init (1);
+<strong>void</strong> *publisher = zmq_socket (context, ZMQ_PUB);
+zmq_bind (publisher, "tcp:<i>//*:5563");</i>
+
+<strong>while</strong> (1) {
+<i>// Write two messages, each with an envelope and content</i>
+s_sendmore (publisher, "A");
+s_send (publisher, "We don't want to see <strong>this</strong>");
+s_sendmore (publisher, "B");
+s_send (publisher, "We would like to see <strong>this</strong>");
+sleep (1);
+}
+<i>// We never get here but clean up anyhow</i>
+zmq_close (publisher);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>订阅者只想要B类型的消息:</p></div>
+<div class="paragraph"><p>psenvsub: Pub-sub envelope subscriber in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Pubsub envelope subscriber</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<i>// Prepare our context and subscriber</i>
+<strong>void</strong> *context = zmq_init (1);
+<strong>void</strong> *subscriber = zmq_socket (context, ZMQ_SUB);
+zmq_connect (subscriber, "tcp:<i>//localhost:5563");</i>
+zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, "B", 1);
+
+<strong>while</strong> (1) {
+<i>// Read envelope with address</i>
+<strong>char</strong> *address = s_recv (subscriber);
+<i>// Read message contents</i>
+<strong>char</strong> *contents = s_recv (subscriber);
+printf ("[%s] %s\n", address, contents);
+free (address);
+free (contents);
+}
+<i>// We never get here but clean up anyhow</i>
+zmq_close (subscriber);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>当你运行这两个程序时，订阅者应该给你展示这些：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[B] We would like to see <strong>this</strong>
+[B] We would like to see <strong>this</strong>
+[B] We would like to see <strong>this</strong>
+[B] We would like to see <strong>this</strong>
+...</tt></pre>
+</div></div>
+<div class="paragraph"><p>这个例子显示了订阅过滤器拒绝或者接收整个部分消息（键加上数据）。你不会得到分段消息的部分，直到永远。</p></div>
+<div class="paragraph"><p>如果你从发布者订阅分段消息并且你想知道它们的身份，因此你可以通过另外的一个套接字给它们发送数据（这是一个十分典型的用例），你创建一个三部分的消息：</p></div>
+<div class="paragraph"><p><span class="image">
+<img src="images/fig28.png" alt="width=100%" />
+</span></p></div>
+<div class="paragraph"><p>持久的订阅者和高水位标记</p></div>
+<div class="paragraph"><p>身份可以在所有类型的套接字上工作。如果你有一个发布和一个订阅套接字，并且订阅者给发布者它的身份，发布者持有数据直到它可以投递数据给订阅者。</p></div>
+<div class="paragraph"><p>这是在同一时间既精彩又可怕。它很精彩是因为更新可以在发布者的传输缓冲区中等待你，知道你连接并收集它们。它可怕是因为默认会快速杀死发布者并锁定你的系统。</p></div>
+<div class="paragraph"><p>如果你使用持久化的订阅者套接字（例如你在订阅者套接字上设置身份），你必须防范发布者套接字上高水位标记(HWM)导致的队列爆炸。</p></div>
+<div class="paragraph"><p>如果你想证明这些，取出第一章的wuclient和wuserver，并且在wuclient连接之前添加下面这行：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>zmq_setsockopt (subscriber, ZMQ_IDENTITY, "Hello", 5);</tt></pre>
+</div></div>
+<div class="paragraph"><p>编译并运行两个程序。它看起来很一般。但是注意发布者使用的内存，你将会看到随着订阅者完成，发布者的内存不断上长。如果你重启订阅者，发布者队列停止增长。只要订阅者离开，它们又开始增长。它会很快压垮你的系统。</p></div>
+<div class="paragraph"><p>我们将先看看怎样做这些，然后如何正确的做这些。这里有一个发布者和订阅者使用节点协调技术实现第二章的同步。发布者发送10条消息，每条消息之间等待一秒。这些等待是为了是你可以使用CTRL-C杀死订阅者，等待几秒钟，接着重启。</p></div>
+<div class="paragraph"><p>下面是发布者：</p></div>
+<div class="paragraph"><p>durapub: Durable publisher in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Publisher for durable subscriber</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Subscriber tells us when it's ready here</i>
+<strong>void</strong> *sync = zmq_socket (context, ZMQ_PULL);
+zmq_bind (sync, "tcp:<i>//*:5564");</i>
+
+<i>// We send updates via this socket</i>
+<strong>void</strong> *publisher = zmq_socket (context, ZMQ_PUB);
+zmq_bind (publisher, "tcp:<i>//*:5565");</i>
+
+<i>// Wait for synchronization request</i>
+<strong>char</strong> *string = s_recv (sync);
+free (string);
+
+<i>// Now broadcast exactly 10 updates with pause</i>
+<strong>int</strong> update_nbr;
+<strong>for</strong> (update_nbr = 0; update_nbr &lt; 10; update_nbr++) {
+<strong>char</strong> string [20];
+sprintf (string, "Update %d", update_nbr);
+s_send (publisher, string);
+sleep (1);
+}
+s_send (publisher, "END");
+
+zmq_close (sync);
+zmq_close (publisher);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>下面是订阅者：
+durasub: Durable subscriber in C</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>//</i>
+<i>// Durable subscriber</i>
+<i>//</i>
+#include "zhelpers.h"
+
+<strong>int</strong> main (<strong>void</strong>)
+{
+<strong>void</strong> *context = zmq_init (1);
+
+<i>// Connect our subscriber socket</i>
+<strong>void</strong> *subscriber = zmq_socket (context, ZMQ_SUB);
+zmq_setsockopt (subscriber, ZMQ_IDENTITY, "Hello", 5);
+zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, "", 0);
+zmq_connect (subscriber, "tcp:<i>//localhost:5565");</i>
+
+<i>// Synchronize with publisher</i>
+<strong>void</strong> *sync = zmq_socket (context, ZMQ_PUSH);
+zmq_connect (sync, "tcp:<i>//localhost:5564");</i>
+s_send (sync, "");
+
+<i>// Get updates, exit when told to do so</i>
+<strong>while</strong> (1) {
+<strong>char</strong> *string = s_recv (subscriber);
+printf ("%s\n", string);
+<strong>if</strong> (strcmp (string, "END") == 0) {
+free (string);
+<strong>break</strong>;
+}
+free (string);
+}
+zmq_close (sync);
+zmq_close (subscriber);
+zmq_term (context);
+<strong>return</strong> 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>要运行这些，开启发布者，接着手机订阅者，每一个有自己的窗口。允许订阅者收集一到两条消息，接着使用CTRL-C终止它。数到三，接着重启它。你会看到下面这些：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ durasub
+Update 0
+Update 1
+Update 2
+^C
+$ durasub
+Update 3
+Update 4
+Update 5
+Update 6
+Update 7
+^C
+$ durasub
+Update 8
+Update 9
+END</tt></pre>
+</div></div>
+<div class="paragraph"><p>为了看出差别，在订阅者（代码）中注释掉设置套接字身份的行，再试一次。你将会看到它会丢失信息。设置身份可以将一个短暂的订阅者变成一个持久的订阅者。在实践中你需要小心的选择身份，无论是从配置文件，还是申城UUID或者是存储在某个地方。</p></div>
+<div class="paragraph"><p>当我们给发布类型套接字设置一个高水位标记(HWM)时，发布者不再在那存储许多消息。让我们测试一下，在套接字开始发布之前，将发布者的高水位标记（HWM）设为2条消息。</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>uint64_t hwm = 2;
+zmq_setsockopt (publisher, ZMQ_HWM, &amp;hwm, <strong>sizeof</strong> (hwm));</tt></pre>
+</div></div>
+<div class="paragraph"><p>现在开始运行我们的测试，在两秒钟暂停之后，我们杀死并重启订阅者，将看到如下信息：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ durasub
+Update 0
+Update 1
+^C
+$ durasub
+Update 2
+Update 3
+Update 7
+Update 8
+Update 9
+END</tt></pre>
+</div></div>
+<div class="paragraph"><p>仔细看：不断为我们维持两条消息（2和3），然后消息之间就有一些差距，接着又是新的更新。高水位标记（HWM）导致ØMQ丢弃消息而不能放入队列，ØMQ 参考手册称这叫做“异常条件”。</p></div>
+<div class="paragraph"><p>简言之，如果你使用订阅者身份，你必须在发布者套接字上设置高水位标记，否则将导致服务器有内存溢出而崩溃的风险。然而，还有一个出路。ØMQ提供一种叫做“交换区”的东西，也就是使用磁盘文件保存不能存储在队列中的消息。它非常简单就可用：</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt><i>// Specify swap space in bytes</i>
+uint64_t swap = 25000000;
+zmq_setsockopt (publisher, ZMQ_SWAP, &amp;swap, <strong>sizeof</strong> (swap));</tt></pre>
+</div></div>
+<div class="paragraph"><p>在实践中，将高水位标记(HWM)设为1，把什么东西抖存在硬盘上，将导致发布订阅系统非常慢。这里是一个比较好的“最佳实践”给发布者去处理未知的订阅者：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+总是在发布套接字上设置一个高水位标记（HWM），根据预期的最大订阅者数量，队列可使用的内存量，以及每条消息的大小。举个例子，如果你期望达到5000个订阅者，有1GB的内存可用，消息大约为200字节。因此一个安全的高水位标记（HWM）应为（1，000，000，000/200/5,000）=1,000.
+</p>
+</li>
+<li>
+<p>
+如果你不想订阅者太慢或者崩溃而丢失消息，你可以根据订阅者的数量，节点的消息速率，消息的平均大小以及你想覆盖的时间设置一个足够大的交换区去处理节点。举个例子，如果有5,0000个订阅者，每秒钟10,000条大小大约为200字节的消息进入，你将每秒钟将需要100MB的磁盘空间。为了覆盖一分钟的中断，因此你需要6GB的磁盘空间，且它必须要快，但是这是一个不同的故事。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>持久订阅的一些注意事项：</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+根据订阅者的生存时间，更新的频率，网络缓冲区的大小，你使用的传输协议，数据肯能会丢失。持久化的订阅者比暂时性的更可靠，但是它们不是完美的。
+</p>
+</li>
+<li>
+<p>
+交换文件是不可恢复的，因此一个发布者死掉或者重启，它将会丢失在传输缓存以及网络I/O缓存的数据。
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>使用高水位标记（HWM）选项的注意事项:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+这对单个套接字的传送和接收缓冲区都有影响。一些套接字（PUB，PUSH）只有传送缓冲区。一些套接字（SUB，PULL，REP）只有接收缓冲区。一些套接字（DEALER，ROUTER，PAIR）传送和接收缓冲区都有。
+</p>
+</li>
+<li>
+<p>
+当你的套接字到达它的套接字高水位标记，根据套接字类型，它要么被阻塞要么丢弃数据。PUB类型的套接字在达到高水位标记时将丢弃数据，而其它类型的套接字将会被阻塞。
+</p>
+</li>
+<li>
+<p>
+通过inproc传输，发送者和接收者共享同一个缓冲区，因此真真实的高水位标记（HWM）是两边之和。实际上，这就意味着一边没有设置HWM，缓冲区的大小是没有限制的。
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_显露的必要性">显露的必要性</h3>
+<div class="paragraph"><p>ØMQ就像一箱可以搭在一起的挂件，唯一的限制就是你的想像力和清醒的头脑。</p></div>
+<div class="paragraph"><p>可扩展的弹性架构令你大开眼界。首先你可能需要一到两杯咖啡。不要犯了我曾经犯过的错误：买了标有“Entkoffeiniert”的异国风味的德国咖啡。这并不意味着“可口”。可扩展的弹性架构并不是一个新的概念-基于流的编程和像Erlang语言那样的工作方式，但是ØMQ使得它比以往任何时候更容易使用。</p></div>
+<div class="paragraph"><p>就像Gonzo Diethelm 所说的：我的感觉可以用这句话来概括：“如果ØMQ不存在，就必须创造”。意思就是ØMQ在我的大脑中酝酿了多年，并作出即时的感觉&#8230;ØMQ在我看来现在是有"显露的必要性".</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2011-09-15 09:23:51 CST
+</div>
+</div>
+</body>
+</html>
