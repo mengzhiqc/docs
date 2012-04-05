@@ -17,7 +17,7 @@ Windows
 - Wait for several minitus and you can clone repository from Anjuke Git Repository
 - Details Install Method , You can refer github help document - http://help.github.com/win-set-up-git/
 ==================================================
-.Pics
+.Graphics
 image::../images/bootcamp_1_win_install_1.jpg[pic1]
 image::../images/bootcamp_1_win_install_2.jpg[pic1]
 image::../images/bootcamp_1_win_install_3.jpg[pic1]
@@ -38,4 +38,8 @@ Linux
 =====================================
 
 Install Egit For Eclipse
+- Open Help->Eclipse Marketplace->Search Egit->Install Egit
 
+.Graphics
+image::../images/egit01.jpg[egit01]
+image::../images/egit02.jpg[egit01]
