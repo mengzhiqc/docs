@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<article lang="en">
+<articleinfo>
+    <date>2012-04-16</date>
+</articleinfo>
+<section id="_aifang_trip">
+<title>Aifang-Trip</title>
+<formalpara><title>Step 1</title><para>check aifang-core/config/database  database:bbs_slave .
+Detail:
+
+$config[<emphasis>bbs_slave</emphasis>] = array(
+    <emphasis>dsn</emphasis>&#8658;'mysql:host=10.10.8.21;port=3307;dbname=bbs_db',
+    <emphasis>username</emphasis> &#8658; <emphasis>readonly</emphasis>,
+    <emphasis>password</emphasis> &#8658; <emphasis>aN2jU3ke</emphasis>,</para></formalpara>
+<literallayout class="monospaced">'init_attributes' =&gt; array(),
+'init_statements' =&gt; array('SET CHARACTER SET utf8','SET NAMES utf8'),</literallayout>
+<literallayout class="monospaced">    'default_fetch_mode' =&gt; $default_fetch_mode
+);</literallayout>
+<formalpara><title>Step 2</title><para>update app-group-shared in /home/www/release/app-3rd/   control-version: v2012-04_01</para></formalpara>
+<formalpara><title>Step 3</title><para>mkdir /home/www/releases/app-3rd/app-faq-shared
+svn co <ulink url="http://svn.dev.aifang.com/sites/aifang/app-3rd/app-faq-shared/v2012-03_01/">http://svn.dev.aifang.com/sites/aifang/app-3rd/app-faq-shared/v2012-03_01/</ulink> app-faq-shared   modify the deploy shell</para></formalpara>
+<formalpara><title>Step 4</title><para>copy <subscript>/config/v2/faq/config/* to </subscript>/config/v2/faq-shared/config/*  remember that!!!! mkdir faq-shared</para></formalpara>
+<tip><simpara>Have Done At 11:35</simpara></tip>
+<note><simpara>all above should complete before 3pm</simpara></note>
+<formalpara><title>Step 5</title><para>modify the ~/config/v2/aifang-web/index.php:
+    -   Check:define("FAQ_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ-SHARED_RELEASE_VERSION")));
+        -  [$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   before  APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+        -  [$G_CONF_PATH] ?</para></formalpara>
+<formalpara><title>Step 6</title><para>modify the ~/config/v2/aifang-trip/index.php:
+        -       Check:define("FAQ_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ-SHARED_RELEASE_VERSION")));</para></formalpara>
+<itemizedlist>
+<listitem>
+<simpara>
+[$G_LOAD_PATH] Insert APP_PATH."../app-aifang-group",
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+[$G_LOAD_PATH] Insert APP_PATH."../app-aifang-wenda",
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+[$G_LOAD_PATH] Insert APP_PATH."../app-group-shared",
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+[$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   before  APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+[$G_CONF_PATH] ?
+</simpara>
+</listitem>
+</itemizedlist>
+<formalpara><title>Step 7</title><para>modify the ~/config/v2/aifang-my/index.php:
+        -       Check:define("FAQ_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ_RELEASE_VERSION")));
+        -       Check:define("FAQ_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ-SHARED_RELEASE_VERSION")));
+        -       Check:define("GROUP_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/GROUP-SHARED_RELEASE_VERSION")));
+        -       [$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq/".FAQ_VERSION."/",
+        -       [$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   before  APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+        -       [$G_CONF_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   after app-aifang-core/config
+        -   [$G_CONF_PATH] Insert  APP_PATH."../../app-3rd/app-group-shared/".GROUP_SHARED_VERSION."/",</para></formalpara>
+</section>
+</article>

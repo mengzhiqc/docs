@@ -34,12 +34,195 @@ Linux
 .Steps
 =====================================
 - aptitude install git
-- Source Method:
 =====================================
 
 Install Egit For Eclipse
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 - Open Help->Eclipse Marketplace->Search Egit->Install Egit
 
 .Graphics
 image::../images/egit01.jpg[egit01]
 image::../images/egit02.jpg[egit01]
+
+How to clone a repository to local
+----------------------------------
+
+- right click on project explorer
+
+.Graphics
+image::../images/import01.png[]
+
+- select 'Projects from Git'
+
+.Graphics
+image::../images/import02.png[]
+
+- input git repository uri
+
+.Graphics
+image::../images/import03.png[]
+
+- select branches clone from remote repository
+
+.Graphics
+image::../images/import04.png[]
+
+- select local destination
+
+.Graphics
+image::../images/import05.png[]
+
+- create a new project
+
+.Graphics
+image::../images/import06.png[]
+image::../images/import07.png[]
+
+- select the project path
+[NOTE]
+ The path must the same as the local repository
+
+
+.Graphics
+image::../images/import08.png[]
+
+- clone successfully
+
+.Graphics
+image::../images/import08.png[]
+
+Create a new branch
+-------------------
+- switch to a new branch
+
+.Graphics
+image::../images/branch01.png[]
+
+- input your new branch's name and choose rebase pull stategy
+
+.Graphics
+image::../images/branch02.png[]
+
+get current week release
+-------------------------
+- create a branch
+- choose remote refs to create current week release
+
+.Graphics
+image::../images/clonerelease01.png[]
+
+[NOTE]
+pull strategy choose *Rebase*
+
+
+Add new files
+-------------
+- add new remote alias
+
+.Graphics
+image::../images/addfile01.png[]
+
+- commit the modify
+
+.Graphics
+image::../images/addfile02.png[]
+
+- push to remote repository
+[TIP]
+choose the remote repository you specified
+
+.Graphics
+image::../images/addfile03.png[]
+image::../images/addfile04.png[]
+
+Modify files
+------------
+
+- commit the modify
+
+.Graphics
+ image::../images/modifyfile01.png[]
+
+Rebase branch
+------------
+
+- choose the menu *Rebase*
+ 
+.Graphics
+image::../images/rebase01.png[]
+
+- choose the branch we want to rebase, usually, we choose origin/master
+
+.Graphics
+image::../images/rebase02.png[]
+
+Merge branch to master
+----------------------
+
+- checkout to master branch
+- choose the branch you want to merge
+
+.Graphics
+image::../images/merge01.png[]
+
+Show logs
+---------
+
+.Graphics
+image::../images/showlog01.png[]
+image::../images/showlog02.png[]
+
+HotFix
+------
+
+- checkout to  release-2012_15
+- create a new branch hotfix01 from release-2012_15
+
+.Graphic
+image::../images/hotfix01.png[]
+
+- fix bug and commit
+
+- switch to release-2012_15
+
+- merge hotfix to release
+
+.Graphic
+image::../images/hotfix02.png[]
+
+- push release to remote repository 
+
+- go back to hotfix01
+
+- rebase hotfix01
+
+.Graphic
+image::../images/hotfix03.png[]
+
+- switch to master and merge hotfix01 to master
+
+.Graphic
+image::../images/hotfix04.png[]
+
+- push master to remote repository
+
+.Graphic
+image::../images/hotfix05.png[]
+
+
+resolve conflicts
+-----------------
+
+[NOTE] 
+resolve confilicts in git is similar as svn
+
+.Graphics
+image::../images/conflict01.png[]
+
+- then add to index to reslove conflicts
+
+.Graphics
+image::../images/conflict02.png[]
+
+- then commit and push to remote repository

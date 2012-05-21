@@ -1,0 +1,95 @@
+
+Aifang-Trip
+-----------
+
+.Step 1
+check aifang-core/config/database  database:bbs_slave . 
+Detail:
+// read slave数据库设置
+$config['bbs_slave'] = array(
+    'dsn'=>'mysql:host=10.10.8.21;port=3307;dbname=bbs_db',
+    'username' => 'readonly',
+    'password' => 'aN2jU3ke',
+
+    'init_attributes' => array(),
+    'init_statements' => array('SET CHARACTER SET utf8','SET NAMES utf8'),
+
+    'default_fetch_mode' => $default_fetch_mode
+);
+
+.Step 2
+
+update app-group-shared in /home/www/release/app-3rd/   control-version: v2012-04_01
+
+.Step 3
+
+mkdir /home/www/releases/app-3rd/app-faq-shared
+svn co http://svn.dev.aifang.com/sites/aifang/app-3rd/app-faq-shared/v2012-03_01/ app-faq-shared   modify the deploy shell 
+
+.Step 4
+copy ~/config/v2/faq/config/* to ~/config/v2/faq-shared/config/*  remember that!!!! mkdir faq-shared
+
+[TIP]
+Have Done At 11:35
+
+[NOTE]
+all above should complete before 3pm
+
+.Step 5 
+Build ampq.php in ~/config/v2/faq-shared/config
+add follow lines:
+<?php
+//ampq faq默认配置 
+$config['faq_mq_host']='10.10.6.213';
+$config['faq_mq_port']='5672';
+$config['faq_mq_user']='guest';
+$config['faq_mq_pass']='guest';
+
+//ampq 原来叫aifang_mq 
+$config['anjuke_mq']=array(
+        'host'=>'10.10.6.213',
+        'port'=>'5672',
+        'user'=>'guest',
+        'pass'=>'guest'
+);
+
+
+.Step 6
+
+modify the ~/config/v2/aifang-web/index.php:
+Remind!!:We Should Change The Order Of LOAD_PATH
+    - 	Check:define("FAQ_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ-SHARED_RELEASE_VERSION")));
+	-  [$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   before  APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+    -  [$G_CONF_PATH] "/home/www/config/v2/faq-shared/config/",
+	-  [$G_CONF_PATH] ?
+	
+.Step 7
+
+modify the ~/config/v2/aifang-trip/index.php:
+	- 	Check:define("FAQ_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ-SHARED_RELEASE_VERSION")));
+	- 	Check:define("GROUP_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/GROUP-SHARED_RELEASE_VERSION")));
+
+	-  [$G_LOAD_PATH] APP_PATH."../../../app-3rd/app-group-shared/".GROUP_SHARED_VERSION."/",
+	-  [$G_LOAD_PATH] Insert APP_PATH."../app-aifang-wenda",
+	-  [$G_LOAD_PATH] Insert APP_PATH."../app-group-shared",
+	-  [$G_LOAD_PATH] APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+	-  [$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   before  APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+
+
+	-  [$G_CONF_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/"
+	-  [$G_CONF_PATH] ?
+	-  [$G_CONF_PATH] "/home/www/config/v2/faq/config/",
+    -  [$G_CONF_PATH] "/home/www/config/v2/faq-shared/config/",
+    -  [$G_CONF_PATH] "/home/www/config/v2/aifang-group/config/",
+	
+.Step 8
+
+modify the ~/config/v2/aifang-my/index.php:
+	-	Check:define("FAQ_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ_RELEASE_VERSION")));
+	- 	Check:define("FAQ_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/FAQ-SHARED_RELEASE_VERSION")));
+	-	Check:define("GROUP_SHARED_VERSION",trim(file_get_contents("/home/www/config/machine/GROUP-SHARED_RELEASE_VERSION")));	
+	-	[$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq/".FAQ_VERSION."/",
+	-	[$G_LOAD_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",   before  APP_PATH."../../../app-3rd/app-faq/".FAQ_VERSION."/",
+	-	[$G_CONF_PATH] Insert  APP_PATH."../../app-3rd/app-faq-shared/".FAQ_SHARED_VERSION."/",	  after app-aifang-core/config
+	-   [$G_CONF_PATH] Insert  APP_PATH."../../app-3rd/app-group-shared/".GROUP_SHARED_VERSION."/",
+
