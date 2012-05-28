@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<article lang="en">
+<articleinfo>
+    <title>PHP 5.4.0 CHANGELOG</title>
+    <date>May 28th</date>
+    <author>
+        <firstname>Kavin</firstname>
+        <email>kavin@aifang.com</email>
+    </author>
+    <authorinitials>K</authorinitials>
+<revhistory><revision><revnumber>5.4.0</revnumber><date>May 28th</date><authorinitials>K</authorinitials></revision></revhistory>
+</articleinfo>
+<section id="_2012年3月1日">
+<title>2012年3月1日</title>
+<simpara>autoconf 2.59+ is now supported (and required) for generating the configure script with ./buildconf. Autoconf 2.60+ is desirable otherwise the configure help order may be incorrect.
+autoconf需要版本2.5.9以上来使用./buildconf生成configure脚本。建议使用2.60以上的版本，否则configure的帮助命令configure --help可能会出错。</simpara>
+<simpara>Removed legacy features
+移除的旧的特性:</simpara>
+<screen>break/continue $var syntax.
+break或者continue  后面跟数字变量(例：break 1;表示break一层，break 2;表示break二层)
+
+Safe mode and all related ini options.
+安全模式和相关的ini配置
+
+register_globals and register_long_arrays ini options.
+register_globals和register_long_arrays的ini选项
+
+import_request_variables().
+import_request_variables()函数
+
+allow_call_time_pass_reference
+允许调用时传引用参数
+.
+define_syslog_variables ini option and its associated function.
+define_syslog_variables的ini选项和相关函数
+
+highlight.bg ini option.
+highlight.bg的ini选项
+
+Session bug compatibility mode (session.bug_compat_42 and session.bug_compat_warn ini options).
+Session bug兼容模式
+
+session_is_registered(), session_register() and session_unregister() functions.
+session_is_registered(), session_register() 和 session_unregister()方法
+
+y2k_compliance ini option.
+y2k_compliance的ini选项
+
+magic_quotes_gpc, magic_quotes_runtime and magic_quotes_sybase ini options. get_magic_quotes_gpc, get_magic_quotes_runtime are kept but always return false, set_magic_quotes_runtime raises an E_CORE_ERROR.
+magic_quotes_gpc,magic_quotes_runtime和magic_quotes_sybase的ini选项，get_magic_quotes_gpc,get_magic_quotes_runtime保留但总是返回false, set_magic_quotes_runtime将产生E_CORE_ERROR级别的错误
+
+Removed support for putenv("TZ=..") for setting the timezone.
+移除对putenv("TZ=..")的支持，该写法用来设置timezone
+
+Removed the timezone guessing algorithm in case the timezone isn't set with date.timezone or date_default_timezone_set(). Instead of a guessed timezone, "UTC" is now used instead.
+移除timezone猜测算法，该猜测算法用于没用设置data.timezone或者date_default_timezone_set()。世界标准时间UTC(Coodinated Universal Time)现在作为默认时区。
+
+Moved extensions to PECL
+移动到PECL的扩展
+ext/sqlite. (Note: the ext/sqlite3 and ext/pdo_sqlite extensions are not affected)
+ext/sqlite (注意：ext/sqlite3和ext/pdo_sqlite模块不受影响)
+
+General improvements
+一些改进</screen>
+<simpara>Added short array syntax support ([1,2,3]), see UPGRADING guide for full details.
+添加短数组的语法支持 形如[1,2,3] ps.终于可以像js一样写数组了</simpara>
+<simpara>Added binary numbers format (0b001010).
+添加二进制数字格式(0b001010)</simpara>
+<simpara>添加Class::{表达式}()的支持 ps. 这样Class::{get_class_name()}()就不是梦了。</simpara>
+<simpara>Added multibyte support by default. Previously php had to be compiled with --enable-zend-multibyte. Now it can be enabled or disabled through zend.multibyte directive in php.ini.
+默认支持多字节。原先版本php需要在编译的时候添加--enable-zend_multibyte.现在可以通过php.ini的zend.multibyte选项来设置是否支持</simpara>
+<simpara>Removed compile time dependency from ext/mbstring.
+从ext/mbstring移除编译时依赖</simpara>
+<simpara>Added support for Traits.
+添加Traits支持 ps. Traits类似与class，不过它仅仅是方法的简单集合，具体可以查看http://php.net/manual/en/language.oop5.traits.php</simpara>
+<simpara>Added closure $this support back.
+添加闭包内$this的返回支持</simpara>
+<simpara>Added array dereferencing support.
+添加数组的非关联支持
+例：
+function fruit () {
+        return array(<emphasis>a</emphasis> &#8658; <emphasis>apple</emphasis>, <emphasis>b</emphasis> &#8658; <emphasis>banana</emphasis>);
+}</simpara>
+<literallayout class="monospaced">echo fruit()['a'];</literallayout>
+<simpara>Added callable typehint.
+添加callable的类型提示。</simpara>
+<simpara>Added indirect method call through array. #47160.
+添加从数组直接调用方法的支持。现在可以这样了：$object&#8594;method()[0]&#8594;otherMethod();</simpara>
+<simpara>Added DTrace support.
+添加对Dtrace的支持</simpara>
+<simpara>Added class member access on instantiation (e.g. (new foo)&#8594;bar()) support.
+添加初始化过程调用类成员的支持，如 (new foo)&#8594;bar()</simpara>
+<simpara>&lt;?= is now always available regardless of the short_open_tag setting.
+&lt;?=现在总是有效，不管short_open_tag是否设置</simpara>
+<simpara>Implemented Zend Signal Handling (configurable option --enable-zend-signals, off by default).
+扩展Zend的信号处理（配置选项 --enable-zend-signals,默认关闭）</simpara>
+<simpara>Improved output layer, see README.NEW-OUTPUT-API for internals.
+改善输出层，详见README.NEW-OUTPUT-API</simpara>
+<simpara>Improved unix build system to allow building multiple PHP binary SAPIs and one SAPI module the same time. #53271, #52419.
+改善unix构建系统上允许同一时间创建多个PHP二进制SAPI和一个SAPI模块</simpara>
+<simpara>Improved the warning message of incompatible arguments.
+改善不兼容参数的警告信息</simpara>
+<simpara>Improved ternary operator performance when returning arrays.
+提升三元运算返回数组的性能</simpara>
+<simpara>Changed silent conversion of array to string to produce a notice.
+数组到字符的静态转换会产生一个notice</simpara>
+<simpara>Changed default value of "default_charset" php.ini option from ISO-8859-1 to UTF-8.
+php.ini中的default_charset选项默认值从ISO-8859-1到UTF-8</simpara>
+<simpara>Changed E_ALL to include E_STRICT.
+E_ALL的错误包含E_STRICT级别错误</simpara>
+<simpara>Disabled windows CRT warning by default, can be enabled again using the ini directive windows_show_crt_warnings.
+默认禁用windows的CRT警告，可以用ini里的windows_show_crt_warnings指令重新打开</simpara>
+<simpara>Improved Zend Engine memory usage
+改善Zend Engine的内存使用</simpara>
+<simpara>Improved parse error messages.
+改善错误信息解析</simpara>
+<simpara>Improved core functions
+改善核心函数</simpara>
+<simpara>Added hex2bin() function.
+添加hex2bin()函数</simpara>
+<simpara>number_format() no longer truncates multibyte decimal points and thousand separators to the first byte. #53457.
+number_format()不再切割多字节小数点和首字节千位分隔符</simpara>
+<simpara>Added support for object references in recursive serialize() calls. #36424.
+添加迭代serialize()方法中对象引用的调用</simpara>
+<simpara>Added support for SORT_NATURAL and SORT_FLAG_CASE in array sort functions (sort, rsort, ksort, krsort, asort, arsort and array_multisort). #55158.
+添加数组sort函数（sort, rsort, ksort, krsort, asort, arsort and array_multisort）中SORT_NATURAL和SORT_FLAG_CASE 参数的支持</simpara>
+<simpara>Added stream metadata API support and stream_metadata() stream class handler.</simpara>
+<simpara>User wrappers can now define a stream_truncate() method that responds to truncation, e.g. through ftruncate(). #53888.
+Improved unserialize() performance.
+Changed array_combine() to return empty array instead of FALSE when both parameter arrays are empty. #34857.
+Improved generic SAPI support
+Added $<emphasis>SERVER[<emphasis>REQUEST_TIME_FLOAT</emphasis>] to include microsecond precision.
+Added max_input_vars directive to prevent attacks based on hash collisions.
+Added header_register_callback() which is invoked immediately prior to the sending of headers and after default headers have been added.
+Added http_response_code() function. #52555.
+Fixed bug #55500 (Corrupted $_FILES indices lead to security concern).
+Fixed bug #54374 (Insufficient validating of upload name leading to corrupted $_FILES indices).
+Improved Apache SAPI
+Fixed bug #60205 (possible integer overflow in content_length).
+Improved CLI SAPI
+Added friendly log messages. #55109.
+Added built-in web server that is intended for testing purpose.
+Added command line option --rz &lt;name&gt; which shows information of the named Zend extension.
+Interactive readline shell improvements
+Added "cli.pager" php.ini setting to set a pager for output.
+Added "cli.prompt" php.ini setting to configure the shell prompt.
+Added shortcut #inisetting=value to change ini settings at run-time.
+Changed shell not to terminate on fatal errors.
+Interactive shell works with shared readline extension. #53878.
+Fixed bug #60591 (Memory leak when access a non-exists file).
+Fixed bug #60523 (PHP Errors are not reported in browsers using built-in SAPI).
+Fixed bug #60477 (Segfault after two multipart/form-data POST requests, one 200 RQ and one 404).
+Implement #60390 (Missing $_SERVER[<emphasis>SERVER_PORT</emphasis>]).
+Fixed bug #60180 ($_SERVER["PHP_SELF"] incorrect).
+Fixed bug #60159 (Router returns false, but POST is not passed to requested resource).
+Fixed bug #60146 (Last 2 lines of page not being output).
+Fixed bug #60115 (memory definitely lost in cli server).
+Fixed bug #60112 (If URI does not contain a file, index.php is not served).
+Fixed bug #55759 (memory leak when using built-in server).
+Fixed bug #55755 (SegFault when outputting header WWW-Authenticate).
+Fixed bug #55747 (request headers missed in $_SERVER).
+Fixed bug #55726 (Changing the working directory makes router script inaccessible).
+Fixed bug #55463 (cli-server missing _SERVER[REMOTE_ADDR]).
+Fixed bug #55450 (Built in web server not accepting file uploads).
+Fixed bug #55423 (cli-server could not output correctly in some case).
+Improved CGI/FastCGI SAPI
+Added apache compatible functions: apache_child_terminate(), getallheaders(), apache_request_headers() and apache_response_headers().
+Improved performance of FastCGI request parsing.
+Fixed reinitialization of SAPI callbacks after php_module_startup().
+Improved PHP-FPM SAPI
+Added partial syslog support (on error_log only). #52052.
+Added .phar to default authorized extensions.
+Added process.max to control the number of process FPM can fork. #55166.
+Dropped restriction of not setting the same value multiple times, the last one holds.
+Lowered default value for Process Manager. #54098.
+Enhanced security by limiting access to user defined extensions. #55181.
+Enhanced error log when the primary script can&#8217;t be open. #60199.
+Removed EXPERIMENTAL flag.
+Improved Litespeed SAPI
+Improved BCmath extension
+Improved CURL extension
+Added support for CURLOPT_MAX_RECV_SPEED_LARGE and CURLOPT_MAX_SEND_SPEED_LARGE. #51815.
+Improved Date extension
+Added the + modifier to parseFromFormat to allow trailing text in the string to parse without throwing an error.
+Improved DBA extension
+Added Tokyo Cabinet abstract DB support.
+Added Berkeley DB 5 support.
+Improved DOM extension
+Added the ability to pass options to loadHTML.
+Improved filesystem functions
+scandir() now accepts SCANDIR_SORT_NONE as a possible sorting_order value. #53407.
+Improved fileinfo extension
+Fixed possible memory leak in finfo_open().
+Fixed memory leak when calling the Finfo constructor twice.
+Fixed bug #60094 (C++ comment fails in c89).
+Improved HASH extension
+Added Jenkins&#8217;s one-at-a-time hash support.
+Added FNV-1 hash support.
+Made Adler32 algorithm faster. #53213.
+Removed Salsa10/Salsa20, which are actually stream ciphers.
+Fixed bug #60221 (Tiger hash output byte order).
+Improved intl extension
+Added Spoofchecker class, allows checking for visibly confusable characters and other security issues.
+Added Transliterator class, allowing transliteration of strings.
+Added support for UTS #46.
+Fixed memory leak in several Intl locale functions.
+Fixed build on Fedora 15 / Ubuntu 11.
+Fixed bug #55562 (grapheme_substr() returns false on big length).
+Improved JSON extension
+Added new json_encode() option JSON_UNESCAPED_UNICODE. #53946.
+Added JsonSerializable interface.
+Added JSON_BIGINT_AS_STRING, extended json_decode() sig with $options.
+Added support for JSON_NUMERIC_CHECK option in json_encode() that converts numeric strings to integers.
+Added new json_encode() option JSON_UNESCAPED_SLASHES. #49366.
+Added new json_encode() option JSON_PRETTY_PRINT. #44331.
+Improved LDAP extension
+Added paged results support. #42060.
+Improved mbstring extension
+Added Shift_JIS/UTF-8 Emoji (pictograms) support.
+Added JIS X0213:2004 (Shift_JIS-2004, EUC-JP-2004, ISO-2022-JP-2004) support.
+Ill-formed UTF-8 check for security enhancements.
+Added MacJapanese (Shift_JIS) and gb18030 encoding support.
+Added encode/decode in hex format to mb</emphasis>[en|de]code_numericentity().
+Added user JIS X0213:2004 (Shift_JIS-2004, EUC-JP-2004, ISO-2022-JP-2004) support.
+Added the user defined area for CP936 and CP950.
+Fixed possible crash in mb_ereg_search_init() using empty pattern.
+Fixed bug #60306 (Characters lost while converting from cp936 to utf8).
+Improved MS SQL extension
+Fixed bug #60267 (Compile failure with freetds 0.91).
+Improved MySQL extensions
+MySQL: Deprecated mysql_list_dbs(). #50667.
+mysqlnd: Added named pipes support. #48082.
+MySQLi: Added iterator support in MySQLi. mysqli_result implements Traversable.
+PDO_mysql: Removed support for linking with MySQL client libraries older than 4.1.
+ext/mysql, mysqli and pdo_mysql now use mysqlnd by default.
+Fixed bug #55473 (mysql_pconnect leaks file descriptors on reconnect).
+Fixed bug #55653 (PS crash with libmysql when binding same variable as param and out).
+Improved OpenSSL extension
+Added AES support. #48632.
+Added a "no_ticket" SSL context option to disable the SessionTicket TLS extension. #53447.
+Added no padding option to openssl_encrypt()/openssl_decrypt().
+Use php&#8217;s implementation for Windows Crypto API in openssl_random_pseudo_bytes.
+On error in openssl_random_pseudo_bytes() made sure we set strong result to false.
+Fixed segfault with older versions of OpenSSL.
+Fixed possible attack in SSL sockets with SSL 3.0 / TLS 1.0. CVE-2011-3389.
+Improved Oracle Database extension (OCI8)
+Increased maximum Oracle error message buffer length for new 11.2.0.3 size.
+Improved internal initalization failure error messages.
+Fixed bug #59985 (show normal warning text for OCI_NO_DATA).
+Improved PDO
+Fixed PDO objects binary incompatibility.
+PDO DBlib driver
+Added nextRowset support.
+Fixed bug #60033 (Incorrectly merged PDO dblib patches break uniqueidentifier column type).
+Fixed bug #50755 (PDO DBLIB Fails with OOM).
+Improved Pdo Firebird driver
+Fixed bug #53280 (segfaults if query column count less than param count).
+Fixed bug #48877 ("bindValue" and "bindParam" do not work for PDO Firebird).
+Fixed bug #47415 (segfaults when passing lowercased column name to bindColumn).
+Improved PostgreSQL extension
+Added support for "extra" parameter for PGNotify().
+Improved preg extension
+Changed third parameter of preg_match_all() to optional. #53238.
+Improved readline extension
+Fixed bug #54450 (Enable callback support when built against libedit).
+Improved Reflection extension
+Added ReflectionClass::newInstanceWithoutConstructor() to create a new instance of a class without invoking its constructor. #55490.
+Added ReflectionExtension::isTemporary() and ReflectionExtension::isPersistent() methods.
+Added ReflectionZendExtension class.
+Added ReflectionClass::isCloneable().
+Fixed bug #60367 (Reflection and Late Static Binding).
+Fixed bug #60357 (<emphasis>toString() method triggers E_NOTICE "Array to string conversion").
+Improved Session extension
+Expose session status via new function, session_status. #52982.
+Added support for object-oriented session handlers.
+Added support for storing upload progress feedback in session data.
+Changed session.entropy_file to default to /dev/urandom or /dev/arandom if either is present at compile time.
+Fixed bug #60860 (session.save_handler=user without defined function core dumps).
+Implement #60551 (session_set_save_handler should support a core&#8217;s session handler interface).
+Fixed bug #60640 (invalid return values).
+Improved SNMP extension
+Added OO API. #53594 (php-snmp rewrite).
+Sanitized return values of existing functions. Now it returns FALSE on failure.
+Allow <subscript>infinite OIDs in GET/GETNEXT/SET queries. Autochunk them to max_oids upon request.
+Introducing unit tests for extension with </subscript>full coverage. IPv6 support. (#42918)
+Way of representing OID value can now be changed when SNMP_VALUE_OBJECT is used for value output mode. Use or&#8217;ed SNMP_VALUE_LIBRARY(default if not specified) or SNMP_VALUE_PLAIN. (#54502)
+Fixed bug #60749 (SNMP module should not strip non-standard SNMP port from hostname).
+Fixed bug #60585 (php build fails with USE flag snmp when IPv6 support is disabled).
+Fixed bug #53862 (snmp_set_oid_output_format does not allow returning to default).
+Fixed bug #51336 (snmprealwalk (snmp v1) does not handle end of OID tree correctly).
+Fixed bug #46065 (snmp_set_quick_print() persists between requests).
+Fixed bug #45893 (Snmp buffer limited to 2048 char).
+Fixed bug #44193 (snmp v3 noAuthNoPriv doesn&#8217;t work).
+Improved SOAP extension
+Added new SoapClient option "keep_alive". #60329.
+Fixed basic HTTP authentication for WSDL sub requests.
+Improved SPL extension
+Added RegexIterator::getRegex() method.
+Added SplObjectStorage::getHash() hook.
+Added CallbackFilterIterator and RecursiveCallbackFilterIterator.
+Added missing class_uses(..) as pointed out by #55266.
+Immediately reject wrong usages of directories under Spl(Temp)FileObject and friends.
+FilesystemIterator, GlobIterator and (Recursive)DirectoryIterator now use the default stream context.
+Fixed bug #60201 (SplFileObject::setCsvControl does not expose third argument via Reflection).
+Fixed bug #55807 (Wrong value for splFileObject::SKIP_EMPTY).
+Fixed bug #55287 (spl_classes() not includes CallbackFilter classes)
+Improved Sysvshm extension
+Fixed bug #55750 (memory copy issue in sysvshm extension).
+Improved Tidy extension
+Fixed bug #54682 (Tidy::diagnose() NULL pointer dereference).
+Improved Tokenizer extension
+Fixed bug #54089 (token_get_all with regards to </emphasis>halt_compiler is not binary safe).
+Improved XSL extension
+Added XsltProcessor::setSecurityPrefs($options) and getSecurityPrefs() to define forbidden operations within XSLT stylesheets, default is not to enable write operations from XSLT. Fixed bug #54446.
+XSL doesn&#8217;t stop transformation anymore, if a PHP function can&#8217;t be called
+Improved ZLIB extension
+Re-implemented non-file related functionality.
+Fixed bug #55544 (ob_gzhandler always conflicts with zlib.output_compression).</simpara>
+</section>
+</article>
