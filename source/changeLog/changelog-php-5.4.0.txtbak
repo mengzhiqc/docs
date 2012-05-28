@@ -8,56 +8,82 @@ v5.4.0, May 28th
 autoconf 2.59+ is now supported (and required) for generating the configure script with ./buildconf. Autoconf 2.60+ is desirable otherwise the configure help order may be incorrect.
 autoconf需要版本2.5.9以上来使用./buildconf生成configure脚本。建议使用2.60以上的版本，否则configure的帮助命令configure --help可能会出错。
 
+Removed legacy features
+-----------------------
 移除的旧的特性:
 --------------
 
+- break/continue $var syntax.
 - break或者continue  后面跟数字变量(例：break 1;表示break一层，break 2;表示break二层)  
 
+- Safe mode and all related ini options.
 - 安全模式和相关的ini配置
 
+- register_globals and register_long_arrays ini options.
 - register_globals和register_long_arrays的ini选项
 
+- import_request_variables().
 - import_request_variables()函数
 
+- allow_call_time_pass_reference
 - 允许调用时传引用参数
 
+- define_syslog_variables ini option and its associated function.
 - define_syslog_variables的ini选项和相关函数
 
+- highlight.bg ini option.
 - highlight.bg的ini选项
 
+- Session bug compatibility mode (session.bug_compat_42 and session.bug_compat_warn ini options).
 - Session bug兼容模式
 
+- session_is_registered(), session_register() and session_unregister() functions.
 - session_is_registered(), session_register() 和 session_unregister()方法
 
+- y2k_compliance ini option.
 - y2k_compliance的ini选项
 
+- magic_quotes_gpc, magic_quotes_runtime and magic_quotes_sybase ini options. get_magic_quotes_gpc, get_magic_quotes_runtime are kept but always return false, set_magic_quotes_runtime raises an E_CORE_ERROR.
 - magic_quotes_gpc,magic_quotes_runtime和magic_quotes_sybase的ini选项，get_magic_quotes_gpc,get_magic_quotes_runtime保留但总是返回false, set_magic_quotes_runtime将产生E_CORE_ERROR级别的错误
 
-- 移除对putenv("TZ=..")的支持，该写法用来设置timezone
+- Removed support for putenv("TZ=..") for setting the timezone.
+-移除对putenv("TZ=..")的支持，该写法用来设置timezone
 
-- 移除timezone猜测算法，该猜测算法用于没用设置data.timezone或者date_default_timezone_set()。世界标准时间UTC(Coodinated Universal Time)现在作为默认时区。
+- Removed the timezone guessing algorithm in case the timezone isn't set with date.timezone or date_default_timezone_set(). Instead of a guessed timezone, "UTC" is now used instead.
+-移除timezone猜测算法，该猜测算法用于没用设置data.timezone或者date_default_timezone_set()。世界标准时间UTC(Coodinated Universal Time)现在作为默认时区。
 
+- Moved extensions to PECL
 - 移动到PECL的扩展
+- ext/sqlite. (Note: the ext/sqlite3 and ext/pdo_sqlite extensions are not affected)
 - ext/sqlite (注意：ext/sqlite3和ext/pdo_sqlite模块不受影响)
 
+General improvements
+----------------------
 一些改进
 ---------
+-Added short array syntax support ([1,2,3]), see UPGRADING guide for full details.
+-添加短数组的语法支持 形如[1,2,3] ps.终于可以像js一样写数组了
 
-- 添加短数组的语法支持 形如[1,2,3] ps.终于可以像js一样写数组了
+-Added binary numbers format (0b001010).
+-添加二进制数字格式(0b001010)
 
-- 添加二进制数字格式(0b001010)
+-Added support for Class::{expr}() syntax.
+-添加Class::{表达式}()的支持 ps. 这样Class::{get_class_name()}()就不是梦了。
 
-- 添加Class::{表达式}()的支持 ps. 这样Class::{get_class_name()}()就不是梦了。
+-Added multibyte support by default. Previously php had to be compiled with --enable-zend-multibyte. Now it can be enabled or disabled through zend.multibyte directive in php.ini.
+-默认支持多字节。原先版本php需要在编译的时候添加--enable-zend_multibyte.现在可以通过php.ini的zend.multibyte选项来设置是否支持
 
-- 默认支持多字节。原先版本php需要在编译的时候添加--enable-zend_multibyte.现在可以通过php.ini的zend.multibyte选项来设置是否支持
+-Removed compile time dependency from ext/mbstring.
+-从ext/mbstring移除编译时依赖
 
-- 从ext/mbstring移除编译时依赖
+-Added support for Traits.
+-添加Traits支持 ps. Traits类似与class，不过它仅仅是方法的简单集合，具体可以查看http://php.net/manual/en/language.oop5.traits.php
 
-- 添加Traits支持 ps. Traits类似与class，不过它仅仅是方法的简单集合，具体可以查看http://php.net/manual/en/language.oop5.traits.php
+-Added closure $this support back.
+-添加闭包内$this的返回支持
 
-- 添加闭包内$this的返回支持
-
-- 添加数组的非关联支持
+-Added array dereferencing support.
+-添加数组的非关联支持
 
 =======================================================
 例：
@@ -68,47 +94,68 @@ function fruit () {
  echo fruit()['a'];
 ========================================================
 
-- 添加callable的类型提示。
+-Added callable typehint.
+-添加callable的类型提示。
 
-- 添加从数组直接调用方法的支持。现在可以这样了：$object->method()[0]->otherMethod();
+-Added indirect method call through array. #47160.
+-添加从数组直接调用方法的支持。现在可以这样了：$object->method()[0]->otherMethod();
 
-- 添加对Dtrace的支持
+-Added DTrace support.
+-添加对Dtrace的支持
 
-- 添加初始化过程调用类成员的支持，如 (new foo)->bar()
+-Added class member access on instantiation (e.g. (new foo)->bar()) support.
+-添加初始化过程调用类成员的支持，如 (new foo)->bar()
 
-- <?=现在总是有效，不管short_open_tag是否设置
+-<?= is now always available regardless of the short_open_tag setting.
+-<?=现在总是有效，不管short_open_tag是否设置
 
-- 扩展Zend的信号处理（配置选项 --enable-zend-signals,默认关闭）
+-Implemented Zend Signal Handling (configurable option --enable-zend-signals, off by default).
+-扩展Zend的信号处理（配置选项 --enable-zend-signals,默认关闭）
 
-- 改善输出层，详见README.NEW-OUTPUT-API
+-Improved output layer, see README.NEW-OUTPUT-API for internals.
+-改善输出层，详见README.NEW-OUTPUT-API
 
-- 改善unix构建系统上允许同一时间创建多个PHP二进制SAPI和一个SAPI模块
+-Improved unix build system to allow building multiple PHP binary SAPIs and one SAPI module the same time. #53271, #52419.
+-改善unix构建系统上允许同一时间创建多个PHP二进制SAPI和一个SAPI模块
 
-- 改善不兼容参数的警告信息
+-Improved the warning message of incompatible arguments.
+-改善不兼容参数的警告信息
 
-- 提升三元运算返回数组的性能
+-Improved ternary operator performance when returning arrays.
+-提升三元运算返回数组的性能
 
-- 数组到字符的静态转换会产生一个notice
+-Changed silent conversion of array to string to produce a notice.
+-数组到字符的静态转换会产生一个notice
 
-- php.ini中的default_charset选项默认值从ISO-8859-1到UTF-8
+-Changed default value of "default_charset" php.ini option from ISO-8859-1 to UTF-8.
+-php.ini中的default_charset选项默认值从ISO-8859-1到UTF-8
 
-- E_ALL的错误包含E_STRICT级别错误
+-Changed E_ALL to include E_STRICT.
+-E_ALL的错误包含E_STRICT级别错误
 
-- 默认禁用windows的CRT警告，可以用ini里的windows_show_crt_warnings指令重新打开
+-Disabled windows CRT warning by default, can be enabled again using the ini directive windows_show_crt_warnings.
+-默认禁用windows的CRT警告，可以用ini里的windows_show_crt_warnings指令重新打开
 
-- 改善Zend Engine的内存使用
+-Improved Zend Engine memory usage
+-改善Zend Engine的内存使用
 
-- 改善错误信息解析
+-Improved parse error messages.
+-改善错误信息解析
 
-- 改善核心函数
+-Improved core functions
+-改善核心函数
 
-- 添加hex2bin()函数
+-Added hex2bin() function.
+-添加hex2bin()函数
 
-- number_format()不再切割多字节小数点和首字节千位分隔符
+-number_format() no longer truncates multibyte decimal points and thousand separators to the first byte. #53457.
+-number_format()不再切割多字节小数点和首字节千位分隔符
 
-- 添加迭代serialize()方法中对象引用的调用
+-Added support for object references in recursive serialize() calls. #36424.
+-添加迭代serialize()方法中对象引用的调用
 
-- 添加数组sort函数（sort, rsort, ksort, krsort, asort, arsort and array_multisort）中SORT_NATURAL和SORT_FLAG_CASE 参数的支持
+-Added support for SORT_NATURAL and SORT_FLAG_CASE in array sort functions (sort, rsort, ksort, krsort, asort, arsort and array_multisort). #55158.
+-添加数组sort函数（sort, rsort, ksort, krsort, asort, arsort and array_multisort）中SORT_NATURAL和SORT_FLAG_CASE 参数的支持
 
 Added stream metadata API support and stream_metadata() stream class handler.
 
